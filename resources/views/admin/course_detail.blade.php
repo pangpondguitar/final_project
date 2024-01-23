@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label for="s_num" class="fs-6 mt-1 mb-0">รหัสวิชา</label>
+                    <label for="s_num" class="fs-6 mt-1 mb-0">รหัสวิชา123</label>
                     <input type="text" class="form-control" placeholder="ป้อนชื่อสาขา" id="s_num" name="s_num">
                     <label for="s_name" class="fs-6 mt-1 mb-0">ชื่อวิชา</label>
                     <input type="text" class="form-control" placeholder="ป้อนรายละเอียดข้อมูลสาขา" id="s_name" name="s_name">
