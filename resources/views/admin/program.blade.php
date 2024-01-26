@@ -70,7 +70,7 @@
                                     As Uber works through a huge amount of internal management turmoil.
                                 </p>
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <a type="button" class="btn btn-outline-primary btn-sm mb-0" href="{{ route('program.edit', $item->id)}}">View Project</a>
+                                    <a type="button" class="btn btn-outline-primary btn-sm mb-0" href="{{ route('program.edit', $item->p_id)}}">View Project</a>
                                     <div class="avatar-group mt-2">
                                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
                                             <img alt="Image placeholder" src="../assets/img/team-1.jpg">

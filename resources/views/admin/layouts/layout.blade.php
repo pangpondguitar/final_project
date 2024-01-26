@@ -98,6 +98,14 @@
             overflow-x: hidden;
             /* ซ่อน scrollbar ด้านล่าง (แนวนอน) */
         }
+
+        .menu_course_active {
+            background-image: linear-gradient(310deg, #141727 0%, #3A416F 100%);
+        }
+
+        .menu_course_active .title {
+            color: #fff;
+        }
     </style>
 </head>
 

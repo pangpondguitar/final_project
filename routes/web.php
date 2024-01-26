@@ -62,7 +62,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
             Route::get('/', 'index')->name('admin.course');
             Route::get('/all/{id}', 'all')->name('admin.course_all');
             Route::post('/insert/{id}', 'course_insert')->name('admin.course_insert');
-            Route::get('/detail/{id}', 'detail')->name('admin.course_detail');
+            Route::get('/detail/{id}/{menu}', 'detail')->name('admin.course_detail');
+            Route::get('/course/delete/{id}', 'course_delete')->name('admin.course_detail.course_delete');
             Route::post('/subject/insert/{id}', 'subject_insert')->name('admin.course_detail.subject_insert');
             Route::post('/subject/edite/{id}', 'subject_edit')->name('admin.course_detail.subject_edit');
             Route::get('/subject/delete/{id}', 'subject_delete')->name('admin.course_detail.subject_delete');

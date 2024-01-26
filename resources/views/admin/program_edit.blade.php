@@ -53,7 +53,7 @@
                                 </div>
                             </div> -->
                             <div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex">
-                                <a href="#" data-target="{{ route('program.delete', $program->id) }}" class="btn btn-danger" onclick="showAlert(this)">ลบข้อมูล</a>
+                                <a href="#" data-target="{{ route('program.delete', $program->p_id) }}" class="btn btn-danger" onclick="showAlert(this)">ลบข้อมูล</a>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                     <button type="button" class="btn-close text-reset text-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                 </div>
                                 <div class="offcanvas-body">
-                                    <form method="POST" action="{{ route('program.update.course', $program->id) }}">
+                                    <form method="POST" action="{{ route('program.update.course', $program->p_id) }}">
                                         @csrf
                                         <div class="row">
                                             @foreach($courses as $item)
@@ -95,7 +95,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <form method="POST" action="{{ route('program.update', $program->id) }}">
+                            <form method="POST" action="{{ route('program.update', $program->p_id) }}">
                                 @csrf
                                 @if (session('status'))
                                 <!-- <div class="alert alert-secondary text-white">

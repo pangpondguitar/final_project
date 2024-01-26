@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\Program;
 use App\Models\Subject;
+use App\Models\Course_committee;
 
 class CourseController extends Controller
 {
@@ -49,7 +50,14 @@ class CourseController extends Controller
 
         return redirect()->back();
     }
-    public function detail($id)
+    public function course_delete($id)
+    {
+        $course = Course::where('c_id', $id)->first();
+        $course->delete();
+        return back()->with('status', 'Some message here');
+    }
+
+    public function detail($id, $menu_type)
     {
         // $data = DB::table('programs')
         //     ->select('programs.id', 'programs.p_name', 'courses.c_name')
@@ -58,10 +66,14 @@ class CourseController extends Controller
         //     ->get();
 
         $subject = Subject::where('c_id', $id)->paginate(10);
+        $course = Course::find($id);
+        $course_com = Course_committee::where('c_id', $id)->get();
+
+
+
         // $data = $program->courses;
         // $p_name = $program->p_name;
-
-        return view('admin.course_detail', compact('id', 'subject'));
+        return view('admin.course_detail', compact('id', 'subject', 'course', 'course_com', 'menu_type'));
     }
 
     public function subject_insert(Request $request, $id)

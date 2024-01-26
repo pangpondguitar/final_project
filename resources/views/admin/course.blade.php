@@ -56,7 +56,7 @@
                             <h6 class="mb-0 "> {{$item->p_name}}</h6>
                             <p class="mb-0 text-xs text-truncate" style="max-width: 80%; "> {{$item->p_detail}}</p>
                         </div>
-                        <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="{{ route('admin.course_all', $item->id)}}">ดูหลักสูตร</a>
+                        <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="{{ route('admin.course_all', $item->p_id)}}">ดูหลักสูตร</a>
                     </li>
                     @endforeach
                 </ul>

@@ -10,7 +10,7 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'p_id';
     protected $relation = ['courses'];
     protected $fillable = [
         'c_id'

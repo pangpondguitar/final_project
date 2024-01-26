@@ -62,7 +62,7 @@
                                         </blockquote>
                                     </div>
                                     <div>
-                                        <a href="{{ route('admin.course_detail', $item->c_id)}}" class="btn btn-outline-info">ดูรายละเอียด</a>
+                                        <a href="{{ route('admin.course_detail', ['id' => $item->c_id, 'menu' => 1 ])}}" class="btn btn-outline-info">ดูรายละเอียด</a>
                                     </div>
                                 </div>
                             </div>

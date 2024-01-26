@@ -1,6 +1,7 @@
 @extends('admin.layouts.layout')
 @section('content')
 <!-- Modal -->
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form method="POST" action="{{ route('admin.course_detail.subject_insert', $id)}}  ">
         @csrf
@@ -32,37 +33,74 @@
 </div>
 
 <div class="row">
+
     <div class="col-12 mt-4">
         <div class="card mb-3">
             <div class="card-body p-3">
+                <h5 class="mb-0">เมนู</h5>
+                <p class="text-sm">จัดการข้อมูลหลักสูตร</p>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <a href="{{ route('admin.course_detail', ['id' => $id, 'menu' => 1])}}">
+                            <div class="card h-100 @if($menu_type == 1) menu_course_active @endif">
+                                <span class="mask  opacity-9 border-radius-xl  "></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <h5 class="title fw-normal mb-0 mt-3">
+                                                รายวิชาทั้งหมดในหลักสูตร
+                                            </h5>
+                                            <span class="title text-sm">รายวิชาทั้งหมด </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-sm-8">
-                        <div class="nav-wrapper position-relative end-0">
-                            <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a href="{{ route('admin.course_detail', $id)}}" class="nav-link mb-0 px-0 py-1  ">
-                                        รายวิชา
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.course_detail', $id)}}" class=" nav-link mb-0 px-0 py-1 ">
-                                        คณะกรรมการหลักสูตร
-                                    </a>
-                                </li>
-
-
-                                <div class="moving-tab position-absolute nav-link" style="padding: 0px; width: 120px; transform: translate3d(171px, 0px, 0px); transition: all 0.5s ease 0s;"><a class="nav-link mb-0 px-0 py-1  " data-bs-toggle="tab" href="../../../examples/pages/account/settings.html" role="tab" aria-selected="true">-</a></div>
-                            </ul>
-                        </div>
+                        </a>
                     </div>
+                    <div class="col-lg-3">
+                        <a href="{{ route('admin.course_detail', ['id' => $id, 'menu' => 2])}}">
+                            <div class="card h-100 @if($menu_type == 2) menu_course_active @endif">
+                                <span class="mask  opacity-9 border-radius-xl  "></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <h5 class="title fw-normal mb-0 mt-3">
+                                                คณะกรรมการหลักสูตร
+                                            </h5>
+                                            <span class="text-muted text-sm title">คณะกรรมการหลักสูตร </span>
+                                        </div>
 
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="{{ route('admin.course_detail', ['id' => $id, 'menu' => 3])}}">
+                            <div class="card h-100 @if($menu_type == 3) menu_course_active @endif">
+                                <span class="mask  opacity-9 border-radius-xl  "></span>
+                                <div class="card-body p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-8 text-start">
+                                            <h5 class="title fw-normal mb-0 mt-3">
+                                                รายละเอียดข้อมูลหลักสูตร
+                                            </h5>
+                                            <span class="title text-sm">รายละเอียดข้อมูลหลักสูตร </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @if($menu_type == 1)
     <div class="col-lg-12">
-        <div class="card ">
+        <div class="card mb-3 ">
             <div class="card-header pb-0 p-3">
                 <h5 class="mb-0">รายวิชา</h5>
                 <p class="text-sm">รายวิชาทั้งหมด</p>
@@ -167,5 +205,182 @@
             @endif
         </div>
     </div>
+    @elseif($menu_type == 2)
+    <div class="col-lg-12">
+        <div class="card mb-3">
+            <div class="card-header pb-0 p-3">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="mb-0">คณะกรรมการหลักสูตร</h5>
+                        <p class="text-sm">คณะกรรมการหลักสูตรทั้งหมด</p>
+                    </div>
+                    <div>
+                        <button class="btn bg-gradient-info">เพิ่มคณะกรรมการ</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach($course_com as $item)
+
+                    <div class="col-lg-3">
+                        <div class="card card-plain text-center">
+                            <a href="javascript:;">
+                                <img class="avatar avatar-xl shadow" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">Andrew John</h4>
+                                <h6 class="category text-info text-gradient">Loan Counselor</h6>
+                                <p class="card-description">
+                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    <!-- <div class="col-lg-3">
+                        <div class="card card-plain text-center">
+                            <a href="javascript:;">
+                                <img class="avatar avatar-xl shadow" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">Andrew John</h4>
+                                <h6 class="category text-info text-gradient">Loan Counselor</h6>
+                                <p class="card-description">
+                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card card-plain text-center">
+                            <a href="javascript:;">
+                                <img class="avatar avatar-xl shadow" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">Andrew John</h4>
+                                <h6 class="category text-info text-gradient">Loan Counselor</h6>
+                                <p class="card-description">
+                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card card-plain text-center">
+                            <a href="javascript:;">
+                                <img class="avatar avatar-xl shadow" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">Andrew John</h4>
+                                <h6 class="category text-info text-gradient">Loan Counselor</h6>
+                                <p class="card-description">
+                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card card-plain text-center">
+                            <a href="javascript:;">
+                                <img class="avatar avatar-xl shadow" src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-3.jpg">
+                            </a>
+                            <div class="card-body">
+                                <h4 class="card-title">Andrew John</h4>
+                                <h6 class="category text-info text-gradient">Loan Counselor</h6>
+                                <p class="card-description">
+                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card h-100 card-plain border">
+                            <div class="card-body d-flex flex-column justify-content-center text-center">
+                                <a href="javascript:;">
+                                    <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
+                                    <h5 class=" text-secondary"> เพิ่มกรรมการ </h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    @elseif($menu_type == 3)
+    <div class="col-lg-12">
+        <div class="card mb-3 ">
+            <div class="card-header pb-0 p-3">
+                <h5 class="mb-0">รายละเอียดข้อมูลหลักสูตร</h5>
+                <p class="text-sm">รายละเอียดข้อมูลหลักสูตร</p>
+
+
+            </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label ">ชื่อหลักสูตร</label>
+                            <div class="input-group">
+                                <input id="firstName" name="name" class="form-control" type="text" placeholder="ชื่อหลักสูตร" required="required" value="{{$course->c_name}}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">ชื่อหลักสูตรภาษาอังกฤษ</label>
+                            <div class="input-group">
+                                <input id="lastName" name="name2" class="form-control" type="text" placeholder="ชื่อหลักสูตร(ภาษาอังกฤษ)" required="required" value="{{$course->c_name2}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="form-label mt-4">อัพโหลดไฟล์</label>
+                            <input type="file" class="form-control" name="file" id="">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label class="form-label mt-4">รายละเอียด</label>
+                            <textarea name="address" class="form-control" id="" cols="30" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class=" row d-flex text-end mt-3">
+                        <div class="col-lg-12">
+                            <a class="btn bg-outline-secondary mb-0 px-5" href="{{route('admin.users')}}">กลับ</a>
+                            <button class="btn bg-gradient-success mb-0 px-5" type="submit">บันทึกข้อมูล</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card " id="delete">
+            <div class="card-header">
+                <h5 class="mb-1">ลบข้อมูลหลักสูตร</h5>
+                <p class="text-sm mb-0">กรุณายืนยันการลบข้อมูลหลักสูตร คุณแน่ใจหรือในการลบข้อมูลหลักสูตรออกจากระบบเมื่อลบแล้วไม่สามารถกู้คืนข้อมูลดังกล่าวได้</p>
+            </div>
+            <div class="card-body d-sm-flex pt-0">
+                <div class="d-flex align-items-center mb-sm-0 mb-4">
+                    <div>
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault0">
+                        </div>
+                    </div>
+                    <div class="ms-2">
+                        <span class="text-dark font-weight-bold d-block text-sm">Confirm</span>
+                        <span class="text-xs d-block">I want to delete my account.</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline-secondary mb-0 ms-auto" type="button" name="button">Deactivate</button>
+                <button class="btn bg-gradient-danger mb-0 ms-2" type="button" name="button" data-target="{{ route('admin.course_detail.course_delete', $id) }}" onclick="Delete(this)">ลบข้อมูลหลักสูตร</button>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection
