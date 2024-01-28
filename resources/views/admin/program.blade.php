@@ -69,6 +69,7 @@
                                 <p class=" mb-4 text-sm">
                                     As Uber works through a huge amount of internal management turmoil.
                                 </p>
+
                                 <div class="d-flex align-items-center justify-content-between">
                                     <a type="button" class="btn btn-outline-primary btn-sm mb-0" href="{{ route('program.edit', $item->p_id)}}">View Project</a>
                                     <div class="avatar-group mt-2">

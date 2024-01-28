@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminPanel\CourseController;
 use App\Http\Controllers\UsersPanel\UsersControllor;
 use App\Http\Controllers\AdminPanel\AdminuserController;
 use App\Http\Controllers\AdminPanel\TermsControllor;
+use App\Http\Controllers\AdminPanel\TeachingControllor;
 use App\Models\Terms;
 
 /*
@@ -88,6 +89,11 @@ Route::middleware(['auth', 'role:1'])->group(function () {
             Route::get('/delete/{id}', 'term_delete')->name('admin.term_delete');
             Route::post('/edit/{id}', 'term_edit')->name('admin.term_edit');
             Route::get('/term_program/{id}', 'program')->name('admin.term_program');
+        });
+    });
+    Route::prefix('admin/teaching')->group(function () {
+        Route::controller(TeachingControllor::class)->group(function () {
+            Route::get('/', 'index')->name('admin.teaching');
         });
     });
     // Route::name('admin/programs.')->group(function () {
