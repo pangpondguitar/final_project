@@ -26,3 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 Route::get('get_all_programs', [TeachingControllor::class, 'get_all_programs']);
+Route::get('get_all_terms', [TeachingControllor::class, 'get_all_terms']);
+Route::get('get_program/{id}', [TeachingControllor::class, 'get_program']);
+Route::get('get_subject/{id}/{t_id}', [TeachingControllor::class, 'get_subject']);
+Route::get('get_all_teachers', [TeachingControllor::class, 'get_all_teachers']);
+Route::post('add_sub', [teachingControllor::class, 'add_sub']);
+Route::get('get_term_sub', [TeachingControllor::class, 'get_term_sub']);

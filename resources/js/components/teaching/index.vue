@@ -17,8 +17,8 @@ const getProgram = async () => {
     }
 };
 
-const teaching_sub = () => {
-    router.push('/admin/teaching_sub');
+const teaching_sub = (id) => {
+    router.push('/admin/teaching/teaching_sub/'+id);
 };
 
 onMounted(async () => {
@@ -42,21 +42,19 @@ onMounted(async () => {
                 <ul class="list-group" v-for="item in programs  " :key="item.id" >
                     <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
                         <div class="avatar me-3">
-                            <img src="/public/assets/img/book (4).png" alt="kal" class="border-radius-lg shadow" style="padding: 8px;">
+                            <img src="/public/assets/img/book (5).png" alt="kal" class="border-radius-lg shadow" style="padding: 8px;">
                         </div>
                         <div class="d-flex align-items-start flex-column justify-content-center">
                             <h6 class="mb-0 ">{{ item.p_name}}</h6>
                             <p class="mb-0 text-xs text-truncate" >{{ item.p_detail}}</p>
                         </div>
-                        <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" @click="teaching_sub">ดูข้อมูล</button>
+                        <button class="btn btn-link pe-3 ps-0 mb-0 ms-auto" @click="teaching_sub(item.p_id)">ดูข้อมูล</button>
                     </li>
-
                 </ul>
             </div>
         </div>
     </div>
 </div>
-@endsection
 </template>
 <style>
 .text-truncate{

@@ -7,6 +7,6 @@
     <div id="app">
 
     </div>
-
 </div>
+
 @endsection

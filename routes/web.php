@@ -94,6 +94,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::prefix('admin/teaching')->group(function () {
         Route::controller(TeachingControllor::class)->group(function () {
             Route::get('/', 'index')->name('admin.teaching');
+
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
     // Route::name('admin/programs.')->group(function () {

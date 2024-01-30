@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Users_detail::class, 'id');
     }
+
+    public function user_detail_all(): HasOne
+    {
+        return $this->hasOne(Users_detail::class, 'id');
+    }
 }
