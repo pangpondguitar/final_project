@@ -55,9 +55,16 @@ class TeachingControllor extends Controller
         ], 200);
     }
 
-    public function get_all_teachers()
+    public function get_all_teachers($id)
     {
-        $users = User::where('user_type', '2')->where('user_status', '1')->with('user_detail')->get();
+        $users = User::where('user_type', '2')
+            ->where('user_status', '1')
+            ->whereHas('user_detail', function ($query) use ($id) {
+                $query->where('p_id', $id);
+            })
+            ->with('user_detail')
+            ->get();
+
         return response()->json([
             'teachers' => $users
         ], 200);
@@ -76,15 +83,32 @@ class TeachingControllor extends Controller
 
         $terms_sub->save();
     }
-    public function get_term_sub()
+    public function get_term_sub($id)
     {
-        $term_sub = Terms_sub::all();
-        $term_sub = Terms_sub::with('subjects', 's_id')->get();
-        $term_sub = Terms_sub::with('subjects')->get();
 
-
+        $term_sub = Terms_sub::where('t_id', $id)->with('subjects')->get();
         return response()->json([
             'term_sub' => $term_sub
         ], 200);
+    }
+
+    public function delete_sub($id)
+    {
+        $term_sub = Terms_sub::find($id);
+        $term_sub->delete();
+    }
+
+    public function add_teacher(Request $request)
+    {
+        // $users = User::where('user_type', '2')->where('user_status', '1')->with('user_detail')->get();
+        // return response()->json([
+        //     'teachers' => $users
+        // ], 200);
+
+        $terms_sub = new Terms_sub_teach();
+        $terms_sub->id = $request->id;
+        $terms_sub->ts_id = $request->ts_id;
+
+        $terms_sub->save();
     }
 }

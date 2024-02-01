@@ -108,43 +108,65 @@
                 <form action="{{ route('admin.user_edit_check', $data->user->id)}}" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label ">ชื่อ-นามสกุล</label>
                             <div class="input-group">
                                 <input id="firstName" name="name" class="form-control" type="text" placeholder="ป้อนชื่อ-นามสกุล" required="required" value="{{$data->user_d_name}}">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label">ชื่อภาษาอังกฤษ</label>
                             <div class="input-group">
                                 <input id="lastName" name="name2" class="form-control" type="text" placeholder="ป้อนชื่อ-นามสกุล(ภาษาอังกฤษ)" required="required" value="{{$data->user_d_name2}}">
                             </div>
                         </div>
+                        <div class="col-4">
+                            <label class="form-label ">เลือกสาขา</label>
+                            <select name="program" id="" class="form-control">
+                                @foreach($programs as $item)
+                                <option value="{{$item->p_id}}" {{ $item->p_id == $data->p_id ? 'selected' : '' }}>{{$item->p_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-5">
                             <label class="form-label mt-4">ชื่อบัญชีผู้ใช้(username)</label>
                             <div class="input-group">
                                 <input id="email" name="username" class="form-control" type="text" placeholder="ป้อนชื่อบัญชีผู้ใช้" value="{{$data->user->username}}">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-7">
                             <label class="form-label mt-4">Email</label>
                             <div class="input-group">
                                 <input id="location" name="email" class="form-control" type="email" placeholder="ป้อนอีเมล" value="{{$data->user->email}}">
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-12">
                             <label class="form-label mt-4">เบอร์โทรศัพท์</label>
                             <div class="input-group">
                                 <input id="phone" name="phone" class="form-control" type="number" placeholder="ป้อนเบอร์โทรศัพท์" value="{{$data->user_d_phone}}">
                             </div>
                         </div>
+
                         <div class="col-12">
                             <label class="form-label mt-4">ที่อยู่</label>
                             <textarea name="address" class="form-control" id="" cols="30" rows="3">{{$data->user_d_add}}</textarea>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label mt-4">สถานะการใช้งาน</label>
+                            <div class="d-flex mt-1">
+                                <div class="form-check me-4 ">
+                                    <input class="form-check-input" type="radio" name="status" id="customRadio1" value="1" {{ $data->user->user_status == 1 ? 'checked' : '' }}>
+                                    <label class="custom-control-label fs-6 fw-normal" for="customRadio1">ใช้งาน</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="customRadio2" value="0" {{ $data->user->user_status == 0 ? 'checked' : '' }}>
+                                    <label class="custom-control-label text-secondary fs-6 fw-normal" for="customRadio2">ไม่ใช้งาน</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row d-flex text-end mt-3">
@@ -152,6 +174,7 @@
                             <a class="btn bg-outline-secondary mb-0 px-5" href="{{route('admin.users')}}">กลับ</a>
                             <button class="btn bg-gradient-primary mb-0 px-5" type="submit">บันทึกข้อมูล</button>
                         </div>
+
                     </div>
                 </form>
             </div>

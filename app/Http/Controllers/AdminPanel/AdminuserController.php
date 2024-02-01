@@ -32,13 +32,13 @@ class AdminuserController extends Controller
     }
     public function user_detail($id)
     {
-        // $data = Program::all();
+        $programs = Program::all();
         $data = User::find($id);
         $data = $data->user_detail;
         // echo $data->user->name;
         // echo $data->user_d_name;
 
-        return view('admin.user_detail', compact('data'));
+        return view('admin.user_detail', compact('data', 'programs'));
     }
     public function user_insert_check(Request $request)
     {
@@ -76,7 +76,8 @@ class AdminuserController extends Controller
             'user_d_add' => $request->address,
             'user_d_email' => $request->email,
             'user_d_phone' => $request->phone,
-            'id' => $user->id
+            'id' => $user->id,
+            'p_id' => $request->program
         ]);
         return back()->with('status', 'success');
     }
@@ -89,6 +90,7 @@ class AdminuserController extends Controller
 
         $user->username = $request->username;
         $user->email = $request->email;
+        $user->user_status = $request->status;
         $user->save();
 
 
@@ -98,6 +100,7 @@ class AdminuserController extends Controller
         $user->user_d_email = $request->email;
         $user->user_d_phone = $request->phone;
         $user->user_d_add = $request->address;
+        $user->p_id = $request->program;
         $user->save();
 
         return back()->with('status', 'success');
@@ -123,6 +126,7 @@ class AdminuserController extends Controller
     }
     public function user_insert()
     {
-        return view('admin.user_insert');
+        $programs = Program::all();
+        return view('admin.user_insert', compact('programs'));
     }
 }

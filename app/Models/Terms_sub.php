@@ -16,9 +16,10 @@ class Terms_sub extends Model
         's_id'
     ];
 
+    protected $relations = ['subjects'];
 
-    public function subject(): HasMany
+    public function subjects()
     {
-        return $this->hasMany(Subject::class, 's_id');
+        return $this->belongsTo(Subject::class, 's_id');
     }
 }

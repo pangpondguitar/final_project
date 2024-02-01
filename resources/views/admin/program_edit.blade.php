@@ -207,7 +207,7 @@
                                                 <div class="d-flex justify-content-between mt-3">
 
                                                     <div>
-                                                        <a href="javascript:;" class="text-primary icon-move-right">ไปยังหลักสูตร
+                                                        <a href="{{ route('admin.course_detail', ['id' => $c_course->c_id, 'menu' => 1 ])}}" class="text-primary icon-move-right">ไปยังหลักสูตร
                                                             <i class="fas fa-arrow-right text-xs ms-1" aria-hidden="true"></i>
                                                         </a>
                                                     </div>

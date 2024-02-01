@@ -252,17 +252,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label mt-4">Email</label>
                             <div class="input-group">
                                 <input id="location" name="email" class="form-control" type="email" placeholder="ป้อนอีเมล" onfocus="focused(this)" onfocusout="defocused(this)">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <label class="form-label mt-4">เบอร์โทรศัพท์</label>
                             <div class="input-group">
                                 <input id="phone" name="phone" class="form-control" type="number" placeholder="ป้อนเบอร์โทรศัพท์" onfocus="focused(this)" onfocusout="defocused(this)">
                             </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mt-4">เลือกสาขา</label>
+                            <select name="program" id="" class="form-control">
+                                @foreach($programs as $item)
+                                <option value="{{$item->p_id}}">{{$item->p_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-12">
                             <label class="form-label mt-4">ที่อยู่</label>
