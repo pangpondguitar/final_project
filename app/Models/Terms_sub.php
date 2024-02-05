@@ -16,10 +16,19 @@ class Terms_sub extends Model
         's_id'
     ];
 
-    protected $relations = ['subjects'];
+    protected $relations = ['subjects', 'terms_sub_teach'];
 
     public function subjects()
     {
         return $this->belongsTo(Subject::class, 's_id');
+    }
+
+    // public function terms_sub_teach()
+    // {
+    //     return $this->belongsTo(Terms_sub_teach::class, 'ts_id');
+    // }
+    public function terms_sub_teach(): HasMany
+    {
+        return $this->hasMany(Terms_sub_teach::class, 'ts_id');
     }
 }
