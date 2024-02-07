@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,4 +19,13 @@
     </form>
 </body>
 
-</html>
+</html> -->
+
+
+@extends('users.layouts.layout')
+@section('content')
+
+<div id="app">
+
+</div>
+@endsection

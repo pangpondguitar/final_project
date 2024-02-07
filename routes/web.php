@@ -10,6 +10,10 @@ use App\Http\Controllers\UsersPanel\UsersControllor;
 use App\Http\Controllers\AdminPanel\AdminuserController;
 use App\Http\Controllers\AdminPanel\TermsControllor;
 use App\Http\Controllers\AdminPanel\TeachingControllor;
+
+use App\Http\Controllers\UsersPanel\ProfileControllor;
+use App\Http\Controllers\UsersPanel\CourseSpecControllor;
+
 use App\Models\Terms;
 
 /*
@@ -104,6 +108,20 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 });
 Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('users/home', [UsersControllor::class, 'index'])->name('users.home');
+
+    Route::prefix('users/profile')->group(function () {
+        Route::controller(ProfileControllor::class)->group(function () {
+            Route::get('/', 'index')->name('users.profile');
+            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+
+    Route::prefix('users/course_spec')->group(function () {
+        Route::controller(CourseSpecControllor::class)->group(function () {
+            Route::get('/', 'index2')->name('users.course_spec');
+            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
 });
 // Route::get('/admin', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
 

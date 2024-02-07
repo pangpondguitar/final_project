@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminPanel\TeachingControllor;
+use App\Http\Controllers\UsersPanel\ProfileControllor;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,3 +38,7 @@ Route::get('delete_sub/{id}', [TeachingControllor::class, 'delete_sub']);
 Route::get('delete_Teacher/{id}', [TeachingControllor::class, 'delete_Teacher']);
 Route::get('get_term_sub/{id}', [TeachingControllor::class, 'get_term_sub']);
 Route::post('add_teacher', [teachingControllor::class, 'add_teacher']);
+
+
+//users
+Route::get('get_profile/{id}', [ProfileControllor::class, 'get_profile']);
