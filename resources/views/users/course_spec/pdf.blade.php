@@ -1,148 +1,51 @@
+<html>
 
-<script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: normal;
+            src: url("{{ public_path('/assets/my-fonts/Sarabun-Regular.ttf') }}") format('truetype');
+        }
 
-//importing bootstrap 5 and pdf maker Modules
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: normal;
+            src: url("{{ public_path('/assets/my-fonts/THSarabunNew.ttf') }}") format('truetype');
+        }
 
-import pdfMake from 'pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts.js';
-import htmlToPdfmake from 'html-to-pdfmake';
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: normal;
+            font-weight: bold;
+            src: url("{{ public_path('/assets/my-fonts/Sarabun-Bold.ttf') }}") format('truetype');
+        }
 
-export default {
-    data() {
-        return {
-            // Replace 'your-dynamic-image-path.jpg' with the actual path or URL of your dynamic image
-            imagePath: '/assets/img/logo-sru.jpg',
-            externalDataRetrievedFromServer: [
-                { name: 'Bartek', age: 34 },
-                { name: 'John', age: 27 },
-                { name: 'Elizabeth', age: 30 },
-            ]
-        };
-    },
-    methods: {
-        getBase64ImageFromURL(url) {
-            return new Promise((resolve, reject) => {
-                var img = new Image();
-                img.setAttribute("crossOrigin", "anonymous");
-                img.onload = () => {
-                    var canvas = document.createElement("canvas");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0);
-                    var dataURL = canvas.toDataURL("image/png");
-                    resolve(dataURL);
-                };
-                img.onerror = error => {
-                    reject(error);
-                };
-                img.src = url;
-            });
-        },
-        buildTableBody(data, columns) {
-            var body = [];
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: normal;
+            src: url("{{ public_path('/assets/my-fonts/THSarabunNew Italic.ttf') }}") format('truetype');
+        }
 
-            body.push(columns);
+        @font-face {
+            font-family: 'THSarabunNew';
+            font-style: italic;
+            font-weight: bold;
+            src: url("{{ public_path('/assets/my-fonts/Sarabun-BoldItalic.ttf') }}") format('truetype');
+        }
 
-            data.forEach(function (row) {
-                var dataRow = [];
+        body {
+            font-family: "THSarabunNew";
+            font-size: 12px !important;
+        }
+    </style>
+</head>
 
-                columns.forEach(function (column) {
-                    dataRow.push(row[column].toString());
-                })
-
-                body.push(dataRow);
-            });
-
-            return body;
-        },
-
-        table(data, columns) {
-            return {
-                table: {
-                    headerRows: 1,
-                    body: buildTableBody(data, columns)
-                }
-            };
-        },
-
-        async printDocument() {
-
-            pdfMake.vfs = pdfFonts.pdfMake.vfs // 2. set vfs pdf font
-            pdfMake.fonts = {
-                // download default Roboto font from cdnjs.com
-                Roboto: {
-                    normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
-                    bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
-                    italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
-                    bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
-                },
-                // Kanit Font
-                Sarabun: { // 3. set Kanit font
-                    normal: 'Sarabun-Regular.ttf',
-                    bold: 'Sarabun-Medium.ttf',
-                    italics: 'Sarabun-Italic.ttf',
-                    bolditalics: 'Sarabun-MediumItalic.ttf'
-                },
-
-            }
-            pdfMake.vfs = pdfFonts.pdfMake.vfs;
-            //get table html
-            const title = document.getElementById('title');
-            const pdfTable = document.getElementById('divToPrint');
-            const pdfresult_sub = document.getElementById('result_sub');
-            //html to pdf format
-            var html = htmlToPdfmake(pdfTable.innerHTML);
-            var titlepdf = htmlToPdfmake(title.innerHTML);
-            var result_subpdf = htmlToPdfmake(pdfresult_sub.innerHTML);
-            console.log(html);
-            pdfMake.vfs = pdfFonts.pdfMake.vfs;
-            const documentDefinition = {
-                content: [
-
-                    {
-                        image: await this.getBase64ImageFromURL(
-                            "/assets/img/logo-sru.jpg"
-                        ),
-                        width: 70,
-                        height: 80,
-                        style: 'center',
-                        margin: [5, 2, 10, 20]
-                    },
-                    titlepdf,
-                    html,
-                    {
-                        text: '\n\n',
-                        style: 'header',
-                        pageBreak: 'before',
-                        pageOrientation: 'landscape'
-                    },
-                    result_subpdf,
-
-                ],
-                styles: {
-                    center:
-                    {
-                        alignment: 'center'
-                    }
-
-                },
-
-
-                defaultStyle: { // 4. default style 'KANIT' font to test
-                    font: 'Sarabun'
-                }
-            }
-
-            pdfMake.createPdf(documentDefinition).open();
-
-        },
-
-    },
-}
-</script>
-
-<template>
+<body>
     <div class="App container mt-5">
 
         <div id="title">
@@ -245,19 +148,7 @@ export default {
         </div>
         <button class="btn btn-primary" @click="printDocument()">Export To PDF</button>
     </div>
-</template>
 
-<style>
-.img-logo {
-    width: 50px;
-    height: auto;
-}
+</body>
 
-.th20 {
-    width: 20%;
-}
-
-.fz-12 {
-    font-size: 12px !important;
-}
-</style>
+</html>

@@ -13,9 +13,10 @@ use App\Http\Controllers\AdminPanel\TeachingControllor;
 
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
-
+use App\Http\Controllers\PDFController;
 use App\Models\Terms;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,7 @@ use App\Models\Terms;
 Route::get('/', function () {
     return view('welcome');
 });
+
 // Route::get('admin', function () {
 //     return view('admin.home');
 // });
@@ -119,6 +121,12 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('users/course_spec')->group(function () {
         Route::controller(CourseSpecControllor::class)->group(function () {
             Route::get('/', 'index2')->name('users.course_spec');
+            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('users/pdf')->group(function () {
+        Route::controller(PDFController::class)->group(function () {
+            Route::get('/', 'index')->name('users.pdf');
             // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
