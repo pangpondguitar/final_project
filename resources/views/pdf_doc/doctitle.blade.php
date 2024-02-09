@@ -173,36 +173,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="" id="result_sub">
-            <label for="">5. ผลลัพธ์การเรียนรู้ของรายวิชา</label>
-            <table>
-                <thead>
-                    <tr>
-                        <td class="th20 fz-12">
-                            <small>คุณธรรมและจริยธรรม</small>
-                        </td>
-                        <td class="th20 fz-12">
-                            ความรู้
-                        </td>
-                        <td class="th20 fz-12">
-                            ทักษะทางปัญญา
-                        </td>
-                        <td>
-                            ทักษะความ <br> สัมพันธ์ระหว่างบุลคล<br> และความรับผิดชอบ
-                        </td>
-                        <td>
-                            ทักษะการวิเคราะห์<br> เชิงตัวเลขการสื่อสาร <br> และการใช้เทคโนโลยี<br> สารสนเทส
-                        </td>
-                        <td>
-                            วัตถุประสงค์<br> ของหลักสูตร
-                        </td>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-
     </div>
-    <div class="page_break page2"></div>
 </body>
 
 </html>
