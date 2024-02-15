@@ -15,8 +15,9 @@ class Subject extends Model
         's_num',
         's_name',
         's_name2',
+        's_credit',
         'c_id',
-        'p_id'
+        'doc_type',
     ];
     protected $relation = ['terms_subs'];
 
@@ -29,5 +30,10 @@ class Subject extends Model
     public function term_sub(): HasMany
     {
         return $this->hasMany(Terms_sub::class, 's_id');
+    }
+
+    public function courses()
+    {
+        return $this->belongsTo(Course::class, 'c_id');
     }
 }

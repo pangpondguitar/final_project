@@ -44,7 +44,7 @@ class TeachingControllor extends Controller
     public function get_subject($id, $t_id)
     {
 
-        $terms_course = Terms_courses::where('p_id', $id)->where('t_id', $t_id)->first();
+        $terms_course = Terms_courses::where('p_id', $id)->where('t_id', $t_id)->first();  //หา เทอมนี้ สาขานี้ ใช้ หลักสูตรใหน
         $get_course = $terms_course->c_id;
 
         $program = Program::find($id);
@@ -91,10 +91,21 @@ class TeachingControllor extends Controller
 
         $terms_sub->save();
     }
-    public function get_term_sub($id)
+    public function get_term_sub($id, $p_id)
     {
 
-        $term_sub = Terms_sub::where('t_id', $id)->with('subjects')->paginate(10);
+        // $term_sub = Terms_sub::where('t_id', $id)
+        //     ->with('subjects')->whereHas('subjects', function ($query) use ($p_id) {
+        //         $query->where('p_id', $p_id);
+        //     })
+        //     ->paginate(10);
+
+        $term_sub = Terms_sub::where('t_id', $id)
+            ->with('subjects.courses.program')->whereHas('subjects.courses.program', function ($query) use ($p_id) {
+                $query->where('p_id', $p_id);
+            })
+            ->paginate(10);
+
         return response()->json([
             'term_sub' => $term_sub
         ], 200);

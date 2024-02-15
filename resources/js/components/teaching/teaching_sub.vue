@@ -53,6 +53,7 @@ const get_Subject = async () => {
             `/api/get_subject/${props.id}/${currentTerm.value}`
         );
         subject.value = response.data.subject;
+        console.log("subject:", subject.value);
     } catch (error) {
         console.error("Error fetching subject:", error);
     }
@@ -77,7 +78,7 @@ const get_all_Teaching = async () => {
 const get_Term_sub = async (page = 1) => {
     try {
         let response = await axios.get(
-            `/api/get_term_sub/${currentTerm.value}/?page=${page}`
+            `/api/get_term_sub/${currentTerm.value}/${props.id}/?page=${page}`
         );
         term_sub.value = response.data.term_sub;
         console.log("Term sub:", term_sub.value.data);
@@ -179,8 +180,8 @@ const saveSub = (s_id) => {
     get_Term_sub();
     axios
         .post("/api/add_sub", formData)
-        .then((response) => {})
-        .catch((error) => {});
+        .then((response) => { })
+        .catch((error) => { });
 
     toast.fire({
         icon: "success",
@@ -193,19 +194,19 @@ const add_Teacher = (ts_id, id) => {
     formData.append("id", id);
     axios
         .post("/api/add_teacher", formData)
-        .then((response) => {})
-        .catch((error) => {});
+        .then((response) => { })
+        .catch((error) => { });
 
     toast.fire({
         icon: "success",
         title: "Subject add successfully",
     });
+    get_all_Teaching();
 };
 
 console.log(showTeacher);
 function filteredList() {
     if (Array.isArray(term_sub.value.data)) {
-        console.error("term_sub.value is not an array");
         return term_sub.value.data.filter(
             (item) =>
                 item.subjects &&
@@ -244,14 +245,9 @@ onMounted(async () => {
                     <p class="text-sm">{{ program.p_detail }}</p>
                     <div class="row">
                         <div class="col-lg-12">
-                            <button
-                                class="btn btn-info me-2 fs-6 fw-normal"
-                                v-for="item in terms"
-                                :key="item.id"
-                                @click="
-                                    term(item.t_id, item.t_name, item.t_year)
-                                "
-                            >
+                            <button class="btn btn-info me-2 fs-6 fw-normal" v-for="item in terms" :key="item.id" @click="
+                                term(item.t_id, item.t_name, item.t_year)
+                                ">
                                 {{ item.t_name }}/{{ item.t_year }}
                             </button>
                         </div>
@@ -275,16 +271,10 @@ onMounted(async () => {
                             </p>
                         </div>
                         <div>
-                            <button
-                                class="btn btn-light s-none me-2"
-                                @click="menus('All')"
-                            >
+                            <button class="btn btn-light s-none me-2" @click="menus('All')">
                                 รายวิชาทั้งหมด
                             </button>
-                            <button
-                                class="btn btn-dark"
-                                @click="menus_check('Add')"
-                            >
+                            <button class="btn btn-dark" @click="menus_check('Add')">
                                 เพิ่มรายวิชา
                             </button>
                         </div>
@@ -299,69 +289,42 @@ onMounted(async () => {
                                         <thead>
                                             <tr>
                                                 <td style="width: 10%">
-                                                    <label class="ms-3"
-                                                        >#</label
-                                                    >
+                                                    <label class="ms-3">#</label>
                                                 </td>
                                                 <td class="" style="width: 13%">
                                                     <label>รหัสวิชา</label>
                                                 </td>
                                                 <td>
-                                                    <label for=""
-                                                        >รหัสวิชา</label
-                                                    >
+                                                    <label for="">รหัสวิชา</label>
                                                 </td>
                                                 <td class="text-center">
                                                     control
                                                 </td>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr
-                                                v-for="item in subject"
-                                                :key="item.id"
-                                            >
+                                        <tbody v-if="subject.length > 0">
+                                            <tr v-for="item in subject" :key="item.id">
                                                 <td class="align-middle">
-                                                    <div
-                                                        class="form-check ms-3"
-                                                    >
-                                                        <input
-                                                            class="form-check-input"
-                                                            type="checkbox"
-                                                            value=""
-                                                            id="flexCheckDefault"
-                                                        />
+                                                    <div class="form-check ms-3">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="flexCheckDefault" />
                                                     </div>
                                                 </td>
-                                                <td
-                                                    class="fw-bold align-middle"
-                                                >
-                                                    <span
-                                                        class="mb-0 fw-normal fs-6"
-                                                    >
-                                                        {{ item.s_num }}</span
-                                                    >
+                                                <td class="fw-bold align-middle">
+                                                    <span class="mb-0 fw-normal fs-6">
+                                                        {{ item.s_num }}</span>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <span
-                                                        class="fs-6 mb-0 fw-normal"
-                                                        >{{ item.s_name }}</span
-                                                    >
+                                                    <span class="fs-6 mb-0 fw-normal">{{ item.s_name }}</span>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button
-                                                        type="button"
+                                                    <button type="button"
                                                         class="btn btn-secondary btn-icon-only rounded-circle mb-0 me-2"
                                                         @click="
                                                             saveSub(item.s_id)
-                                                        "
-                                                    >
-                                                        <span
-                                                            class="btn-inner--icon"
-                                                            ><i
-                                                                class="bi bi-plus-circle"
-                                                            ></i
-                                                        ></span>
+                                                            ">
+                                                        <span class="btn-inner--icon"><i
+                                                                class="bi bi-plus-circle"></i></span>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -371,21 +334,10 @@ onMounted(async () => {
                             </div>
                             <div v-else>
                                 <div>
-                                    <input
-                                        type="text"
-                                        v-model="input"
-                                        class="form-control input-search"
-                                        placeholder="ค้นหารายวิชา..."
-                                    />
-                                    <div
-                                        class="item fruit"
-                                        v-for="item in filteredList()"
-                                        :key="item"
-                                    ></div>
-                                    <div
-                                        class="item error"
-                                        v-if="input && !filteredList().length"
-                                    >
+                                    <input type="text" v-model="input" class="form-control input-search"
+                                        placeholder="ค้นหารายวิชา..." />
+                                    <div class="item fruit" v-for="item in filteredList()" :key="item"></div>
+                                    <div class="item error" v-if="input && !filteredList().length">
                                         <p>No results found!</p>
                                     </div>
                                 </div>
@@ -398,20 +350,13 @@ onMounted(async () => {
                                             <thead>
                                                 <tr>
                                                     <td style="width: 10%">
-                                                        <label class="ms-3"
-                                                            >#</label
-                                                        >
+                                                        <label class="ms-3">#</label>
                                                     </td>
-                                                    <td
-                                                        class=""
-                                                        style="width: 13%"
-                                                    >
+                                                    <td class="" style="width: 13%">
                                                         <label>รหัสวิชา</label>
                                                     </td>
                                                     <td>
-                                                        <label for=""
-                                                            >ชื่อรายวิชา</label
-                                                        >
+                                                        <label for="">ชื่อรายวิชา</label>
                                                     </td>
                                                     <td class="text-center">
                                                         <label>control</label>
@@ -419,172 +364,97 @@ onMounted(async () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr
-                                                    v-for="item in filteredList()"
-                                                    :key="item.id"
-                                                >
+                                                <tr v-for="item in filteredList()" :key="item.id">
                                                     <td class="align-middle">
-                                                        <div
-                                                            class="form-check ms-3"
-                                                        >
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="checkbox"
-                                                                value=""
-                                                                id="flexCheckDefault"
-                                                            />
+                                                        <div class="form-check ms-3">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="flexCheckDefault" />
                                                         </div>
                                                     </td>
-                                                    <td
-                                                        class="fw-bold align-middle"
-                                                    >
-                                                        <span
-                                                            class="mb-0 fw-normal fs-6"
-                                                            >{{
-                                                                item.subjects
-                                                                    .s_num
-                                                            }}</span
-                                                        >
+                                                    <td class="fw-bold align-middle">
+                                                        <span class="mb-0 fw-normal fs-6">{{
+                                                            item.subjects
+                                                                .s_num
+                                                        }}</span>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <span
-                                                            class="fs-6 mb-0 fw-normal"
-                                                            >{{
-                                                                item.subjects
-                                                                    .s_name
-                                                            }}</span
-                                                        >
+                                                        <span class="fs-6 mb-0 fw-normal">{{
+                                                            item.subjects
+                                                                .s_name
+                                                        }}</span>
                                                     </td>
                                                     <td class="text-center">
-                                                        <button
-                                                            type="button"
+                                                        <button type="button"
                                                             class="btn btn-outline-secondary btn-icon-only rounded-circle mb-0 me-2"
                                                             :class="{
-                                                                'active text-white':
-                                                                    teachers_menu ===
-                                                                    item.ts_id,
-                                                            }"
-                                                            @click="
-                                                                teaching_check(
-                                                                    item.ts_id
-                                                                )
-                                                            "
-                                                        >
-                                                            <span
-                                                                class="btn-inner--icon"
-                                                                ><i
-                                                                    class="bi bi-people-fill"
-                                                                ></i
-                                                            ></span>
+                                                                        'active text-white':
+                                                                            teachers_menu ===
+                                                                            item.ts_id,
+                                                                    }" @click="
+            teaching_check(
+                item.ts_id
+            )
+            ">
+                                                            <span class="btn-inner--icon"><i
+                                                                    class="bi bi-people-fill"></i></span>
                                                         </button>
 
-                                                        <button
-                                                            @click="
-                                                                delete_Sub(
-                                                                    item.ts_id,
-                                                                    item
-                                                                        .subjects
-                                                                        .s_name
-                                                                )
-                                                            "
-                                                            type="button"
-                                                            class="btn btn-reddit btn-icon-only rounded-circle mb-0"
-                                                        >
-                                                            <span
-                                                                class="btn-inner--icon"
-                                                                ><i
-                                                                    class="bi bi-trash3"
-                                                                ></i
-                                                            ></span>
+                                                        <button @click="
+                                                            delete_Sub(
+                                                                item.ts_id,
+                                                                item
+                                                                    .subjects
+                                                                    .s_name
+                                                            )
+                                                            " type="button"
+                                                            class="btn btn-reddit btn-icon-only rounded-circle mb-0">
+                                                            <span class="btn-inner--icon"><i
+                                                                    class="bi bi-trash3"></i></span>
                                                         </button>
                                                     </td>
-                                                    <div
-                                                        class="modal fade"
-                                                        id="exampleModal"
-                                                        tabindex="-1"
-                                                        aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <form
-                                                            method="POST"
-                                                            action=""
-                                                        >
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <form method="POST" action="">
                                                             @csrf
-                                                            <div
-                                                                class="modal-dialog modal-dialog-centered modal-md"
-                                                            >
-                                                                <div
-                                                                    class="modal-content"
-                                                                >
-                                                                    <div
-                                                                        class="modal-header"
-                                                                    >
-                                                                        <h2
-                                                                            class="modal-title fs-5"
-                                                                            id="exampleModalLabel"
-                                                                        >
+                                                            <div class="modal-dialog modal-dialog-centered modal-md">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h2 class="modal-title fs-5" id="exampleModalLabel">
                                                                             เพิ่มอาจารย์ผู้สอน
                                                                         </h2>
-                                                                        <button
-                                                                            type="button"
-                                                                            class="btn-close text-dark"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"
-                                                                        >
-                                                                            <span
-                                                                                aria-hidden="true"
-                                                                                >&times;</span
-                                                                            >
+                                                                        <button type="button" class="btn-close text-dark"
+                                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <div
-                                                                        class="modal-body"
-                                                                    >
-                                                                        <ul
-                                                                            class="list-group"
-                                                                            v-for="items in teachers"
-                                                                            :key="
-                                                                                items.id
-                                                                            "
-                                                                        >
-                                                                            <li
-                                                                                class="list-group list-group-flush mb-2"
-                                                                            >
+                                                                    <div class="modal-body">
+                                                                        <ul class="list-group" v-for="items in teachers"
+                                                                            :key="items.id
+                                                                                ">
+                                                                            <li class="list-group list-group-flush mb-2">
                                                                                 <div
-                                                                                    class="d-flex justify-content-between align-items-center"
-                                                                                >
+                                                                                    class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label
-                                                                                            class="mb-0 fw-normal fs-6"
-                                                                                        >
+                                                                                        <label class="mb-0 fw-normal fs-6">
                                                                                             <small
-                                                                                                class="text-muted"
-                                                                                                >ผู้สอน</small
-                                                                                            ><br />
+                                                                                                class="text-muted">ผู้สอน</small><br />
                                                                                             {{
                                                                                                 items
                                                                                                     .user_detail
                                                                                                     .user_d_name
-                                                                                            }}</label
-                                                                                        >
+                                                                                            }}</label>
                                                                                     </div>
                                                                                     <div>
-                                                                                        <button
-                                                                                            type="button"
+                                                                                        <button type="button"
                                                                                             class="btn btn-success btn-icon-only rounded-circle mb-0 me-2"
                                                                                             @click="
-                                                                                                add_Teacher(
-                                                                                                    ts_id,
-                                                                                                    items.id
-                                                                                                )
-                                                                                            "
-                                                                                        >
-                                                                                            <span
-                                                                                                class="btn-inner--icon"
-                                                                                                ><i
-                                                                                                    class="bi bi-plus-circle"
-                                                                                                ></i
-                                                                                            ></span>
+                                                                                            add_Teacher(
+                                                                                                ts_id,
+                                                                                                items.id
+                                                                                            )
+                                                                                                ">
+                                                                                            <span class="btn-inner--icon"><i
+                                                                                                    class="bi bi-plus-circle"></i></span>
                                                                                         </button>
                                                                                     </div>
                                                                                 </div>
@@ -599,12 +469,8 @@ onMounted(async () => {
                                             </tbody>
                                         </table>
                                         <div class="container">
-                                            <Bootstrap5Pagination
-                                                :data="term_sub"
-                                                @pagination-change-page="
-                                                    get_Term_sub
-                                                "
-                                            />
+                                            <Bootstrap5Pagination :data="term_sub" @pagination-change-page="get_Term_sub
+                                                " />
                                         </div>
                                     </div>
                                 </div>
@@ -613,9 +479,7 @@ onMounted(async () => {
                         <div class="col-lg-6" v-if="!showTeacher">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <div
-                                        class="d-flex justify-content-between align-items-center"
-                                    >
+                                    <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <h5 class="mb-0">
                                                 เพิ่มอาจารย์ผู้สอนในรายวิชา
@@ -626,37 +490,19 @@ onMounted(async () => {
                                         </div>
 
                                         <div>
-                                            <button
-                                                type="button"
+                                            <button type="button"
                                                 class="btn btn-success btn-icon-only rounded-circle mb-0 me-2"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal"
-                                            >
-                                                <span class="btn-inner--icon"
-                                                    ><i
-                                                        class="bi bi-plus-circle"
-                                                    ></i
-                                                ></span>
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <span class="btn-inner--icon"><i class="bi bi-plus-circle"></i></span>
                                             </button>
                                         </div>
                                     </div>
-                                    <ul
-                                        class="list-group list-group-flush mt-4"
-                                        v-for="item in teaching"
-                                        :key="item.ts_id"
-                                    >
-                                        <li
-                                            class="list-group-item py-2"
-                                            v-for="subTeach in item.terms_sub_teach"
-                                            :key="subTeach.tst_id"
-                                        >
-                                            <div
-                                                class="d-flex justify-content-between"
-                                            >
+                                    <ul class="list-group list-group-flush mt-4" v-for="item in teaching" :key="item.ts_id">
+                                        <li class="list-group-item py-2" v-for="subTeach in item.terms_sub_teach"
+                                            :key="subTeach.tst_id">
+                                            <div class="d-flex justify-content-between">
                                                 <div>
-                                                    <strong
-                                                        >อาจารย์ผู้สอน:</strong
-                                                    >
+                                                    <strong>อาจารย์ผู้สอน:</strong>
                                                     {{
                                                         subTeach.users
                                                             .user_detail
@@ -664,17 +510,14 @@ onMounted(async () => {
                                                     }}
                                                 </div>
                                                 <div>
-                                                    <i
-                                                        class="bi bi-trash3"
-                                                        @click="
-                                                            delete_Teacher(
-                                                                subTeach.tst_id,
-                                                                subTeach.users
-                                                                    .user_detail
-                                                                    .user_d_name
-                                                            )
-                                                        "
-                                                    ></i>
+                                                    <i class="bi bi-trash3" @click="
+                                                    delete_Teacher(
+                                                        subTeach.tst_id,
+                                                        subTeach.users
+                                                            .user_detail
+                                                            .user_d_name
+                                                    )
+                                                        "></i>
                                                 </div>
                                             </div>
                                         </li>
@@ -692,11 +535,14 @@ onMounted(async () => {
 /* Add CSS transitions for a smooth effect */
 .col-lg-6,
 .col-lg-12 {
-    transition: all 0.4s ease; /* You can adjust the duration and easing function as needed */
+    transition: all 0.4s ease;
+    /* You can adjust the duration and easing function as needed */
 }
+
 .input-search {
     width: 280px !important;
 }
+
 .card-menu {
     background-color: #f4f4f4;
 }

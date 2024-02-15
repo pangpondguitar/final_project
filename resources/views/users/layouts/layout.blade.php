@@ -113,6 +113,36 @@
         .menu_course_active .title {
             color: #fff;
         }
+
+        .badge-success {
+            color: #67b108;
+            background-color: #cdf59b;
+        }
+
+        .badge-secondary {
+            color: #5974a2;
+            background-color: #e4e8ed;
+        }
+
+        .badge-info {
+            color: #08a1c4;
+            background-color: #abe9f7;
+        }
+
+        .badge-danger {
+            color: #bd0000;
+            background-color: #fc9797;
+        }
+
+        .badge-warning {
+            color: #fbc400;
+            background-color: #fef5d3;
+        }
+
+        .badge-dark {
+            color: #1e2e4a;
+            background-color: #8097bf;
+        }
     </style>
 </head>
 

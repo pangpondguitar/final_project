@@ -9,17 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    //วิชา
     public function up(): void
     {
-        Schema::create('subjects', function (Blueprint $table) {
-            $table->id('s_id');
-            $table->string('s_num');
-            $table->string('s_name');
-            $table->string('s_name2');
-            $table->string('s_credit');
-            $table->string('c_id');
+        Schema::create('topic_learn_results', function (Blueprint $table) {
+            $table->id('tlr_id');
+            $table->string('tlr_title');
             $table->string('doc_type');
+            $table->string('c_id');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('topic_learn_results');
     }
 };

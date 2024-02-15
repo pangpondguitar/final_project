@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Program;
+use App\Models\Subject;
 
 class Course extends Model
 {
@@ -23,5 +24,10 @@ class Course extends Model
     public function program()
     {
         return $this->belongsTo(Program::class, 'p_id');
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'c_id');
     }
 }

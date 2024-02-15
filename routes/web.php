@@ -64,9 +64,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
         Route::get('/delete/{id}', [AdminControllor::class, 'program_delete'])->name('program.delete');
     });
 
-    Route::prefix('admin/course')->group(function () {
+    Route::prefix('admin/courses')->group(function () {
         Route::controller(CourseController::class)->group(function () {
             Route::get('/', 'index')->name('admin.course');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
             Route::get('/all/{id}', 'all')->name('admin.course_all');
             Route::post('/insert/{id}', 'course_insert')->name('admin.course_insert');
             Route::get('/detail/{id}/{menu}', 'detail')->name('admin.course_detail');
@@ -100,7 +101,6 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::prefix('admin/teaching')->group(function () {
         Route::controller(TeachingControllor::class)->group(function () {
             Route::get('/', 'index')->name('admin.teaching');
-
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
@@ -114,21 +114,21 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('users/profile')->group(function () {
         Route::controller(ProfileControllor::class)->group(function () {
             Route::get('/', 'index')->name('users.profile');
-            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
 
     Route::prefix('users/course_spec')->group(function () {
         Route::controller(CourseSpecControllor::class)->group(function () {
-            Route::get('/', 'index2')->name('users.course_spec');
-            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+            Route::get('/', 'index')->name('users.course_spec');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
     Route::prefix('users/pdf')->group(function () {
         Route::controller(PDFController::class)->group(function () {
             Route::get('/', 'index')->name('users.pdf');
             Route::get('/result', 'pdf_result')->name('users2.pdf');
-            // Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
 });

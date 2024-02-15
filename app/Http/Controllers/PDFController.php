@@ -30,6 +30,13 @@ class PDFController extends Controller
         $pdf->loadView('pdf_doc.docresult_detail')->setPaper('a4', 'portrait');
         $m->addRaw($pdf->output());
 
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.docplan')->setPaper('a4', 'landscape');
+        $m->addRaw($pdf->output());
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.doclast')->setPaper('a4', 'landscape');
+        $m->addRaw($pdf->output());
 
         // file_put_contents('pdf_doc' . '.pdf', $m->merge());
 

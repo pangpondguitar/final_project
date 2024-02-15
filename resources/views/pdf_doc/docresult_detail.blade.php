@@ -251,7 +251,6 @@
             <td>
                 <div class="title2">
                     <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-
                 </div>
             </td>
 

@@ -9,23 +9,71 @@ use App\Models\Course;
 use App\Models\Program;
 use App\Models\Subject;
 use App\Models\Course_committee;
+use App\Models\Topic_learn_results;
+
+use PHPUnit\Framework\Constraint\Count;
 
 class CourseController extends Controller
 {
+
     public function index()
     {
-        // $course = Course::find(1);
-        // $program = $course->program;
-
-        // $program = Program::find(2);
-        // $course = $program->courses;
-
-
-        $data = Program::all();
-        // $programs = DB::table('programs')->get();
-        // dd($data[0]->courses);
-        return view('admin.course', compact('data'));
+        return view('admin.course');
     }
+
+    public function get_all_programs()
+    {
+        $programs = Program::all();
+        return response()->json([
+            'programs' => $programs
+        ], 200);
+    }
+
+    public function get_program($id)
+    {
+        $program = Program::find($id);
+        return response()->json([
+            'program' => $program
+        ], 200);
+    }
+
+    public function get_courses($id)
+    {
+        $program = Program::find($id);
+        $courses = $program->courses;
+
+        return response()->json([
+            'courses' => $courses
+        ], 200);
+    }
+
+    public function get_subjects($id)
+    {
+        $subjects = Subject::where('c_id', $id)->paginate(10);
+
+        return response()->json([
+            'subjects' => $subjects
+        ], 200);
+    }
+
+    public function get_single_course($id)
+    {
+        $course = Course::find($id);
+
+        return response()->json([
+            'course' => $course
+        ], 200);
+    }
+    public function update_course(Request $request, $id)
+    {
+        $course = Course::find($id);
+        $course->c_name = $request->c_name;
+        $course->c_name2 = $request->c_name2;
+        $course->save();
+    }
+
+
+
     public function all($id)
     {
         // $data = DB::table('programs')
@@ -35,26 +83,26 @@ class CourseController extends Controller
         //     ->get();
         $program = Program::find($id);
         $data = $program->courses;
+
+
         $p_name = $program->p_name;
         return view('admin.courseall', compact('data', 'p_name', 'id'));
     }
-    public function course_insert(Request $request, $id)
+    public function add_course(Request $request)
     {
 
-        $user = Course::create([
-            'c_name' => $request->name,
-            'c_name2' => $request->name2,
-            'c_file' => $request->email,
-            'p_id' => $id,
-        ]);
+        $course = new Course();
+        $course->c_name = $request->c_name;
+        $course->c_name2 = $request->c_name2;
+        $course->p_id = $request->id;
+        $course->c_file = 'none';
 
-        return redirect()->back();
+        $course->save();
     }
-    public function course_delete($id)
+    public function delete_course($id)
     {
-        $course = Course::where('c_id', $id)->first();
+        $course = Course::find($id);
         $course->delete();
-        return back()->with('status', 'Some message here');
     }
 
     public function detail($id, $menu_type)
@@ -100,6 +148,66 @@ class CourseController extends Controller
         return redirect('admin/course/detail/' . $id)->with('status', 'บันทึกข้อมูลสำเร็จ!');;
         //  return view('admin.course_detail', compact('id'));
     }
+    public function add_subject(Request $request, $id)
+    {
+        $subject = new Subject();
+        $subject->s_num = $request->s_num;
+        $subject->s_name = $request->s_name;
+        $subject->s_name2 = $request->s_name2;
+        $subject->s_credit = $request->s_credit;
+        $subject->doc_type = $request->doc_type;
+        $subject->c_id = $id;
+        $subject->save();
+    }
+
+    public function update_subject(Request $request)
+    {
+        $subject =  Subject::find($request->s_id);
+        $subject->s_num = $request->s_num;
+        $subject->s_name = $request->s_name;
+        $subject->s_name2 = $request->s_name2;
+        $subject->s_credit = $request->s_credit;
+        $subject->doc_type = $request->doc_type;
+        $subject->save();
+    }
+
+    public function edit_doctype(Request $request, $id)
+    {
+        $subject =  Subject::find($id);
+
+        $subject->doc_type = $request->doc_type;
+        $subject->save();
+    }
+    public function add_topic_result(Request $request, $id)
+    {
+        $topic = new Topic_learn_results();
+        $topic->tlr_title = $request->title;
+        $topic->doc_type = $request->doc_type;
+        $topic->c_id = $id;
+        $topic->save();
+    }
+
+    public function topic_result($id)
+    {
+        $topic = Topic_learn_results::where('c_id', $id)->get();
+
+        return response()->json([
+            'topic' => $topic
+        ], 200);
+    }
+    public function update_topic_result(Request $request, $id)
+    {
+        $topic = Topic_learn_results::find($id);
+        $topic->tlr_title = $request->title;
+    }
+
+    public function delete_topic_result($id)
+    {
+        $topic = Topic_learn_results::find($id);
+        $topic->delete();
+    }
+
+
     public function subject_edit(Request $request, $id)
     {
         $request->validate([
@@ -125,13 +233,12 @@ class CourseController extends Controller
 
         return redirect()->back();
     }
-    public function subject_delete($id)
+
+
+    public function delete_subject($id)
     {
 
-        // Use first() instead of get() to get a single model instance
-        $subject = Subject::where('s_id', $id)->first();
-
-
+        $subject = Subject::find($id);
         $subject->delete();
 
         return back()->with('status', 'Some message here');
