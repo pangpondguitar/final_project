@@ -30,4 +30,9 @@ class Course extends Model
     {
         return $this->hasMany(Subject::class, 'c_id');
     }
+
+    public function topic_learn_results()
+    {
+        return $this->hasMany(Topic_learn_results::class, 'c_id');
+    }
 }

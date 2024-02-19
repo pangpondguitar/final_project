@@ -10,7 +10,7 @@ import userHome from '../components/users/index.vue'
 import userProfile from '../components/users/profile/index.vue'
 import userCourseSpec from '../components/users/course_spec/index.vue'
 import userSubject_detail from '../components/users/course_spec/subject_detail.vue'
-import subdoc_fisrt from '../components/users/course_spec/subdoc_first.vue'
+import subdoc from '../components/users/course_spec/subdoc.vue'
 import subdoc_sec from '../components/users/course_spec/subdoc_sec.vue'
 import notFound from '../components/notFound.vue'
 
@@ -56,8 +56,8 @@ const routes = [
         props : true
     },
     {
-        path : '/users/course_spec/subdoc_first/:id',
-        component : subdoc_fisrt,
+        path : '/users/course_spec/subdoc/:id',
+        component : subdoc,
         props : true
     },
     {

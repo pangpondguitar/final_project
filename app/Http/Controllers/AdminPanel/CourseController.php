@@ -71,9 +71,6 @@ class CourseController extends Controller
         $course->c_name2 = $request->c_name2;
         $course->save();
     }
-
-
-
     public function all($id)
     {
         // $data = DB::table('programs')
@@ -187,9 +184,9 @@ class CourseController extends Controller
         $topic->save();
     }
 
-    public function topic_result($id)
+    public function topic_result($id, $doc)
     {
-        $topic = Topic_learn_results::where('c_id', $id)->get();
+        $topic = Topic_learn_results::where('c_id', $id)->where('doc_type', $doc)->get();
 
         return response()->json([
             'topic' => $topic

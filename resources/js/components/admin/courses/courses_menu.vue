@@ -30,7 +30,7 @@ const select_menu = (value) => {
                                 <h5 class="title fw-normal mb-0 mt-3 ">
                                     รายวิชาทั้งหมดในหลักสูตร
                                 </h5>
-                                <span class="title text-sm">รายวิชาทั้งหมด </span>
+                                <span class="title-sub text-sm">รายวิชาทั้งหมด </span>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@ const select_menu = (value) => {
             </div>
             <div class="col-lg-3 ">
                 <a>
-                    <div class="card h-100  " @click="select_menu(2)" :class='{ "menu-active": menu === 2 }'>
+                    <div class="card h-100 card-menu " @click="select_menu(2)" :class='{ "menu-active": menu === 2 }'>
                         <span class="mask  opacity-9 border-radius-xl  "></span>
                         <div class="card-body p-3 position-relative">
                             <div class="row">
@@ -46,7 +46,7 @@ const select_menu = (value) => {
                                     <h5 class="title fw-normal mb-0 mt-3">
                                         คณะกรรมการหลักสูตร
                                     </h5>
-                                    <span class="text-muted text-sm title">คณะกรรมการหลักสูตร </span>
+                                    <span class=" text-sm title-sub">คณะกรรมการหลักสูตร </span>
                                 </div>
 
                             </div>
@@ -64,7 +64,7 @@ const select_menu = (value) => {
                                     <h5 class="title fw-normal mb-0 mt-3">
                                         รายละเอียดข้อมูลหลักสูตร
                                     </h5>
-                                    <span class="title text-sm">รายละเอียดข้อมูลหลักสูตร </span>
+                                    <span class=" text-sm title-sub">รายละเอียดข้อมูลหลักสูตร </span>
                                 </div>
 
                             </div>
@@ -82,7 +82,7 @@ const select_menu = (value) => {
                                     <h5 class="title fw-normal mb-0 mt-3">
                                         รายละเอียดข้อมูล มคอ.
                                     </h5>
-                                    <span class="title text-sm">จัดการข้อมูล มคอ. </span>
+                                    <span class="title-sub text-sm ">จัดการข้อมูล มคอ. </span>
                                 </div>
 
                             </div>
@@ -99,6 +99,17 @@ const select_menu = (value) => {
 <style>
 .card-menu {
     border: #000 !important;
+    background-color: #fbfbfb;
+    color: #9d9d9d;
+    transition: 0.3s;
+}
+
+.card-menu .title {
+    color: #4c4c4c;
+}
+
+.card-menu .title .title-sub {
+    color: #5a5a5a;
 }
 
 .menu-active {
@@ -110,5 +121,12 @@ const select_menu = (value) => {
 .menu-active .title {
     color: #fff !important;
 
+}
+
+.card-menu:hover {
+
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 </style>

@@ -213,7 +213,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0 table table-hover">
                     <thead>
                         <tr>
                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
@@ -226,15 +226,14 @@ onMounted(async () => {
                     <tbody>
                         <tr v-for="item in subjects.data" :key="item.id">
 
-                            <td>
-                                <h6 class="text-center">{{ item.s_num }}</h6>
+                            <td class="align-middle text-center">
+                                {{ item.s_num }}
                             </td>
                             <td>
-                                <div class="d-flex px-3 py-1">
-
+                                <div class="d-flex px-3 ">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 ">{{ item.s_name }}</h6>
-                                        <h6 class="text-xs text-secondary mb-0">{{ item.s_name }}</h6>
+                                        <h6 class="mb-0 fw-light">{{ item.s_name }}</h6>
+                                        <h6 class="text-xs text-secondary mb-0 fw-normal">{{ item.s_name2 }}</h6>
                                     </div>
                                 </div>
                             </td>

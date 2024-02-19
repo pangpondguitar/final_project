@@ -16,7 +16,7 @@ import App from './components/App.vue';
 import router from './router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/dist/sweetalert2.css'
-
+import 'primevue/resources/themes/aura-light-green/theme.css'
 window.Swal = Swal;
 const toast = Swal.mixin({
     toast:true,

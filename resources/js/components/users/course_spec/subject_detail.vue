@@ -6,10 +6,10 @@ import axios from "axios";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const router = useRouter();
 
-let subjectTname = ref({
-});
-let teachers = ref({
-});
+let subjectTname = ref({});
+let teachers = ref({});
+let subject = ref({});
+
 
 const props = defineProps({
     id: {
@@ -17,6 +17,16 @@ const props = defineProps({
         default: "",
     },
 });
+
+const getSubject = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_subject/${props.id}`);
+        subject.value = response.data.subject;
+        console.log("subject", subject.value);
+    } catch (error) {
+        console.error('Error fetching subject:', error);
+    }
+};
 const get_Subject_teach = async () => {
     try {
         let response = await axios.get(`/api/get_subject_teach/${props.id}`);
@@ -28,7 +38,7 @@ const get_Subject_teach = async () => {
 
 const get_teachers = async () => {
     try {
-        let response = await axios.get(`/api/get_teachers/29`);
+        let response = await axios.get(`/api/get_teachers/${props.id}`);
         teachers.value = response.data.teachers;
         console.log(teachers.value);
     } catch (error) {
@@ -36,11 +46,12 @@ const get_teachers = async () => {
     }
 };
 const Subdoc_fisrt = (id) => {
-    router.push('/users/course_spec/subdoc_first/' + id);
+    router.push('/users/course_spec/subdoc/' + id);
 };
 onMounted(async () => {
     await get_Subject_teach();
     await get_teachers();
+    await getSubject();
 });
 </script>
 
@@ -64,22 +75,24 @@ onMounted(async () => {
                 <div class="col-lg-6">
                     <div class="card" @click="Subdoc_fisrt(props.id)">
                         <div class="card-body">
-                            <div class="icon icon-shape bg-gradient-dark shadow text-center">
+                            <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
                                 <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
-                            </div>
-                            <h5 class="mt-3 mb-0">มคอ.3 <span class="text-secondary text-sm">m</span></h5>
-                            <p class="mb-0">จัดทำ มคอ3</p>
+                            </div> -->
+                            <div class="h2">3</div>
+                            <h5 class="mt-1 mb-0">อาจารย์ผู้สอน<span class="text-secondary text-sm"></span></h5>
+                            <p class="mb-0">ทั้งหมด</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card">
+                    <div class="card" @click="Subdoc_fisrt(props.id)">
                         <div class="card-body">
-                            <div class="icon icon-shape bg-gradient-danger shadow text-center">
+                            <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
                                 <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
-                            </div>
-                            <h5 class="mt-3 mb-0">มคอ.4 <span class="text-secondary text-sm">m</span></h5>
-                            <p class="mb-0">จัดทำ มคอ4</p>
+                            </div> -->
+                            <div class="h2">2</div>
+                            <h5 class="mt-1 mb-0">อาจารย์ผู้สอน<span class="text-secondary text-sm"></span></h5>
+                            <p class="mb-0">ทั้งหมด</p>
                         </div>
                     </div>
                 </div>
@@ -180,7 +193,7 @@ onMounted(async () => {
                                 </div>
                             </div>
                             <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h5 class="mb-0 "> {{ termTeach.users.user_detail.user_d_name }}</h5>
+                                <h6 class="mb-0 "> {{ termTeach.users.user_detail.user_d_name }}</h6>
                                 <p class="mb-0 text-xs">Hi! I need more information..</p>
                             </div>
                             <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Reply</a>
@@ -198,6 +211,28 @@ onMounted(async () => {
                                 </div>
                                 <div>
                                     <span class="badge badge-danger">pdf</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)"
+                                    v-if="subject.doc_type == 1">
+                                    <div class="card-body">
+                                        <div class="icon icon-shape bg-gradient-info shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="mt-3 mb-0">มคอ.3 <span class="text-secondary text-sm">m</span></h5>
+                                        <p class="mb-0">จัดทำ มคอ3</p>
+                                    </div>
+                                </div>
+                                <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)"
+                                    v-if="subject.doc_type == 2">
+                                    <div class="card-body">
+                                        <div class="icon icon-shape bg-gradient-danger shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="mt-3 mb-0">มคอ.4 <span class="text-secondary text-sm">m</span></h5>
+                                        <p class="mb-0">จัดทำ มคอ4</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,6 +259,11 @@ onMounted(async () => {
 
 .card-2 {
     height: 400px !important;
+}
+
+.card-select-doc {
+    box-shadow: none;
+    background-color: #f1f1f1;
 }
 </style>
 

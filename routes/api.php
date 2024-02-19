@@ -64,7 +64,7 @@ Route::get('admin_delete_subject/{id}', [CourseController::class, 'delete_subjec
 Route::post('admin_edit_subject_doc/{id}', [CourseController::class, 'edit_doctype']);
 
 
-Route::get('admin_get_topic_result/{id}', [CourseController::class, 'topic_result']);
+Route::get('admin_get_topic_result/{id}/{doc}', [CourseController::class, 'topic_result']);
 Route::post('admin_add_topic_result/{id}', [CourseController::class, 'add_topic_result']);
 Route::get('admin_update_topic_result/{id}', [CourseController::class, 'update_topic_result']);
 Route::get('admin_delete_topic_result/{id}', [CourseController::class, 'delete_topic_result']);
@@ -74,3 +74,24 @@ Route::get('get_profile/{id}', [ProfileControllor::class, 'get_profile']);
 Route::get('get_all_subject/{id}/{t_id}', [CourseSpecControllor::class, 'get_all_subject']);
 Route::get('get_subject_teach/{id}', [CourseSpecControllor::class, 'get_subject_teach']);
 Route::get('get_teachers/{id}', [CourseSpecControllor::class, 'get_teachers']);
+Route::get('user_get_top_result/{id}', [CourseSpecControllor::class, 'get_top_result']);
+Route::get('user_get_subject/{id}', [CourseSpecControllor::class, 'get_subject']);
+Route::get('user_get_course/{id}', [CourseSpecControllor::class, 'get_course']);
+
+Route::get('user_get_Lresult_list/{id}', [CourseSpecControllor::class, 'get_result_list']);
+Route::post('user_add_Lresult_list/{id}', [CourseSpecControllor::class, 'add_result_list']);
+Route::post('user_update_Lresult_list', [CourseSpecControllor::class, 'update_result_list']);
+Route::get('user_delete_Lresult_list/{id}', [CourseSpecControllor::class, 'delete_result_list']);
+
+Route::get('user_get_Lresult_detail/{id}/{tlr_id}', [CourseSpecControllor::class, 'get_result_detail']);
+Route::post('user_add_Lresult_detail/{id}', [CourseSpecControllor::class, 'add_result_detail']);
+Route::post('user_update_Lresult_detail', [CourseSpecControllor::class, 'update_result_detail']);
+Route::get('user_delete_Lresult_detail/{id}', [CourseSpecControllor::class, 'delete_result_detail']);
+
+Route::get('user_get_planWeek_hour/{id}', [CourseSpecControllor::class, 'get_planweek_hour']);
+Route::post('user_add_planWeek_hour/{id}', [CourseSpecControllor::class, 'add_planweek_hour']);
+Route::post('user_update_planWeek_hour', [CourseSpecControllor::class, 'update_planweek_hour']);
+Route::get('user_delete_planWeek_hour/{id}', [CourseSpecControllor::class, 'delete_planweek_hour']);
+
+Route::get('user_get_planning_top/{id}', [CourseSpecControllor::class, 'get_planning_top']);
+Route::get('user_get_singleWeek/{id}', [CourseSpecControllor::class, 'get_single_week']);

@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Topic_learn_results extends Model
+class Planning_topic extends Model
 {
-    protected $primaryKey = 'tlr_id';
-
-
     use HasFactory;
+    protected $primaryKey = 'pt_id';
+
     protected $fillable = [
-        'tlr_title',
+        'pt_title',
         'doc_type'
     ];
-
-    public function courses()
-    {
-        return $this->belongsTo(Course::class, 'c_id');
-    }
 }

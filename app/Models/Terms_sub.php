@@ -31,4 +31,8 @@ class Terms_sub extends Model
     {
         return $this->hasMany(Terms_sub_teach::class, 'ts_id');
     }
+    public function topic_learn_results()
+    {
+        return $this->hasMany(Topic_learn_results::class);
+    }
 }
