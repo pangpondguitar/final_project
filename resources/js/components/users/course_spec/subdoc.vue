@@ -9,6 +9,12 @@ import Components_fisrt from '../../../components/users/course_spec/doc_section_
 import Components_learning_result from '../../../components/users/course_spec/doc_section_learning_result.vue';
 import Components_planning from '../../../components/users/course_spec/doc_section_planning.vue';
 import Components_measure from '../../../components/users/course_spec/doc_section_measure.vue';
+import Components_resource from '../../../components/users/course_spec/doc_section_resource.vue';
+import Components_committee from '../../../components/users/course_spec/doc_section_committee.vue';
+import Components_prep_plan from '../../../components/users/course_spec/doc_section_prep_plan.vue';
+import Components_measure_prac from '../../../components/users/course_spec/doc_section_measure_prac.vue';
+import Components_adjust from '../../../components/users/course_spec/doc_section_adjust.vue';
+
 const router = useRouter();
 let programs = ref([]);
 let menu = ref([]);
@@ -31,11 +37,16 @@ onMounted(async () => {
 
 <template>
     <div class="row mb-5">
-        <Components_menu @selectMenu="handleMenuClick" />
+        <Components_menu :id="props.id" @selectMenu="handleMenuClick" />
         <Components_fisrt :id="props.id" v-if="menu == 1" />
         <Components_learning_result :id="props.id" v-if="menu == 2" />
         <Components_planning :id="props.id" v-if="menu == 3" />
         <Components_measure :id="props.id" v-if="menu == 4" />
+        <Components_resource :id="props.id" v-if="menu == 5" />
+        <Components_committee :id="props.id" v-if="menu == 6" />
+        <Components_prep_plan :id="props.id" v-if="menu == 7" />
+        <Components_measure_prac :id="props.id" v-if="menu == 8" />
+        <Components_adjust :id="props.id" v-if="menu == 9" />
     </div>
 </template>
 <style>

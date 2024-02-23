@@ -10,15 +10,33 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
+use App\Models\Subject;
+use App\Models\Terms;
+use App\Models\User;
+use App\Models\Users_detail;
+use App\Models\Terms_sub;
+use App\Models\Terms_sub_teach;
+use App\Models\Topic_learn_results;
+use App\Models\Learn_results_list;
+use App\Models\Learn_results_detail;
+use App\Models\Planning_topic;
+use App\Models\Planning_week_hour;
+use App\Models\Planning_week_list;
+use App\Models\Planning_sum_hour;
+use App\Models\Doc_committee;
+use App\Models\Measure_list;
+use App\Models\Resource;
+
 class PDFController extends Controller
 {
-    public function index()
+    public function index($id)
     {
+        $subject = Terms_sub::with(['subjects'])->where('ts_id', $id)->get();
         $m = new Merger();
 
 
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf_doc.doctitle')->setPaper('a4', 'portrait');
+        $pdf->loadView('pdf_doc.doctitle', compact('subject'))->setPaper('a4', 'portrait');
         $m->addRaw($pdf->output());
 
 

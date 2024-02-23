@@ -126,7 +126,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     });
     Route::prefix('users/pdf')->group(function () {
         Route::controller(PDFController::class)->group(function () {
-            Route::get('/', 'index')->name('users.pdf');
+            Route::get('/{id}', 'index')->name('users.pdf');
             Route::get('/result', 'pdf_result')->name('users2.pdf');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });

@@ -16,6 +16,18 @@ use App\Models\Learn_results_detail;
 use App\Models\Planning_topic;
 use App\Models\Planning_week_hour;
 use App\Models\Planning_week_list;
+use App\Models\Planning_sum_hour;
+use App\Models\Doc_committee;
+use App\Models\Measure_list;
+use App\Models\Resource;
+use App\Models\Prep_plan_topic;
+use App\Models\Prep_plan_list;
+use App\Models\Measure_prac_topic;
+use App\Models\Measure_prac_list;
+use App\Models\Adjust_people_topic;
+use App\Models\Adjust_people_list;
+use App\Models\Adjust_repeat;
+use Illuminate\Support\Str;
 
 class CourseSpecControllor extends Controller
 {
@@ -201,5 +213,209 @@ class CourseSpecControllor extends Controller
         return response()->json([
             'single_week' => $single_week
         ], 200);
+    }
+
+    public function get_planning_list($pt_id, $pw_id)
+    {
+        $plan_list = Planning_week_list::where('pw_id', $pw_id)->where('pt_id', $pt_id)->get();
+        return response()->json([
+            'plan_list' => $plan_list
+        ], 200);
+    }
+    public function add_planning_list(Request $request, $pt_id, $pw_id)
+    {
+        $week = new Planning_week_list();
+        $week->pwl_title = $request->pwl_title;
+        $week->pw_id = $pw_id;
+        $week->pt_id = $pt_id;
+        $week->save();
+    }
+    public function update_planning_list(Request $request)
+    {
+        $week = Planning_week_list::find($request->pwl_id);
+        $week->pwl_title = $request->pwl_title;
+        $week->save();
+    }
+    public function delete_planning_list($id)
+    {
+        $week = Planning_week_list::find($id);
+        $week->delete();
+    }
+
+    public function get_planning_sum($id)
+    {
+        $sumhour = Planning_sum_hour::where('ts_id', $id)->first();
+        return response()->json([
+            'sumhour' => $sumhour
+        ], 200);
+    }
+    public function update_planning_sum(Request $request)
+    {
+
+        $sumhour = Planning_sum_hour::find($request->psh_id);
+        $sumhour->psh_describe = $request->describe;
+        $sumhour->psh_practice = $request->practice;
+        $sumhour->psh_self = $request->self;
+        $sumhour->save();
+    }
+
+    public function add_planning_sum(Request $request, $id)
+    {
+        $sumhour = new Planning_sum_hour;
+        $sumhour->psh_describe = $request->describe;
+        $sumhour->psh_practice = $request->practice;
+        $sumhour->psh_self = $request->self;
+        $sumhour->ts_id = $id;
+        $sumhour->save();
+    }
+
+    public function get_measure($id)
+    {
+        $measure = Measure_list::where('ts_id', $id)->get();
+        return response()->json([
+            'measure' => $measure
+        ], 200);
+    }
+    public function add_measure(Request $request, $id)
+    {
+        $measure = new Measure_list();
+        $measure->ml_title = $request->title;
+        $measure->ml_value = $request->value;
+        $measure->ts_id = $id;
+        $measure->save();
+    }
+    public function update_measure(Request $request)
+    {
+        $measure = Measure_list::find($request->id);
+        $measure->ml_title = $request->title;
+        $measure->ml_value = $request->value;
+        $measure->save();
+    }
+    public function delete_measure($id)
+    {
+        $measure = Measure_list::find($id);
+        $measure->delete();
+    }
+    public function get_resource($id)
+    {
+        $resource = Resource::where('ts_id', $id)->first();
+        return response()->json([
+            'resource' => $resource
+        ], 200);
+    }
+    public function add_resource(Request $request, $id)
+    {
+        $resource = new Resource();
+        $resource->rs_title = $request->editor;
+        $resource->ts_id = $id;
+        $resource->save();
+    }
+    public function update_resource(Request $request)
+    {
+        $resource = Resource::find($request->id);
+        $resource->rs_title = $request->editor;
+        $resource->save();
+    }
+
+    public function get_prepplan_top()
+    {
+        $topic = Prep_plan_topic::get();
+        return response()->json([
+            'topic' => $topic
+        ], 200);
+    }
+    public function get_prepplan($id, $ppt_id)
+    {
+        $prep = Prep_plan_list::where('ts_id', $id)->where('ppt_id', $ppt_id)->get();
+        return response()->json([
+            'prep' => $prep
+        ], 200);
+    }
+    public function add_prepplan(Request $request, $id)
+    {
+        $prep = new Prep_plan_list();
+        $prep->ppl_title = $request->title;
+        $prep->ppt_id = $request->ppt_id;
+        $prep->ts_id = $id;
+        $prep->save();
+    }
+    public function update_prepplan(Request $request)
+    {
+        $prep = Prep_plan_list::find($request->id);
+        $prep->ppl_title = $request->title;
+        $prep->save();
+    }
+    public function delete_prepplan($id)
+    {
+        $prep = Prep_plan_list::find($id);
+        $prep->delete();
+    }
+
+    public function get_measure_prac_top()
+    {
+        $topic = Measure_prac_topic::get();
+        return response()->json([
+            'topic' => $topic
+        ], 200);
+    }
+    public function get_measure_prac($id, $mpt_id)
+    {
+        $prac = Measure_prac_list::where('ts_id', $id)->where('mpt_id', $mpt_id)->get();
+        return response()->json([
+            'prac' => $prac
+        ], 200);
+    }
+    public function add_measure_prac(Request $request, $id)
+    {
+        $prac = new Measure_prac_list();
+        $prac->mpl_title = $request->title;
+        $prac->mpt_id = $request->mpt_id;
+        $prac->ts_id = $id;
+        $prac->save();
+    }
+    public function update_measure_prac(Request $request)
+    {
+        $prac = Measure_prac_list::find($request->id);
+        $prac->mpl_title = $request->title;
+        $prac->save();
+    }
+    public function delete_measure_prac($id)
+    {
+        $prac = Measure_prac_list::find($id);
+        $prac->delete();
+    }
+
+    public function get_adjust_people_top()
+    {
+        $topic = Adjust_people_topic::get();
+        return response()->json([
+            'topic' => $topic
+        ], 200);
+    }
+    public function get_adjust_people($id, $apt_id)
+    {
+        $adjust = Adjust_people_list::where('ts_id', $id)->where('apt_id', $apt_id)->get();
+        return response()->json([
+            'adjust' => $adjust
+        ], 200);
+    }
+    public function add_adjust_people(Request $request, $id)
+    {
+        $adjust = new Adjust_people_list();
+        $adjust->apl_title = $request->title;
+        $adjust->apt_id = $request->apt_id;
+        $adjust->ts_id = $id;
+        $adjust->save();
+    }
+    public function update_adjust_people(Request $request)
+    {
+        $adjust = Adjust_people_list::find($request->id);
+        $adjust->apl_title = $request->title;
+        $adjust->save();
+    }
+    public function delete_adjust_people($id)
+    {
+        $adjust = Adjust_people_list::find($id);
+        $adjust->delete();
     }
 }

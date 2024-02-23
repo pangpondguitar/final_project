@@ -11,7 +11,7 @@
 import { createApp } from 'vue'
 import axios from 'axios';
 // import App from './App.vue'
-
+import CKEditor from '@ckeditor/ckeditor5-vue';
 import App from './components/App.vue';
 import router from './router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -29,5 +29,7 @@ window.toast = toast;
 // import router from './router';
 
 // createApp(App).use(router).mount("#app");
-createApp(App).use(router).mount("#app")
+const app = createApp(App)
+createApp(App).use(CKEditor)
+createApp(App).use(router).use( CKEditor ).mount("#app")
 

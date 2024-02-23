@@ -372,12 +372,13 @@ onMounted(async () => {
 .menu-detail {
     transition: 0.3s;
     font-size: 18px !important;
-
+    border-radius: 22px;
 }
 
 .menu-detail-active {
-    background: linear-gradient(135deg, #F36265 0%, #961276 100%);
+    background: linear-gradient(135deg, #17ead9 0%, #6078ea 100%);
     font-weight: 600 !important;
+    border-radius: 22px;
     color: #fff;
 
 }

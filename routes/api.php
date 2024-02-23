@@ -95,3 +95,50 @@ Route::get('user_delete_planWeek_hour/{id}', [CourseSpecControllor::class, 'dele
 
 Route::get('user_get_planning_top/{id}', [CourseSpecControllor::class, 'get_planning_top']);
 Route::get('user_get_singleWeek/{id}', [CourseSpecControllor::class, 'get_single_week']);
+
+Route::get('user_get_planning_list/{pt_id}/{pw_id}', [CourseSpecControllor::class, 'get_planning_list']);
+Route::post('user_add_planning_list/{pt_id}/{pw_id}', [CourseSpecControllor::class, 'add_planning_list']);
+Route::post('user_update_planning_list', [CourseSpecControllor::class, 'update_planning_list']);
+Route::get('user_delete_planning_list/{id}', [CourseSpecControllor::class, 'delete_planning_list']);
+
+Route::get('user_get_planning_sum/{id}', [CourseSpecControllor::class, 'get_planning_sum']);
+Route::post('user_update_planning_sum', [CourseSpecControllor::class, 'update_planning_sum']);
+Route::post('user_add_planning_sum/{id}', [CourseSpecControllor::class, 'add_planning_sum']);
+
+Route::get('user_get_measure/{id}', [CourseSpecControllor::class, 'get_measure']);
+Route::post('user_add_measure/{id}', [CourseSpecControllor::class, 'add_measure']);
+
+
+Route::post('user_update_measure', [CourseSpecControllor::class, 'update_measure']);
+Route::get('user_delete_measure/{id}', [CourseSpecControllor::class, 'delete_measure']);
+
+Route::get('user_get_resource/{id}', [CourseSpecControllor::class, 'get_resource']);
+Route::post('user_add_resource/{id}', [CourseSpecControllor::class, 'add_resource']);
+Route::post('user_update_resource', [CourseSpecControllor::class, 'update_resource']);
+
+Route::get('user_get_prepplan_top', [CourseSpecControllor::class, 'get_prepplan_top']);
+
+Route::get('user_get_prepplan/{id}/{ppt_id}', [CourseSpecControllor::class, 'get_prepplan']);
+Route::post('user_add_prepplan/{id}', [CourseSpecControllor::class, 'add_prepplan']);
+Route::post('user_update_prepplan', [CourseSpecControllor::class, 'update_prepplan']);
+Route::get('user_delete_prepplan/{id}', [CourseSpecControllor::class, 'delete_prepplan']);
+
+Route::get('user_get_measure_prac_top', [CourseSpecControllor::class, 'get_measure_prac_top']);
+
+Route::get('user_get_measure_prac/{id}/{mpt_id}', [CourseSpecControllor::class, 'get_measure_prac']);
+Route::post('user_add_measure_prac/{id}', [CourseSpecControllor::class, 'add_measure_prac']);
+Route::post('user_update_measure_prac', [CourseSpecControllor::class, 'update_measure_prac']);
+Route::get('user_delete_measure_prac/{id}', [CourseSpecControllor::class, 'delete_measure_prac']);
+
+
+Route::get('user_get_adjust_people_top', [CourseSpecControllor::class, 'get_adjust_people_top']);
+Route::get('user_get_adjust_people/{id}/{mpt_id}', [CourseSpecControllor::class, 'get_adjust_people']);
+Route::post('user_add_adjust_people/{id}', [CourseSpecControllor::class, 'add_adjust_people']);
+Route::post('user_update_adjust_people', [CourseSpecControllor::class, 'update_adjust_people']);
+Route::get('user_delete_adjust_people/{id}', [CourseSpecControllor::class, 'delete_adjust_people']);
+
+
+Route::get('user_get_adjust_repeat/{id}', [CourseSpecControllor::class, 'get_adjust_repeat']);
+Route::post('user_add_adjust_repeat/{id}', [CourseSpecControllor::class, 'add_adjust_repeat']);
+Route::post('user_update_adjust_repeat', [CourseSpecControllor::class, 'update_adjust_repeat']);
+Route::get('user_delete_adjust_repeat/{id}', [CourseSpecControllor::class, 'delete_adjust_repeat']);

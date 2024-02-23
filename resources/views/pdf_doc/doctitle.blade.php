@@ -107,6 +107,7 @@
             <label for="" class="text-center">แผนการสอนของรายวิชา</label>
             <label for="" class="text-center">ภาคเรียนที่ 2 ปีการศึกษา 2556</label>
         </div>
+        @foreach($subject as $item)
         <div id="divToPrint" class="font-sb">
             <table class="h1 mt-5 border border-dark table ">
                 <tbody>
@@ -125,11 +126,11 @@
                             <label> 1. รหัสวิชาและชื่อรายวิชา</label>
                             <div class="d-flex align-items-start ">
                                 <div class="me-4">
-                                    <label for="">รหัสวิชา SCS0401 </label>
+                                    <label for="">รหัสวิชา {{$item->subjects->s_num}} </label>
                                 </div>
                                 <div>
-                                    <label class="fw-normal">ชื่อวิชา (ไทย)</label><br>
-                                    <label class="fw-normal">ชื่อวิชา (อังกฤษ)</label>
+                                    <label class="fw-normal">ชื่อวิชา (ไทย) {{$item->subjects->s_name}}</label><br>
+                                    <label class="fw-normal">ชื่อวิชา (อังกฤษ) {{$item->subjects->s_name2}}</label>
                                 </div>
                             </div>
                         </td>
@@ -137,7 +138,7 @@
                     <tr>
                         <td>
                             <label>2. จำนวนหน่วยกิต</label>
-                            <label class="fw-normal">3(2-2-5)</label><br>
+                            <label class="fw-normal">{{$item->subjects->s_credit}}</label><br>
                         </td>
                     </tr>
                     <tr>
@@ -173,6 +174,7 @@
                 </tbody>
             </table>
         </div>
+        @endforeach
     </div>
 </body>
 

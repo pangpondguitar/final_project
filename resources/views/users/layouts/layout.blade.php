@@ -43,6 +43,8 @@
     <script src='build/pdfmake.min.js'></script>
     <script src='build/vfs_fonts.js'></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>
+    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>
 
     @vite('resources/js/app.js')
     <style>
