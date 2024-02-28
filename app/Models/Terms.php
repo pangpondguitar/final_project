@@ -15,4 +15,8 @@ class Terms extends Model
         't_name',
         't_year'
     ];
+    public function term_sub()
+    {
+        return $this->hasMany(Terms_sub::class, 't_id');
+    }
 }

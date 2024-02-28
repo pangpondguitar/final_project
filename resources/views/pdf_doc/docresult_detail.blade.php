@@ -50,7 +50,8 @@
             font-size: 14px !important;
             margin-left: 35px;
             margin-right: 35px;
-            margin-top: 10px;
+            margin-top: 60px;
+            margin-bottom: 130px;
         }
 
         .fs-14 {
@@ -149,49 +150,33 @@
 
 
     <h6 class="fs-14" style="margin-top: 25px;"> รายละเอียดผลลัพธ์การเรียนรู้แต่ละด้านตามมาตรฐานคุณวุฒิระดับอุดมศึกษา ประกอบด้วย</h6>
+    @foreach($result_data_detail as $item)
     <table class="table1">
         <tbody>
             <tr>
                 <td>
-
-                    <h6 class="fs-14 m-4">1.</h6>
-
+                    <h6 class="fs-14 m-4">{{$item['topic_num']}}</h6>
                 </td>
                 <td class="m-4">
-                    <h6 class="fs-14">คุณธรรม จริยธรรม</h6>
+                    <h6 class="fs-14">{{$item['topic']}}</h6>
                 </td>
             </tr>
         </tbody>
     </table>
     <table class="table2">
+        @foreach($item['details'] as $detailItem)
         <tr>
             <td>
                 <div class="title2">
-                    <label for="" class="title2">1.2 มีความรับผิดชอบการพัฒนาการเรียนรู้ของตนเอง เคารพกฎระเบียบและข้อบังคับต่างๆ ขององค์กร
-                        และสังคมมีความรับผิดชอบการพัฒนาการเรียนรู้ของตนเอง เคารพกฎระเบียบและข้อบังคับต่างๆ ขององค์กร</label>
-
-                </div>
-            </td>
-
-        </tr>
-        <tr>
-            <td>
-                <div class="title2">
-                    <label for="" class="title2">1.2 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
+                    <label for="" class="title2">{{$detailItem['num']}} {{$detailItem['data']}}</label>
                 </div>
             </td>
         </tr>
-        <tr>
-            <td>
-                <div class="title2">
-                    <label for="" class="title2">1.3 สามารถวิเคราะห์ผลกระทบจากการใช้คอมพิวเตอร์ต่อบุคคลองค์กรและสังคม และมีจรรยาบรรณทาง
-                        วิชาการและวิชาชีพ</label>
-                </div>
-            </td>
-        </tr>
+        @endforeach
     </table>
+    @endforeach
 
-    <table class="table1">
+    <!-- <table class="table1">
         <tbody>
             <tr>
                 <td>
@@ -376,7 +361,7 @@
                 </div>
             </td>
         </tr>
-    </table>
+    </table> -->
 </body>
 
 </html>

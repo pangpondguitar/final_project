@@ -35,4 +35,8 @@ class Terms_sub extends Model
     {
         return $this->hasMany(Topic_learn_results::class);
     }
+    public function terms()
+    {
+        return $this->belongsTo(Terms::class,  't_id');
+    }
 }

@@ -71,15 +71,17 @@
         body {
             font-family: "THSarabunNew";
             font-size: 15px !important;
+            margin-left: 35px;
+            margin-right: 35px;
+            margin-top: 10px;
         }
 
-        .fs {
-            font-size: 15px;
+        .fs-16 {
+            font-size: 16px;
         }
 
-        h6 {
-            padding: 0px, 0px, 0px, 0px;
-            margin: 0px, 0px, 0px, 0px;
+        .fs-14 {
+            font-size: 14px;
         }
 
         table,
@@ -89,6 +91,10 @@
             border-collapse: collapse;
         }
 
+        .border-none {
+            border: none !important;
+        }
+
         .page_break {
             page-break-before: always;
         }
@@ -96,77 +102,144 @@
         .page2 {
             size: A4 landscape;
         }
+
+        #main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .d-flex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .p-0 {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .m-0 {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .ms-10 {
+            margin-left: 10px;
+        }
+
+        .ms-25 {
+            margin-left: 25px;
+        }
+
+        div.title2 {
+            text-indent: 10px;
+        }
     </style>
 </head>
 
 <body>
     <div class="App container mt-5">
-        <img src="/assets/img/logo-sru.jpg" alt="" style="width:50px">
-        <div id="title" class="text-center">
-            <label for="" class="text-center">มคอ.3</label>
-            <label for="" class="text-center">แผนการสอนของรายวิชา</label>
-            <label for="" class="text-center">ภาคเรียนที่ 2 ปีการศึกษา 2556</label>
+
+        <div id="main">
+            <img src="data:image/jpeg;base64,{{ $base64Image }}" alt="Your Image" style="width: 120px;" class="text-center">
         </div>
-        @foreach($subject as $item)
+        @if($subject->subjects->doc_type == 1)
+        <h6 for="" class="fs-16 p-0 m-0 text-center">มคอ.3</h6>
+        @else
+        <h6 for="" class="fs-16 p-0 m-0 text-center">มคอ.4</h6>
+        @endif
+        <h6 class="fs-16 p-0 m-0 text-center">แผนการสอนของรายวิชา</h6>
+        <h6 class="fs-16 p-0 m-0 text-center">{{$subject->subjects->s_num}} {{$subject->subjects->s_name}}</h6>
+        <h6 class="fs-16 p-0 m-0 text-center " style="margin-bottom: 25px;">ภาคเรียนที่ {{$subject->terms->t_name}} ปีการศึกษา {{$subject->terms->t_year}}</h6>
         <div id="divToPrint" class="font-sb">
             <table class="h1 mt-5 border border-dark table ">
                 <tbody>
                     <tr>
                         <td>
-                            <label class="fs"> ชื่อสถาบันอุดมศึกษา มหาวิทยาลัยราชภัฏสุราษฎร์ธานี</label>
+                            <h6 class="fs-14 ms-10 m-0 p-0"> ชื่อสถาบันอุดมศึกษา มหาวิทยาลัยราชภัฏสุราษฎร์ธานี
+                            </h6>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label for=""> คณะ/สาขา/วิชาเอก วิทยาศาสตร์และเทคโนโลยี สาขาวิทการคอมพิวเตอร์</label>
+                            <h6 class="fs-14 ms-10 m-0 p-0"> คณะ/สาขา/วิชาเอก วิทยาศาสตร์และเทคโนโลยี สาขาวิทการคอมพิวเตอร์
+                            </h6>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label> 1. รหัสวิชาและชื่อรายวิชา</label>
-                            <div class="d-flex align-items-start ">
-                                <div class="me-4">
-                                    <label for="">รหัสวิชา {{$item->subjects->s_num}} </label>
-                                </div>
-                                <div>
-                                    <label class="fw-normal">ชื่อวิชา (ไทย) {{$item->subjects->s_name}}</label><br>
-                                    <label class="fw-normal">ชื่อวิชา (อังกฤษ) {{$item->subjects->s_name2}}</label>
-                                </div>
+                            <h6 class="fs-14 ms-10 m-0 p-0"> 1. รหัสวิชาและชื่อรายวิชา</h6>
+                            <table class="border-none">
+                                <tbody class="border-none">
+                                    <tr class="border-none">
+                                        <td class="border-none" style="width: 20%;">
+                                            <label for="" class="ms-25">รหัสวิชา {{$subject->subjects->s_num}} </label>
+                                        </td>
+                                        <td class="border-none ms-25">
+                                            <div class="ms-25">
+                                                <label class="fw-normal ">ชื่อวิชา (ไทย) {{$subject->subjects->s_name}}</label><br>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-none">
+                                        <td class="border-none"></td>
+                                        <td class="border-none ms-10">
+                                            <div class="ms-25">
+
+                                                <label class="fw-normal ">ชื่อวิชา (อังกฤษ) {{$subject->subjects->s_name2}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h6 class="m-0 p-0 ms-10 fs-14">2. จำนวนหน่วยกิต</h6>
+                            <label class="fw-normal ms-25" style="margin-left: 25px;">{{$subject->subjects->s_credit}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h6 class="p-0 m-0 fs-14 ms-10">3. ชื่อหลักสูตรและประเภทของรายวิชา</h6>
+                            <div class="ms-25">
+                                <label> ชื่อหลักสูตร {{$subject->subjects->courses->c_name}}</label><br>
+                                <label> ประเภทของรายวิชา กลุ่มวิชาเฉพาะด้านเลือก</label>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label>2. จำนวนหน่วยกิต</label>
-                            <label class="fw-normal">{{$item->subjects->s_credit}}</label><br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>3. ชื่อหลักสูตรและประเภทของรายวิชา</label><br>
-                            <label class="fw-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                Eligendi
-                                itaque laborum iure cupiditate quas quasi, dolorum quo sequi modi quaerat commodi
-                                fugiat,
-                                <br>
-                                sit optio excepturi animi dicta et distinctio sapiente!</label><br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label>4. คำอธิบายรายวิชา</label>
-                            <label for="">ภาษาไทย</label><br>
-                            <label class="fw-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                Eligendi
-                                itaque laborum iure cupiditate quas quasi, dolorum quo sequi modi quaerat commodi
-                                fugiat,<br>
-                                sit optio excepturi animi dicta et distinctio sapiente!</label><br>
-                            <label for=""> ภาษาอังกฤษ</label><br>
-                            <label class="fw-normal">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                Eligendi
-                                itaque laborum iure cupiditate quas quasi, dolorum quo sequi modi quaerat commodi
-                                fugiat,
-                                sit optio excepturi animi dicta et distinctio sapiente!</label><br>
+                            <h6 class="p-0 m-0 fs-14  ms-10">4. คำอธิบายรายวิชา</h6>
+                            <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาไทย</h6>
+                            <div class="ms-10">
+                                <div class="title2">
+                                    <label for="" class="title2">การใช้โปรแกรมสําเร็จรูปทางสถิติและวิจัยสําหรับการวิเคราะห์และอธิบายผลทางสถิติเกี่ยวกับสถิติเชิง
+                                        พรรณนา การหาความเชื่อมั่นของเครื่องมือวิจัย การทดสอบสมมติฐาน การประมาณค่า การวิเคราะห์ความ
+                                        แปรปรวน การวิเคราะห์การถดถอยและสหสัมพันธ์</label>
+
+                                </div>
+                            </div>
+                            <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาอังกฤษ</h6>
+                            <div class="ms-10">
+                                <div class="title2">
+                                    <label for="" class="title2">The use of statistical packages and research for analyze and describe the descriptive
+                                        statistic results, reliability testing of research tools, hypothesis testing, estimation, variance
+                                        analysis, regression analysis and correlation</label>
+
+                                </div>
+                            </div>
+
 
                         </td>
                     </tr>
@@ -174,7 +247,6 @@
                 </tbody>
             </table>
         </div>
-        @endforeach
     </div>
 </body>
 

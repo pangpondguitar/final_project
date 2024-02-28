@@ -14,4 +14,8 @@ class Planning_topic extends Model
         'pt_title',
         'doc_type'
     ];
+    public function planing_week_list()
+    {
+        return $this->hasMany(Planning_week_list::class,  'pt_id');
+    }
 }

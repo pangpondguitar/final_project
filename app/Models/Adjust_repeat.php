@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Adjust_repeat extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'apr_id';
+    protected $primaryKey = 'adr_id';
 
     protected $fillable = [
-        'apr_title',
+        'adr_title',
         'ts_id'
     ];
 }

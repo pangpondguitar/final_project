@@ -15,4 +15,15 @@ class Planning_week_list extends Model
         'pw_id',
         'pt_id'
     ];
+
+
+    public function planing_topic()
+    {
+        return $this->belongsTo(Planning_topic::class,  'pt_id');
+    }
+
+    public function planing_week_hour()
+    {
+        return $this->belongsTo(Planning_week_hour::class,  'pw_id');
+    }
 }

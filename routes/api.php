@@ -132,7 +132,7 @@ Route::get('user_delete_measure_prac/{id}', [CourseSpecControllor::class, 'delet
 
 
 Route::get('user_get_adjust_people_top', [CourseSpecControllor::class, 'get_adjust_people_top']);
-Route::get('user_get_adjust_people/{id}/{mpt_id}', [CourseSpecControllor::class, 'get_adjust_people']);
+Route::get('user_get_adjust_people/{id}/{apt_id}', [CourseSpecControllor::class, 'get_adjust_people']);
 Route::post('user_add_adjust_people/{id}', [CourseSpecControllor::class, 'add_adjust_people']);
 Route::post('user_update_adjust_people', [CourseSpecControllor::class, 'update_adjust_people']);
 Route::get('user_delete_adjust_people/{id}', [CourseSpecControllor::class, 'delete_adjust_people']);

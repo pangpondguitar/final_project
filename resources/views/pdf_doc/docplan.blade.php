@@ -47,24 +47,22 @@
 
         body {
             font-family: "THSarabunNew";
-            font-size: 14px !important;
-            margin-left: 35px;
-            margin-right: 35px;
-            margin-top: 10px;
+            font-size: 11px !important;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 10px;
         }
 
         .fs-14 {
             font-size: 14px !important;
-            ;
         }
 
-        table {
-            align-items: center;
-
+        .fs-16 {
+            font-size: 16px !important;
         }
 
-        .table1 {
-            margin-left: 20px;
+        .table-1 {
+            width: 100%;
         }
 
         .table2 {
@@ -78,7 +76,6 @@
         tr,
         td {
             border-collapse: collapse;
-            align-items: center;
             border: 1px solid black;
         }
 
@@ -86,24 +83,31 @@
         label {
             margin: 0;
             padding: 0;
-            font-size: 14px !important;
+            font-size: 11px !important;
         }
 
         .topic {
             margin: 0;
             padding: 0;
-            font-size: 14px !important;
+            font-size: 11px !important;
         }
 
         th,
         td {
             padding: 8px;
-            text-align: center;
-            /* vertical-align: top; */
+
+            vertical-align: top;
             margin: 0;
             padding: 0;
         }
 
+        .var-middle {
+            vertical-align: middle !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
 
         label {
             line-height: 0;
@@ -111,6 +115,10 @@
 
         .m-4 {
             margin-right: 15px !important;
+        }
+
+        .m-10 {
+            margin: 10px !important;
         }
 
 
@@ -129,231 +137,123 @@
             text-indent: 30px;
             /* Indentation for lines other than the first */
         }
+
+        thead {
+            display: table-header-group;
+        }
+
+        .column {
+            width: 75%;
+            margin: 0 auto;
+            /* จัดตำแหน่งในศูนย์กลาง */
+            text-align: center;
+            /* จัดตำแหน่งข้อความในศูนย์กลาง */
+            /* word-wrap: break-word; */
+            /* หรือใช้ overflow-wrap: break-word; */
+        }
+
+        .column2 {
+
+
+            /* จัดตำแหน่งในศูนย์กลาง */
+            text-align: start;
+            /* จัดตำแหน่งข้อความในศูนย์กลาง */
+            word-break: break-all;
+        }
+
+        p {
+            width: 140px;
+            vertical-align: top;
+        }
+
+        p.c {
+            vertical-align: top;
+            word-break: break-all !important;
+        }
+
+        div.b {
+            word-wrap: break-word;
+        }
+
+        .border-none {
+            border: none !important;
+        }
+
+        .p-8 {
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            padding-top: 1px !important;
+
+        }
+
+        .py-1 {
+            margin-bottom: 2px;
+            margin-top: 2px;
+        }
     </style>
 </head>
 
 <body>
     <div class="" id="result_sub">
         <h6 class="fs-14">6.แผนการสอน</h6>
-        <table>
+        <table style="width: 100%;">
             <thead>
                 <tr>
-                    <td>
-                        <h6>
+                    <td class="text-center m-10" style="width: 10% !important;">
+                        <h6 class="m-10">
                             สัปดาห์ที่<br>
                             (จํานวน<br>
                             ชั่วโมง)
                         </h6>
                     </td>
-                    <td>
-                        <h6>
-                            ผลลัพธ์การเรียนรู้รายวิชา<br>
-                            (CLOs)
-                        </h6>
+                    @foreach($plan_week_top as $item)
+                    <td class="text-center var-middle" style="width: 20% !important;">
+                        <div>
+
+                            <div class="column">
+                                <h6> {{$item['pt_title']}}</h6>
+                            </div>
+
+                        </div>
                     </td>
-                    <td>
-                        <h6> หัวข้อบรรยาย</h6>
-                    </td>
-                    <td>
-                        <h6> วิธีการสอน</h6>
-                    </td>
-                    <td>
-                        <h6> สื่อการสอน</h6>
-                    </td>
-                    <td>
-                        <h6>
-                            วิธีการและเครื่องมือ
-                            ประเมินผลการสอน
-                        </h6>
-                    </td>
+
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
+                @foreach($plan_week as $pwId => $weekItem)
                 <tr>
-                    <td>
-                        1 <br>
-                        (4)
+                    <td class="text-center" style="width: 10%;">
+                        {{ $weekItem['week'] }} <br>
+                        ({{ $weekItem['hour'] }})
                     </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
+                    @foreach($weekItem as $ptId => $items)
+                    @if($ptId !== 'week' && $ptId !== 'hour') {{-- Exclude 'week' and 'hour' keys --}}
+                    <td class="">
+                        <div class="p-8">
+                            <table class="border-none">
+                                <tbody class="border-none">
+                                    @foreach($items as $item)
+                                    <tr class="border-none">
+                                        <td class="border-none">
+                                            <label> {{ $item['order']}}</label>
+                                        </td>
+                                        <td class="border-none">
+                                            <div class="b" style="width: 135px; margin-left:4px"> {{ $item['data']['pwl_title'] }}</div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
+                    @endif
+                    @endforeach
                 </tr>
-                <tr>
-                    <td>
-                        1 <br>
-                        (4)
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        1 <br>
-                        (4)
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                        <div class="title2">
-                            <label for="" class="title2">1.1 มีคุณธรรม จริยธรรม มีวินัย เสียสละและซื่อสัตย์สุจริต</label>
-                        </div>
-                    </td>
-                </tr>
+                @endforeach
 
             </tbody>
+
             <tfoot>
                 <td>
                     17
@@ -363,30 +263,29 @@
                 </td>
             </tfoot>
         </table>
-
-        <h6 class="fs-14 " style="margin-top: 15px;">สรุปจํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h6>
+        <h6 class="fs-14" style="margin-top: 15px;">สรุปจํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h6>
         <table class="table2">
             <thead>
-                <tr>
-                    <td>
-                        <h6>
+                <tr class="text-center var-middle">
+                    <td class="var-middle">
+                        <h6 class="fs-14">
                             ภาคทฤษฎีการบรรยาย
                         </h6>
                     </td>
-                    <td>
-                        <h6>
-                            ภาคปฏิบัติ
+                    <td class="var-middle" style="width: 30%;">
+                        <h6 class="fs-14">
+                            ภาคปฏิบัติ <br>
 
                             (การฝึกปฏิบัติ/ภาคสนาม/การฝึกงาน)
                         </h6>
                     </td>
-                    <td>
-                        <h6>
+                    <td class="var-middle" style="width: 20%;">
+                        <h6 class="fs-14">
                             การศึกษาด้วยตนเอง
                         </h6>
                     </td>
-                    <td>
-                        <h6>
+                    <td class="var-middle">
+                        <h6 class="fs-14">
                             รวม
                         </h6>
                     </td>
@@ -395,19 +294,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <label for="">30</label>
+                <tr class="text-center">
+                    @foreach($sum_plan_week as $item)
+                    <td class="text-center py-1">
+                        <label for="" class="fs-16 text-center">{{$item->psh_describe}}</label>
                     </td>
-                    <td>
-                        <label for="">30</label>
+                    <td class="text-center py-1">
+                        <label for="" class="fs-16 text-center">{{$item->psh_practice}}</label>
                     </td>
-                    <td>
-                        <label for="">30</label>
+                    <td class="text-center py-1">
+                        <label for="" class="fs-16 text-center">{{$item->psh_self}}</label>
                     </td>
-                    <td>
-                        <label for="">135</label>
+                    <td class="text-center py-1">
+                        <label for="" class="fs-16 text-center">{{$item->psh_describe + $item->psh_practice + $item->psh_self}}</label>
                     </td>
+                    @endforeach
 
                 </tr>
             </tbody>

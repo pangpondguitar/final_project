@@ -35,14 +35,14 @@
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/THSarabunNew Italic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts/Sarabun-ExtraLightItalic.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: bold;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-BoldItalic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts/Sarabun-Italic.ttf') }}") format('truetype');
         }
 
         body {
@@ -53,10 +53,15 @@
             margin-top: 10px;
         }
 
+
         .fs-14 {
             font-size: 14px !important;
-            ;
         }
+
+        .fs-16 {
+            font-size: 16px !important;
+        }
+
 
         table {
             align-items: center;
@@ -111,6 +116,10 @@
         .m-4 {
             margin-right: 15px !important;
         }
+
+        .text-start {
+            text-align: left !important;
+        }
     </style>
 </head>
 
@@ -121,72 +130,48 @@
         <table class="table1">
             <thead>
                 <tr>
-                    <td>
-                        <h6>รายการ</h6>
+                    <td style="width:80%;">
+                        <h6 class="fs-14">รายการ</h6>
                     </td>
                     <td>
-                        <h6>ร้อยละ</h6>
+                        <h6 class="fs-14">ร้อยละ</h6>
                     </td>
                 </tr>
             </thead>
             <tbody>
+                @foreach($measure_list as $item)
                 <tr>
-                    <td>
-                        การมีส่วนร่วมในชั้นเรียน การเข้าชั้นเรียน การแต่งกาย
+                    <td class="fs-14 text-start">
+                        <div style="margin-left: 5px;"> {{ $item->ml_title}}</div>
                     </td>
-                    <td>
-                        10
+                    <td class="fs-14 ">
+                        {{ $item->ml_value}}
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        แบบฝึกหัดท้ายบทเรียน วิเคราะห์กรณีศึกษาค้นคว้าและการนําเสนอรายงาน
-                    </td>
-                    <td>
-                        10
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        สอบปฏิบัติการใช้โปรแกรมเพื่อหาค่าสถิติที่เกี่ยวข้อง
-                    </td>
-                    <td>
-                        10
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        คะแนนสอบกลางภาค
-                    </td>
-                    <td>
-                        10
-                    </td>
-                </tr>
+                @endforeach
 
-                <tr>
-                    <td>
-                        คะแนนสอบปลายภาค
-                    </td>
-                    <td>
-                        10
-                    </td>
-                </tr>
 
             </tbody>
             <tfoot>
                 <tr>
                     <td>
-                        <h6> คะแนนสอบปลายภาค</h6>
+                        <h6> รวม</h6>
                     </td>
+
                     <td>
-                        <h6> 100</h6>
+                        <h6> {{$sum_measure_list}}</h6>
                     </td>
+
+
                 </tr>
             </tfoot>
         </table>
 
-        <h6 class="fs-14" style="margin-top: 15px;">8. ทรัพยากรประกอบการเรียนการสอน</h6>
-        <label for=""></label>
+        <h6 class="fs-14" style="margin-top: 20px;">8. ทรัพยากรประกอบการเรียนการสอน</h6>
+        @foreach($resource as $item)
+        <div style="margin-left: 25px;"> {!! $item->rs_title !!}</div>
+        @endforeach
+        <h6 class="fs-14" style="margin-top: 20px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
     </div>
 </body>
 

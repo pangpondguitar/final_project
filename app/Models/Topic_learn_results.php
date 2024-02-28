@@ -20,4 +20,9 @@ class Topic_learn_results extends Model
     {
         return $this->belongsTo(Course::class, 'c_id');
     }
+
+    public function learn_results_detail()
+    {
+        return $this->hasMany(learn_results_detail::class,  'tlr_id');
+    }
 }

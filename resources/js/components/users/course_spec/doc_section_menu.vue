@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 let menu = ref([]);
+let subject = ref({});
 const props = defineProps({
     id: {
         type: String,
@@ -19,9 +20,21 @@ const select_menu = (value) => {
     emits('selectMenu', menu.value);
     console.log(menu.value);
 };
-const exportFile = () => {
-    window.open('http://127.0.0.1:8000/users/pdf/1', '_blank');
+const getSubject = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_subject/${props.id}`);
+        subject.value = response.data.subject;
+        console.log("subject", subject.value);
+    } catch (error) {
+        console.error('Error fetching subject:', error);
+    }
 };
+const exportFile = () => {
+    window.open(`http://127.0.0.1:8000/users/pdf/${props.id}`, '_blank');
+};
+onMounted(async () => {
+    await getSubject();
+});
 </script>
 <template>
     <div class="col-lg-3 h-50">
@@ -117,7 +130,8 @@ const exportFile = () => {
                         <span class="text-sm">แผนการสอน</span>
                     </a>
                 </li>
-                <li class="nav-item pt-2" @click="select_menu(4)" :class='{ "menu-side-active": menu === 4 }'>
+                <li class="nav-item pt-2" @click="select_menu(4)" :class='{ "menu-side-active": menu === 4 }'
+                    v-if="subject.doc_type == 1">
                     <a class="nav-link text-body" data-scroll="" href="#notifications">
                         <div class="icon me-2">
                             <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 44 43" version="1.1"
@@ -145,7 +159,8 @@ const exportFile = () => {
                         <span class="text-sm">การวัดและประเมินผลการศึกษา</span>
                     </a>
                 </li>
-                <li class="nav-item pt-2" @click="select_menu(5)" :class='{ "menu-side-active": menu === 5 }'>
+                <li class="nav-item pt-2" @click="select_menu(5)" :class='{ "menu-side-active": menu === 5 }'
+                    v-if="subject.doc_type == 1">
                     <a class="nav-link text-body" data-scroll="" href="#sessions">
                         <div class="icon me-2">
                             <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 40 40" version="1.1"
@@ -198,7 +213,8 @@ const exportFile = () => {
                         <span class="text-sm">คณะกรรมการบริหารรายวิชา</span>
                     </a>
                 </li>
-                <li class="nav-item pt-2" @click="select_menu(7)" :class='{ "menu-side-active": menu === 7 }'>
+                <li class="nav-item pt-2" @click="select_menu(7)" :class='{ "menu-side-active": menu === 7 }'
+                    v-if="subject.doc_type == 2">
                     <a class="nav-link text-body" data-scroll="" href="#delete">
                         <div class="icon me-2">
                             <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 45 40" version="1.1"
@@ -223,7 +239,8 @@ const exportFile = () => {
                         <span class="text-sm">การวางแผนและการเตรียมการ</span>
                     </a>
                 </li>
-                <li class="nav-item pt-2" @click="select_menu(8)" :class='{ "menu-side-active": menu === 8 }'>
+                <li class="nav-item pt-2" @click="select_menu(8)" :class='{ "menu-side-active": menu === 8 }'
+                    v-if="subject.doc_type == 2">
                     <a class="nav-link text-body" data-scroll="" href="#delete">
                         <div class="icon me-2">
                             <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 45 40" version="1.1"
@@ -248,7 +265,8 @@ const exportFile = () => {
                         <span class="text-sm">การวัดและประเมินผลการปฏิบัติ</span>
                     </a>
                 </li>
-                <li class="nav-item pt-2" @click="select_menu(9)" :class='{ "menu-side-active": menu === 9 }'>
+                <li class="nav-item pt-2" @click="select_menu(9)" :class='{ "menu-side-active": menu === 9 }'
+                    v-if="subject.doc_type == 2">
                     <a class="nav-link text-body" data-scroll="" href="#delete">
                         <div class="icon me-2">
                             <svg class="text-dark mb-1" width="16px" height="16px" viewBox="0 0 45 40" version="1.1"

@@ -15,4 +15,9 @@ class Planning_week_hour extends Model
         'pw_hour',
         'ts_id'
     ];
+
+    public function planing_week_list()
+    {
+        return $this->hasMany(Planning_week_list::class,  'pw_id');
+    }
 }

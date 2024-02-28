@@ -13,7 +13,8 @@
     },
     "thsarabunnew": {
         "normal": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_normal_8850558d1b722ded3e9c2aa9715411f7",
-        "bold": "thsarabunnew_bold_a4533f8fe68625af065df41d89f0501e",
-        "bold_italic": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_bold_italic_0ffa977a1ec4696b0359ddce07b98aa9"
+        "bold": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_bold_a4533f8fe68625af065df41d89f0501e",
+        "bold_italic": "thsarabunnew_bold_italic_dab7931910b5d46859f767c8da350115",
+        "italic": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_italic_d97e9bc3a76916462a227c27202cffb5"
     }
 }

@@ -17,4 +17,9 @@ class Learn_results_detail extends Model
         'ts_id',
         'lrd_remark'
     ];
+
+    public function topic_learn_results()
+    {
+        return $this->belongsTo(Topic_learn_results::class,  'tlr_id');
+    }
 }

@@ -418,4 +418,30 @@ class CourseSpecControllor extends Controller
         $adjust = Adjust_people_list::find($id);
         $adjust->delete();
     }
+
+    public function get_adjust_repeat($id)
+    {
+        $adjust_r = Adjust_repeat::where('ts_id', $id)->get();
+        return response()->json([
+            'adjust_r' => $adjust_r
+        ], 200);
+    }
+    public function add_adjust_repeat(Request $request, $id)
+    {
+        $adjust_r = new Adjust_repeat();
+        $adjust_r->adr_title = $request->title;
+        $adjust_r->ts_id = $id;
+        $adjust_r->save();
+    }
+    public function update_adjust_repeat(Request $request)
+    {
+        $adjust_r = Adjust_repeat::find($request->id);
+        $adjust_r->adr_title = $request->title;
+        $adjust_r->save();
+    }
+    public function delete_adjust_repeat($id)
+    {
+        $adjust_r = Adjust_repeat::find($id);
+        $adjust_r->delete();
+    }
 }
