@@ -13,4 +13,9 @@ class Measure_prac_topic extends Model
     protected $fillable = [
         'mpt_title'
     ];
+
+    public function measure_prac_list()
+    {
+        return $this->hasMany(Measure_prac_list::class, 'mpt_id');
+    }
 }

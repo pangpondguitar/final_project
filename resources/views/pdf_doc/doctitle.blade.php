@@ -141,6 +141,10 @@
         div.title2 {
             text-indent: 10px;
         }
+
+        div.b {
+            word-wrap: break-word;
+        }
     </style>
 </head>
 
@@ -220,27 +224,23 @@
                     </tr>
                     <tr>
                         <td>
+                            @foreach($subdes as $item)
                             <h6 class="p-0 m-0 fs-14  ms-10">4. คำอธิบายรายวิชา</h6>
                             <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาไทย</h6>
                             <div class="ms-10">
-                                <div class="title2">
-                                    <label for="" class="title2">การใช้โปรแกรมสําเร็จรูปทางสถิติและวิจัยสําหรับการวิเคราะห์และอธิบายผลทางสถิติเกี่ยวกับสถิติเชิง
-                                        พรรณนา การหาความเชื่อมั่นของเครื่องมือวิจัย การทดสอบสมมติฐาน การประมาณค่า การวิเคราะห์ความ
-                                        แปรปรวน การวิเคราะห์การถดถอยและสหสัมพันธ์</label>
-
+                                <div class="b" style="width: 600px">
+                                    <label for="" class="">{!! $item->sd_title !!}</label>
                                 </div>
                             </div>
                             <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาอังกฤษ</h6>
                             <div class="ms-10">
-                                <div class="title2">
-                                    <label for="" class="title2">The use of statistical packages and research for analyze and describe the descriptive
-                                        statistic results, reliability testing of research tools, hypothesis testing, estimation, variance
-                                        analysis, regression analysis and correlation</label>
+                                <div class="b" style="width: 600px">
+                                    <label for="" class="">{!! $item->sd_title_eng !!}</label>
 
                                 </div>
                             </div>
 
-
+                            @endforeach
                         </td>
                     </tr>
 

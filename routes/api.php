@@ -142,3 +142,12 @@ Route::get('user_get_adjust_repeat/{id}', [CourseSpecControllor::class, 'get_adj
 Route::post('user_add_adjust_repeat/{id}', [CourseSpecControllor::class, 'add_adjust_repeat']);
 Route::post('user_update_adjust_repeat', [CourseSpecControllor::class, 'update_adjust_repeat']);
 Route::get('user_delete_adjust_repeat/{id}', [CourseSpecControllor::class, 'delete_adjust_repeat']);
+
+Route::get('user_get_objective/{id}', [CourseSpecControllor::class, 'get_objective']);
+Route::post('user_add_objective/{id}', [CourseSpecControllor::class, 'add_objective']);
+Route::post('user_update_objective', [CourseSpecControllor::class, 'update_objective']);
+Route::get('user_delete_objective/{id}', [CourseSpecControllor::class, 'delete_objective']);
+
+Route::get('user_get_subdes/{id}', [CourseSpecControllor::class, 'get_subdes']);
+Route::post('user_add_subdes/{id}', [CourseSpecControllor::class, 'add_subdes']);
+Route::post('user_update_subdes', [CourseSpecControllor::class, 'update_subdes']);

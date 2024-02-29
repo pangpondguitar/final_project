@@ -15,4 +15,9 @@ class Prep_plan_list extends Model
         'ppt_id',
         'ts_id',
     ];
+
+    public function prep_plan_topic()
+    {
+        return $this->belongsTo(Prep_plan_topic::class, 'ppt_id');
+    }
 }

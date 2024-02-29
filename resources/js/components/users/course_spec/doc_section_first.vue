@@ -1,11 +1,15 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
-import axios from "axios";
+import { onMounted, ref, computed, watch, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { defineProps, defineEmits } from 'vue';
+import { Bootstrap5Pagination } from "laravel-vue-pagination";
+import gsap from 'gsap'
 const router = useRouter();
 
 let subject = ref({});
 let course = ref({});
+let subdes = ref({});
 let form = ref({
     s_num: '',
     s_name: '',
@@ -13,6 +17,12 @@ let form = ref({
     s_cradit: '',
     title_thai: '',
     title_eng: ''
+})
+const editMode = ref(false);
+let formdes = ref({
+    id: '',
+    title: '',
+    title_eng: '',
 })
 
 const props = defineProps({
@@ -39,9 +49,64 @@ const getCourse = async () => {
         console.error('Error fetching course:', error);
     }
 };
+
+const getSubdes = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_subdes/${props.id}`);
+        subdes.value = response.data.subdes;
+        console.log(subdes.value);
+        editMode.value = subdes.value != null;
+        if (editMode.value == true) {
+            formdes.value.id = subdes.value.sd_id
+            formdes.value.title = subdes.value.sd_title
+            formdes.value.title_eng = subdes.value.sd_title_eng
+        }
+    } catch (error) {
+        console.error('Error fetching topic:', error);
+    }
+};
+const SubDes_formCheck = async () => {
+    try {
+        if (editMode.value == true) {
+            const formData = new FormData();
+            formData.append("id", formdes.value.id);
+            formData.append("title", formdes.value.title);
+            formData.append("title_eng", formdes.value.title_eng);
+            axios
+                .post(`/api/user_update_subdes`, formData)
+                .then((response) => {
+                    getSubdes();
+                })
+                .catch((error) => { });
+
+            toast.fire({
+                icon: "success",
+                title: "Update Planing update successfully",
+            });
+        } else {
+            const formData = new FormData();
+            formData.append("title", formdes.value.title);
+            formData.append("title_eng", formdes.value.title_eng);
+            axios
+                .post(`/api/user_add_subdes/${props.id}`, formData)
+                .then((response) => {
+                    getSubdes();
+                })
+                .catch((error) => { });
+
+            toast.fire({
+                icon: "success",
+                title: "Week hour add successfully",
+            });
+        }
+    } catch (error) {
+        console.error('Error submitting data:', error);
+    }
+};
 onMounted(async () => {
     await getSubject();
     await getCourse();
+    await getSubdes();
 });
 </script>
 <template>
@@ -134,17 +199,19 @@ onMounted(async () => {
                 <div class="row mt-1">
                     <div class="col-10">
                         <label class="form-label">ภาษาไทย </label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            v-model="formdes.title"></textarea>
                     </div>
                     <div class="col-10">
                         <label class="form-label">ภาษาอังกฤษ </label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            v-model="formdes.title_eng"></textarea>
                     </div>
                 </div>
                 <div class="row mt-4 ">
                     <div class="col-lg-12">
                         <div class="d-flex">
-                            <button class="btn btn-dark me-2">บันทึกข้อมูล</button>
+                            <button class="btn btn-dark me-2" @click="SubDes_formCheck()">บันทึกข้อมูล</button>
                             <button class="btn btn-outline-secondary">กลับหน้าหลัก</button>
                         </div>
 

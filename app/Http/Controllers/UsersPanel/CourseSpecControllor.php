@@ -27,6 +27,9 @@ use App\Models\Measure_prac_list;
 use App\Models\Adjust_people_topic;
 use App\Models\Adjust_people_list;
 use App\Models\Adjust_repeat;
+use App\Models\Objective;
+use App\Models\Subject_description;
+
 use Illuminate\Support\Str;
 
 class CourseSpecControllor extends Controller
@@ -96,7 +99,7 @@ class CourseSpecControllor extends Controller
     {
 
         $subject = Terms_sub::with('subjects')->where('ts_id', $id)->first();
-        $doc_type = $subject->subjects->first()->doc_type;
+        $doc_type = $subject->subjects->doc_type;
         $topic = Terms_sub::where('ts_id', $id)->with([
             'subjects' => function ($query) use ($doc_type) {
                 $query->with(['courses' => function ($query) use ($doc_type) {
@@ -443,5 +446,55 @@ class CourseSpecControllor extends Controller
     {
         $adjust_r = Adjust_repeat::find($id);
         $adjust_r->delete();
+    }
+
+    public function get_objective($id)
+    {
+        $objective = Objective::where('ts_id', $id)->get();
+        return response()->json([
+            'objective' => $objective
+        ], 200);
+    }
+    public function add_objective(Request $request, $id)
+    {
+        $objective = new Objective();
+        $objective->obj_title = $request->title;
+        $objective->ts_id = $id;
+        $objective->save();
+    }
+    public function update_objective(Request $request)
+    {
+        $objective = Objective::find($request->id);
+        $objective->obj_title = $request->title;
+        $objective->save();
+    }
+
+    public function delete_objective($id)
+    {
+        $objective = Objective::find($id);
+        $objective->delete();
+    }
+
+    public function get_subdes($id)
+    {
+        $subdes = Subject_description::where('ts_id', $id)->first();
+        return response()->json([
+            'subdes' => $subdes
+        ], 200);
+    }
+    public function add_subdes(Request $request, $id)
+    {
+        $subdes = new Subject_description();
+        $subdes->sd_title = $request->title;
+        $subdes->sd_title_eng = $request->title_eng;
+        $subdes->ts_id = $id;
+        $subdes->save();
+    }
+    public function update_subdes(Request $request)
+    {
+        $subdes = Subject_description::find($request->id);
+        $subdes->sd_title = $request->title;
+        $subdes->sd_title_eng = $request->title_eng;
+        $subdes->save();
     }
 }

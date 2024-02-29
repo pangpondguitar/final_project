@@ -195,7 +195,11 @@
 
 <body>
     <div class="" id="result_sub">
-        <h6 class="fs-14">6.แผนการสอน</h6>
+        @if($subject->subjects->doc_type == 1)
+        <h6 for="" class="fs-14">6.แผนการสอน</h6>
+        @else
+        <h6 for="" class="fs-14">6.แผนการฝึกประสบการณ์ภาคสนาม</h6>
+        @endif
         <table style="width: 100%;">
             <thead>
                 <tr>
@@ -239,7 +243,7 @@
                                             <label> {{ $item['order']}}</label>
                                         </td>
                                         <td class="border-none">
-                                            <div class="b" style="width: 135px; margin-left:4px"> {{ $item['data']['pwl_title'] }}</div>
+                                            <div class="b" style="width: 150px; margin-left:4px"> {{ $item['data']['pwl_title'] }}</div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -254,14 +258,7 @@
 
             </tbody>
 
-            <tfoot>
-                <td>
-                    17
-                </td>
-                <td colspan="5">
-                    <label for="">สอบปลายภาคเรียน</label>
-                </td>
-            </tfoot>
+
         </table>
         <h6 class="fs-14" style="margin-top: 15px;">สรุปจํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h6>
         <table class="table2">

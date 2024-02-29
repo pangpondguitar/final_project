@@ -8,9 +8,11 @@ let topic = ref({});
 let menu_detail = ref({});
 let result_list = ref([]);
 let result_detail = ref([]);
+let objective = ref({});
 let result_list_detailId = ref({});
 const editing = ref(false);
 const editing_detail = ref(false);
+const editing_obj = ref(false);
 let formAdd = ref({
     title: ''
 });
@@ -26,6 +28,15 @@ let formEdit_detail = ref({
     id: '',
     title: ''
 });
+
+let formAdd_Obj = ref({
+    title: '',
+});
+let formEdit_Obj = ref({
+    id: '',
+    title: ''
+});
+
 const openEditModal = (item) => {
     console.log(item);
     editing.value = true;
@@ -42,6 +53,14 @@ const openEditModal_detail = (item) => {
     formEdit_detail.value = {
         id: item.lrd_id,
         title: item.lrd_title
+    }
+}
+const openEditModal_Objective = (item) => {
+    editing_obj.value = true;
+    $('#edit_objective').modal('show');
+    formEdit_Obj.value = {
+        id: item.obj_id,
+        title: item.obj_title
     }
 }
 menu_detail.value = 1
@@ -175,6 +194,8 @@ const add_result_detail = () => {
         title: "List Result add successfully",
     });
 };
+
+
 const update_result_detail = () => {
     const formData = new FormData();
     formData.append("lrd_id", formEdit_detail.value.id);
@@ -226,10 +247,88 @@ const delete_result_detail = (id) => {
         }
     });
 };
+const get_Objective = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_objective/${props.id}`);
+        objective.value = response.data.objective;
+        console.log('objective', objective.value);
+    } catch (error) {
+        console.error('Error fetching objective:', error);
+    }
+};
+const add_Objective = () => {
+    const formData = new FormData();
+    formData.append("title", formAdd_Obj.value.title);
+    axios
+        .post(`/api/user_add_objective/${props.id}`, formData)
+        .then((response) => {
+            formAdd_Obj.value.title = '',
+                get_Objective();
+        })
+        .catch((error) => { });
+
+    toast.fire({
+        icon: "success",
+        title: "List Result add successfully",
+    });
+};
+const update_Objective = () => {
+    const formData = new FormData();
+    formData.append("id", formEdit_Obj.value.id);
+    formData.append("title", formEdit_Obj.value.title);
+    axios
+        .post(`/api/user_update_objective`, formData)
+        .then((response) => {
+            formEdit_Obj.value.id = '',
+                formEdit_Obj.value.title = ''
+            get_Objective();
+            $('#edit_objective').modal('hide');
+        })
+        .catch((error) => { });
+
+    toast.fire({
+        icon: "success",
+        title: "List Result update successfully",
+    });
+};
+const delete_Objective = (id) => {
+    Swal.fire({
+        title: "ยืนยันลบข้อมูล",
+        text: 'ยืนยันลบข้อมูล',
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ยืนยันรายการ",
+        cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+        if (result.value) {
+            axios
+                .get("/api/user_delete_objective/" + id)
+                .then(() => {
+                    Swal.fire(
+                        "Delete",
+                        "Subject delete successfully",
+                        "success"
+                    );
+                    get_Objective();
+                })
+                .catch(() => {
+                    Swal.fire(
+                        "Failed!!",
+                        "There was somthing wrong",
+                        "Warning"
+                    );
+                });
+        }
+    });
+};
+
 onMounted(async () => {
     await getToppic_learnResult();
     await getLearnResult_list();
     await getLearnResult_detail();
+    await get_Objective();
 });
 </script>
 
@@ -271,6 +370,26 @@ onMounted(async () => {
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ปิด</button>
                         <button type="submit" class="btn btn-primary" @click="update_result_detail()">บันทึกข้อมูล</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="edit_objective" tabindex="-1" aria-labelledby="edit_objective" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="exampleModalLabel">แก้ไขวัตถุประสงค์ของรายวิชา</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p-1">
+                            <label for="title" class="fs-6 py-1 mb-0">วัตถุประสงค์ของรายวิชา</label>
+                            <textarea class="form-control" rows="5" v-model="formEdit_Obj.title"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">ปิด</button>
+                        <button type="submit" class="btn btn-primary" @click="update_Objective()">บันทึกข้อมูล</button>
                     </div>
                 </div>
             </div>
@@ -345,7 +464,7 @@ onMounted(async () => {
 
                 </div>
                 <ul class="list-group list-group-flush list-group-numbered">
-                    <li class="list-group-item d-flex justify-content-between " v-for="item in result_detail"
+                    <li class="list-group-item d-flex justify-content-between " v-for="  item   in   result_detail  "
                         :key="item.id">
                         <div class="ms-2 me-auto w-50 d-flex align-items-center">
                             <h6 class="fw-normal text-muted">{{ item.lrd_title }}</h6>
@@ -357,6 +476,41 @@ onMounted(async () => {
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="card mt-3" id="basic-info">
+            <div class="card-header pb-0">
+                <h5 class="mb-0">วัตถุประสงค์</h5>
+                <label class=" mb-0 ms-0 text-muted">วัตถุประสงค์รายวิชา
+                </label>
+
+            </div>
+            <div class="card-body">
+                <div class="row ">
+                    <div class="col-lg-12 ">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="เพิ่มจุดมุ่งหมายรายวิชา"
+                                aria-label="Recipient's username" aria-describedby="button-addon2"
+                                v-model="formAdd_Obj.title">
+                            <button class="btn btn-dark mb-0" type="button" id="button-addon2"
+                                @click="add_Objective()">เพิ่มข้อมูล</button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <ul class="list-group list-group-flush list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between " v-for="item in objective" :key="item.id">
+                        <div class="ms-2 me-auto w-50 d-flex align-items-center">
+                            <h6 class="fw-normal text-muted">{{ item.obj_title }}</h6>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-pen me-3" @click="openEditModal_Objective(item)"></i>
+                            <i class="bi bi-trash3 text-danger" @click="delete_Objective(item.obj_id)"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </template>

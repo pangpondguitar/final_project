@@ -15,4 +15,8 @@ class Adjust_people_list extends Model
         'apt_id',
         'ts_id'
     ];
+    public function adjust_people_topic()
+    {
+        return $this->belongsTo(Adjust_people_list::class, 'apt_id');
+    }
 }

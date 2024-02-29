@@ -144,6 +144,22 @@
         .text-start {
             text-align: left !important;
         }
+
+        div.b {
+            word-wrap: break-word;
+        }
+
+        .border-none {
+            border: none;
+        }
+
+        .vc-top {
+            vertical-align: top !important;
+        }
+
+        .text-start {
+            text-align: start !important;
+        }
     </style>
 </head>
 
@@ -208,7 +224,19 @@
                 @foreach($result_data as $item)
                 <tr>
                     <td style="width: 20%;" class="text-start">
-                        <div class="ms-7"> {{$item}}</div>
+                        <table class="border-none">
+                            <tbody class="border-none">
+                                <tr class="border-none">
+                                    <td class="border-none vc-top">
+                                        <label> {{ $item['num']}}.</label>
+                                    </td>
+                                    <td class="border-none text-start">
+                                        <div class="b" style="width: 150px; margin-left:4px"> {{$item['title']}}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </td>
                     @foreach($list_result_detail as $item)
                     <td>

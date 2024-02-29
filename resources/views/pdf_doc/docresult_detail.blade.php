@@ -48,9 +48,9 @@
         body {
             font-family: "THSarabunNew";
             font-size: 14px !important;
-            margin-left: 35px;
-            margin-right: 35px;
-            margin-top: 60px;
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 55px;
             margin-bottom: 130px;
         }
 
@@ -106,11 +106,27 @@
         }
 
         .m-4 {
-            margin-right: 15px !important;
+            margin-right: 14px !important;
+        }
+
+        .ml-3 {
+            margin-right: 10px !important;
+        }
+
+        .ml-5 {
+            margin-left: 45px !important;
         }
 
         div.title2 {
             text-indent: 43px;
+        }
+
+        div.b {
+            word-wrap: break-word;
+        }
+
+        .indented-text {
+            text-indent: 80px;
         }
     </style>
 </head>
@@ -119,32 +135,17 @@
     <h6 class="fs-14"> วัตถุประสงค์ของหลักสูตร เพื่อผลิตบัณฑิตให้มีคุณลักษณะดังนี้</h6>
     <table class="table1">
         <tbody>
+            @php $num = 1; @endphp
+            @foreach($objective as $item)
             <tr>
                 <td>
-                    <span class="m-4"> 1.</span>
+                    <span class="m-4">{{ $num++ }}.</span>
                 </td>
                 <td class="m-4">
-                    เพื่อผลิตบัณฑิตให้มีความรู้ทางด้านวิทยาการคอมพิวเตอร์ สามารถแก้ไขปัญหา คิดวิเคราะห์อย่างเป็นระบบ
-                    และสามารถประกอบวิชาชีพด้านคอมพิวเตอร์ได้
+                    <div class="b" style="width: 580px;">{!! $item->obj_title !!}</div>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <span class="m-4"> 2.</span>
-                </td>
-                <td class="m-4">
-                    เพื่อผลิตบัณฑิตให้มีทักษะและสมรรถนะด้านวิทยาการคอมพิวเตอร์ สามารถนําความรู้ไปประยุกต์ใช้กับ
-                    ศาสตร์อื่น ๆ และสร้างสรรค์นวัตกรรมได้
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="m-4"> 3.</span>
-                </td>
-                <td class="m-4">
-                    เพื่อผลิตบัณฑิตให้มีคุณธรรม จริยธรรม และจรรยาบรรณในการประกอบอาชีพ
-                </td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 
@@ -163,17 +164,23 @@
             </tr>
         </tbody>
     </table>
-    <table class="table2">
-        @foreach($item['details'] as $detailItem)
-        <tr>
-            <td>
-                <div class="title2">
-                    <label for="" class="title2">{{$detailItem['num']}} {{$detailItem['data']}}</label>
-                </div>
-            </td>
-        </tr>
-        @endforeach
-    </table>
+    <div class="ml-5">
+        <table class="table2">
+            @foreach($item['details'] as $detailItem)
+            <tr>
+                <td>
+                    <span class="ml-3"> {{$detailItem['num'] }}</span>
+                </td>
+                <td>
+                    <div class="b" style="width: 545px;">
+                        {{$detailItem['data'] }}
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+
     @endforeach
 
     <!-- <table class="table1">
