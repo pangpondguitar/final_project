@@ -1,4 +1,3 @@
-
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -9,6 +8,8 @@ const router = useRouter();
 let subjectTname = ref({});
 let teachers = ref({});
 let subject = ref({});
+let docfile = ref({});
+let df_id = ref({});
 
 
 const props = defineProps({
@@ -45,6 +46,59 @@ const get_teachers = async () => {
         console.error("Error fetching subject:", error);
     }
 };
+const getDoc_file = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_docfile/${props.id}`);
+        docfile.value = response.data.docfile;
+
+
+        console.log("docfile", docfile.value);
+    } catch (error) {
+        console.error('Error fetching docfile:', error);
+    }
+};
+
+const Open_Docfile = () => {
+    try {
+        const dfIds = docfile.value.map(item => item.df_id);
+        window.open(`/api/user_get_docfile_finish/${dfIds}`, '_blank');
+    } catch (error) {
+        console.error('Error opening docfile:', error);
+    }
+};
+const delete_Docfile = () => {
+    const dfIds = docfile.value.map(item => item.df_id);
+    Swal.fire({
+        title: "ยืนยันลบไฟล์เอกสาร",
+        text: 'ยืนยันลบข้อมูล',
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ยืนยันรายการ",
+        cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+        if (result.value) {
+            axios
+                .get("/api/user_delete_docfile/" + dfIds)
+                .then(() => {
+                    Swal.fire(
+                        "Delete",
+                        "Subject delete successfully",
+                        "success"
+                    );
+                    getDoc_file();
+                })
+                .catch(() => {
+                    Swal.fire(
+                        "Failed!!",
+                        "There was somthing wrong",
+                        "Warning"
+                    );
+                });
+        }
+    });
+};
 const Subdoc_fisrt = (id) => {
     router.push('/users/course_spec/subdoc/' + id);
 };
@@ -52,6 +106,7 @@ onMounted(async () => {
     await get_Subject_teach();
     await get_teachers();
     await getSubject();
+    await getDoc_file();
 });
 </script>
 
@@ -61,8 +116,10 @@ onMounted(async () => {
             <h4 class="mb-0"> {{ subject.subjects.s_name }}</h4>
 
             <h4 class="fw-normal text-muted h6">รายวิชา{{ subject.subjects.s_name }}</h4>
+
         </div>
     </div>
+
     <div class="row mt-3">
         <div class="col-lg-4">
             <!-- <div class="row">
@@ -72,6 +129,7 @@ onMounted(async () => {
 
             </div> -->
             <div class="row">
+
                 <div class="col-lg-6">
                     <div class="card" @click="Subdoc_fisrt(props.id)">
                         <div class="card-body">
@@ -112,19 +170,26 @@ onMounted(async () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="timeline timeline-one-side mt-2">
+                            <div class="row mt-2" v-show="docfile.length == 1">
+                                <div class="d-flex">
+                                    <img class="pdf-icon " src=" /public/assets/img/pdf (9).png"
+                                        @click="Open_Docfile()">
+                                    <i class="bi bi-trash3 text-secondary ms-3" @click="delete_Docfile()"></i>
+                                </div>
+                            </div>
+                            <div class="timeline timeline-one-side mt-3">
                                 <div class="timeline-block mb-3">
                                     <span class="timeline-step">
                                         <i class="ni ni-bell-55 text-success text-gradient"></i>
                                     </span>
                                     <div class="timeline-content">
-                                        <h6 class="text-dark text-sm font-weight-bold mb-0">$2400, Design changes</h6>
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">สถานะไฟล์เอกสาร กำลังตรวจสอบ
+                                        </h6>
                                         <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">22 DEC 7:20 PM</p>
                                     </div>
                                 </div>
-                                <div class="timeline-block mb-3">
+                                <!-- <div class="timeline-block mb-3">
                                     <span class="timeline-step">
                                         <i class="ni ni-html5 text-danger text-gradient"></i>
                                     </span>
@@ -138,7 +203,8 @@ onMounted(async () => {
                                         <i class="ni ni-cart text-info text-gradient"></i>
                                     </span>
                                     <div class="timeline-content">
-                                        <h6 class="text-dark text-sm font-weight-bold mb-0">Server payments for April</h6>
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">Server payments for April
+                                        </h6>
                                         <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">21 DEC 9:34 PM</p>
                                     </div>
                                 </div>
@@ -157,11 +223,12 @@ onMounted(async () => {
                                         <i class="ni ni-key-25 text-primary text-gradient"></i>
                                     </span>
                                     <div class="timeline-content">
-                                        <h6 class="text-dark text-sm font-weight-bold mb-0">Unlock packages for development
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">Unlock packages for
+                                            development
                                         </h6>
                                         <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">18 DEC 4:54 AM</p>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -187,7 +254,8 @@ onMounted(async () => {
                         <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 border border-bottom"
                             v-for="termTeach in teacher.terms_sub_teach" :key="termTeach.tst_id">
                             <div class="avatar me-3">
-                                <div class="icon icon-shape bg-info-soft shadow text-center border-radius-md shadow-none">
+                                <div
+                                    class="icon icon-shape bg-info-soft shadow text-center border-radius-md shadow-none">
                                     <i class="ni ni-money-coins text-lg text-info text-gradient opacity-10"
                                         aria-hidden="true"></i>
                                 </div>
@@ -202,6 +270,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="card mt-4 ">
+
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
@@ -215,23 +284,42 @@ onMounted(async () => {
                             </div>
                             <div class="col-lg-3">
                                 <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)"
-                                    v-if="subject.doc_type == 1">
+                                    v-show="subject.doc_type == 1 && docfile.length == 0">
                                     <div class="card-body">
                                         <div class="icon icon-shape bg-gradient-info shadow text-center">
                                             <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0">มคอ.3 <span class="text-secondary text-sm">m</span></h5>
-                                        <p class="mb-0">จัดทำ มคอ3</p>
+                                        <p class="mb-0">จัดทำ มคอ3 </p>
+                                    </div>
+                                </div>
+
+                                <div class="card card-do-success" v-show="subject.doc_type == 1 && docfile.length == 1">
+                                    <div class="card-body">
+                                        <div class="icon icon-shape bg-gradient-success shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="mt-3 mb-0 text-success">จัดทำ มคอ.3 </h5>
+                                        <label class="text-dark ms-0">สถานะเสร็จสิ้น</label>
                                     </div>
                                 </div>
                                 <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)"
-                                    v-if="subject.doc_type == 2">
+                                    v-show="subject.doc_type == 2 && docfile.length == 0">
                                     <div class="card-body">
                                         <div class="icon icon-shape bg-gradient-danger shadow text-center">
                                             <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0">มคอ.4 <span class="text-secondary text-sm">m</span></h5>
                                         <p class="mb-0">จัดทำ มคอ4</p>
+                                    </div>
+                                </div>
+                                <div class="card card-do-success" v-show="subject.doc_type == 2 && docfile.length == 1">
+                                    <div class="card-body">
+                                        <div class="icon icon-shape bg-gradient-success shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
+                                        </div>
+                                        <h5 class="mt-3 mb-0 text-success">จัดทำ มคอ.4 </h5>
+                                        <label class="text-dark ms-0">สถานะเสร็จสิ้น</label>
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +335,7 @@ onMounted(async () => {
 
     </div>
 </template>
+
 <style>
 .text-truncate {
     max-width: 80%;
@@ -265,6 +354,19 @@ onMounted(async () => {
     box-shadow: none;
     background-color: #f1f1f1;
 }
+
+.card-do-success {
+    /* background-color: #cdf59b; */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.pdf-icon {
+    width: 80px;
+    transition: 0.3s;
+}
+
+.pdf-icon:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+}
 </style>
-
-

@@ -5,6 +5,9 @@ import teachingSub from '../components/teaching/teaching_sub.vue'
 import coursesAdmin from '../components/admin/courses/index.vue'
 import courses_all_Admin from '../components/admin/courses/courses_all.vue'
 import courses_detail_Admin from '../components/admin/courses/courses_detail.vue'
+import document_check_Admin from '../components/admin/document_check/index.vue'
+import document_check_sub_Admin from '../components/admin/document_check/document_check.vue'
+import document_check_detail_Admin from '../components/admin/document_check/document_detail.vue'
 //users
 import userHome from '../components/users/index.vue'
 import userProfile from '../components/users/profile/index.vue'
@@ -36,6 +39,20 @@ const routes = [
     {
         path : '/admin/courses/course_detail/:id',
         component : courses_detail_Admin,
+        props : true
+    },
+    {
+        path : '/admin/document_check',
+        component : document_check_Admin,
+    },
+    {
+        path : '/admin/document_check/document_check_sub/:id',
+        component : document_check_sub_Admin,
+        props : true
+    },
+    {
+        path : '/admin/document_check/document_check_detail/:id',
+        component : document_check_detail_Admin,
         props : true
     },
     {

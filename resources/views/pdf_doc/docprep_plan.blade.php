@@ -47,15 +47,15 @@
 
         body {
             font-family: "THSarabunNew";
-            font-size: 14px !important;
+            font-size: 20px !important;
             margin-left: 30px;
             margin-right: 30px;
             margin-top: 40px;
             margin-bottom: 130px;
         }
 
-        .fs-14 {
-            font-size: 14px !important;
+        .fs-20 {
+            font-size: 20px !important;
             ;
         }
 
@@ -188,16 +188,16 @@
 </head>
 
 <body>
-    <h6 class="fs-14">7. การวางแผนและการเตรียมการ</h6>
+    <h6 class="fs-20">7. การวางแผนและการเตรียมการ</h6>
     @foreach($prep_plan as $item)
     <table class="table1 border-none">
         <tbody class="border-none">
             <tr class="border-none">
                 <td class="border-none">
-                    <span class="fs-14 m-4">{{$item['topic_num']}}</span>
+                    <span class="fs-20 m-4">{{$item['topic_num']}}</span>
                 </td>
                 <td class="m-4 border-none">
-                    <span class="fs-14">{{$item['topic']}}</spa>
+                    <span class="fs-20">{{$item['topic']}}</spa>
                 </td>
             </tr>
         </tbody>
@@ -220,26 +220,26 @@
     </div>
 
     @endforeach
-    <h6 class="fs-14" style="margin-top: 25px;">8. การวัดและประเมินผลการปฎิบัติของนักศึกษา</h6>
+    <h6 class="fs-20" style="margin-top: 25px;">8. การวัดและประเมินผลการปฎิบัติของนักศึกษา</h6>
     <span class="ml-6">1. หลักเกณฑ์การประเมิน</span>
     <table class="table2">
         <thead>
             <tr>
                 <td style="width:80%;">
-                    <h6 class="fs-14 text-center">รายการ</h6>
+                    <h6 class="fs-20 text-center">รายการ</h6>
                 </td>
                 <td>
-                    <h6 class="fs-14 text-center">ร้อยละ</h6>
+                    <h6 class="fs-20 text-center">ร้อยละ</h6>
                 </td>
             </tr>
         </thead>
         <tbody>
             @foreach($measure_list as $item)
             <tr>
-                <td class="fs-14 text-start">
+                <td class="fs-20 text-start">
                     <div style="margin-left: 5px;"> {{ $item->ml_title}}</div>
                 </td>
-                <td class="fs-14 text-center ">
+                <td class="fs-20 text-center ">
                     {{ $item->ml_value}}
                 </td>
             </tr>
@@ -249,12 +249,12 @@
         </tbody>
         <tfoot>
             <tr>
-                <td>
-                    <h6 class="text-center"> รวม</h6>
+                <td class="text-center fs-20" style="font-weight: bold;">
+                    รวม
                 </td>
 
-                <td>
-                    <h6 class="text-center"> {{$sum_measure_list}}</h6>
+                <td class="text-center fs-20" style="font-weight: bold;">
+                    {{$sum_measure_list}}
                 </td>
             </tr>
         </tfoot>
@@ -265,10 +265,10 @@
             <tbody class="border-none">
                 <tr class="border-none">
                     <td class="border-none">
-                        <span class="fs-14 m-4">{{$item['topic_num']}}</span>
+                        <span class="fs-20 m-4">{{$item['topic_num']}}</span>
                     </td>
                     <td class="m-4 border-none">
-                        <span class="fs-14">{{$item['topic']}}</spa>
+                        <span class="fs-20">{{$item['topic']}}</spa>
                     </td>
                 </tr>
             </tbody>
@@ -291,7 +291,7 @@
         </div>
         @endforeach
     </div>
-    <h6 class="fs-14" style="margin-top: 25px;">9. การประเมินและปรับปรุงการดำเนินการของการฝึกประสบการณ์วิชาชีพภาคสนาม</h6>
+    <h6 class="fs-20" style="margin-top: 25px;">9. การประเมินและปรับปรุงการดำเนินการของการฝึกประสบการณ์วิชาชีพภาคสนาม</h6>
     <span class="ml-6">1. กระบวนการประเมินการฝึกประสบการณ์ภาคสนามจากผู้เกี่ยวข้อง</span>
     <div>
         @foreach($adjust_people as $item)
@@ -299,10 +299,10 @@
             <tbody class="border-none">
                 <tr class="border-none">
                     <td class="border-none">
-                        <span class="fs-14 m-4">{{$item['topic_num']}}</span>
+                        <span class="fs-20 m-4">{{$item['topic_num']}}</span>
                     </td>
                     <td class="m-4 border-none">
-                        <span class="fs-14">{{$item['topic']}}</spa>
+                        <span class="fs-20">{{$item['topic']}}</spa>
                     </td>
                 </tr>
             </tbody>
@@ -328,7 +328,7 @@
         <span class="ml-9">{{$item['adr_title']}}</span>
     </div>
     @endforeach
-    <h6 class="fs-14" style="margin-top: 25px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
+    <h6 class="fs-20" style="margin-top: 25px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
 </body>
 
 </html>

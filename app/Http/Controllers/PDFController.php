@@ -32,12 +32,14 @@ use App\Models\Resource;
 use App\Models\Objective;
 use App\Models\Prep_plan_topic;
 use App\Models\Subject_description;
+use App\Models\Docfile;
+use App\Models\Docfile_status;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 
 class PDFController extends Controller
 {
-    public function index($id)
+    public function get_doc_show($id)
     {
         $subject = Terms_sub::with(['subjects.courses.topic_learn_results'])->with(['terms'])->where('ts_id', $id)->first();
         $top_result = Topic_learn_results::where('c_id', $subject->subjects->c_id)->where('doc_type', $subject->subjects->doc_type)->get();
@@ -151,6 +153,124 @@ class PDFController extends Controller
                 'Content-Disposition' => 'inline; filename="pdf_doc.pdf"',
             ]
         );
+    }
+    public function export($id, $userId)
+    {
+        $subject = Terms_sub::with(['subjects.courses.topic_learn_results'])->with(['terms'])->where('ts_id', $id)->first();
+        $top_result = Topic_learn_results::where('c_id', $subject->subjects->c_id)->where('doc_type', $subject->subjects->doc_type)->get();
+        $result_list_detail = Learn_results_detail::where('ts_id', $id)->get();
+
+
+        $count_list_detail = Topic_learn_results::select('topic_learn_results.tlr_id', 'tlr_title', DB::raw('count(learn_results_details.tlr_id) as count'))
+            ->leftJoin('learn_results_details', 'topic_learn_results.tlr_id', '=', 'learn_results_details.tlr_id')->where('learn_results_details.ts_id', $id)
+            ->groupBy('topic_learn_results.tlr_id', 'tlr_title')
+            ->get();
+        $count_all_details = Learn_results_detail::where('ts_id', $id)->count();
+        $count_all_details = mb_convert_encoding($count_all_details, 'HTML-ENTITIES', 'UTF-8');
+        $list_result_detail = [];
+        $j = 1;
+
+        foreach ($count_list_detail as $item) {
+            for ($i = 1; $i <= $item['count']; $i++) {
+                $list_result_detail[] = [
+                    'num' => $j . '.' . $i,
+                    'data' => $item['tlr_title'],
+                ];
+            }
+            $j += 1;
+        }
+
+        $num = 1;
+        $result_data = [];
+        $list_result = Learn_results_list::where('ts_id', $id)->get();
+
+        foreach ($list_result as $item) {
+            $result_data[] = [
+                'num' => $num,
+                'title' => $item['lrl_title']
+            ];
+            $num  += 1;
+        }
+
+
+
+        $result_data_detail =   $this->learn_result_detail($subject, $id);
+        $plan_week_top =   $this->get_planning_top($subject);
+        $plan_week =   $this->planing_week($id, $subject);
+        $sum_plan_week =   $this->get_planning_sum_hours($id);
+        $measure_list =   $this->get_measure_list($id);
+        $sum_measure_list =   $this->get_sum_measure_list($id);
+        $resource =   $this->get_resource($id);
+        $subdes =   $this->get_sub_description($id);
+        $objective =   $this->get_objective($id);
+        $prep_plan =   $this->get_prep_plan($id);
+        $measure_prac =   $this->get_measure_prac($id);
+        $adjust_people =   $this->get_adjust_people($id);
+        $adjust_repeat =   $this->get_adjust_repeat($id);
+        // return response()->json([
+        //     'term_sub' => $result_data
+        // ], 200);
+
+        $m = new Merger();
+        $imagePath = public_path('/assets/img/logo-sru.jpg');
+        $imageData = File::get($imagePath);
+        $base64Image = base64_encode($imageData);
+
+
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.doctitle', compact('subject', 'base64Image', 'subdes'))->setPaper('a4', 'portrait');
+        $m->addRaw($pdf->output());
+
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.docresult', compact('count_list_detail', 'count_all_details', 'list_result_detail', 'result_data'))->setPaper('a4', 'landscape');
+        $m->addRaw($pdf->output());
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.docresult_detail', compact('result_data_detail', 'objective'))->setPaper('a4', 'portrait');
+        $m->addRaw($pdf->output());
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf_doc.docplan', compact('plan_week', 'plan_week_top', 'sum_plan_week', 'subject'))->setPaper('a4', 'landscape');
+        $m->addRaw($pdf->output());
+        if ($subject->subjects->doc_type == 2) {
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadView('pdf_doc.docprep_plan', compact('prep_plan', 'measure_list', 'sum_measure_list', 'measure_prac', 'adjust_people', 'adjust_repeat'))->setPaper('a4', 'portrait');
+            $m->addRaw($pdf->output());
+        }
+        if ($subject->subjects->doc_type != 2) {
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadView('pdf_doc.doclast', compact('measure_list', 'sum_measure_list', 'resource'))->setPaper('a4', 'portrait');
+            $m->addRaw($pdf->output());
+        }
+
+        file_put_contents('pdf_doc' . '.pdf', $m->merge());
+
+
+        $mergedPdfContent = $m->merge();
+        $filePath = 'pdf_doc.pdf';
+
+        $randomFileName = $id . '_' . uniqid() . '_' . Str::random(10) . '.pdf';
+        $filePath = 'uploads/file_doc' . '/' . $randomFileName;
+
+
+        $doc_file = new Docfile();
+        $doc_file->df_name = $randomFileName;
+        $doc_file->ts_id = $id;
+        $doc_file->id = $userId;
+        $doc_file->save();
+
+        $lastInsertedId = $doc_file->df_id;
+
+        $doc_st = new Docfile_status();
+        $doc_st->df_id = $lastInsertedId;
+        $doc_st->dfs_status = 0;
+        $doc_st->save();
+
+        file_put_contents($filePath, $mergedPdfContent);
+
+        return redirect()->route('users.subject_detail', $id);
     }
     public  function learn_result_detail($subject, $id)
     {

@@ -37,51 +37,51 @@
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-ExtraLight.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/Sarabun-ExtraLight.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/THSarabunNew.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: bold;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-Regular.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew Bold.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/THSarabunNew Italic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew Italic.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: bold;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-BoldItalic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew BoldItalic.ttf') }}") format('truetype');
         }
 
         body {
             font-family: "THSarabunNew";
-            font-size: 15px !important;
-            margin-left: 35px;
-            margin-right: 35px;
+            font-size: 20px !important;
+            margin-left: 40px;
+            margin-right: 40px;
             margin-top: 10px;
         }
 
-        .fs-16 {
-            font-size: 16px;
+        .fs-20 {
+            font-size: 22px !important;
         }
 
-        .fs-14 {
-            font-size: 14px;
+        .fs-18 {
+            font-size: 20px !important;
         }
 
         table,
@@ -155,31 +155,32 @@
             <img src="data:image/jpeg;base64,{{ $base64Image }}" alt="Your Image" style="width: 120px;" class="text-center">
         </div>
         @if($subject->subjects->doc_type == 1)
-        <h6 for="" class="fs-16 p-0 m-0 text-center">มคอ.3</h6>
+        <h6 for="" class="fs-20 p-0 m-0 text-center">มคอ.3</h6>
         @else
-        <h6 for="" class="fs-16 p-0 m-0 text-center">มคอ.4</h6>
+        <h6 for="" class="fs-20 p-0 m-0 text-center">มคอ.4</h6>
         @endif
-        <h6 class="fs-16 p-0 m-0 text-center">แผนการสอนของรายวิชา</h6>
-        <h6 class="fs-16 p-0 m-0 text-center">{{$subject->subjects->s_num}} {{$subject->subjects->s_name}}</h6>
-        <h6 class="fs-16 p-0 m-0 text-center " style="margin-bottom: 25px;">ภาคเรียนที่ {{$subject->terms->t_name}} ปีการศึกษา {{$subject->terms->t_year}}</h6>
+        <h6 class="fs-20 p-0 m-0 text-center">แผนการสอนของรายวิชา</h6>
+        <h6 class="fs-20 p-0 m-0 text-center">{{$subject->subjects->s_num}} {{$subject->subjects->s_name}}</h6>
+        <h6 class="fs-20 p-0 m-0 text-center " style="margin-bottom: 25px;">ภาคเรียนที่ {{$subject->terms->t_name}} ปีการศึกษา {{$subject->terms->t_year}}</h6>
         <div id="divToPrint" class="font-sb">
             <table class="h1 mt-5 border border-dark table ">
                 <tbody>
                     <tr>
                         <td>
-                            <h6 class="fs-14 ms-10 m-0 p-0"> ชื่อสถาบันอุดมศึกษา มหาวิทยาลัยราชภัฏสุราษฎร์ธานี
+                            <h6 class="fs-18 ms-10 m-0 p-0"> ชื่อสถาบันอุดมศึกษา มหาวิทยาลัยราชภัฏสุราษฎร์ธานี
                             </h6>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h6 class="fs-14 ms-10 m-0 p-0"> คณะ/สาขา/วิชาเอก วิทยาศาสตร์และเทคโนโลยี สาขาวิทการคอมพิวเตอร์
+                            <h6 class="fs-18 ms-10 m-0 p-0"> คณะ/สาขา/วิชาเอก วิทยาศาสตร์และเทคโนโลยี สาขาวิทการคอมพิวเตอร์
                             </h6>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h6 class="fs-14 ms-10 m-0 p-0"> 1. รหัสวิชาและชื่อรายวิชา</h6>
+
+                            <span class="fs-18 ms-10 m-0 p-0" style="font-weight: bold;"> 1. รหัสวิชาและชื่อรายวิชา</span>
                             <table class="border-none">
                                 <tbody class="border-none">
                                     <tr class="border-none">
@@ -209,13 +210,13 @@
                     </tr>
                     <tr>
                         <td>
-                            <h6 class="m-0 p-0 ms-10 fs-14">2. จำนวนหน่วยกิต</h6>
+                            <h6 class="m-0 p-0 ms-10 fs-18">2. จำนวนหน่วยกิต</h6>
                             <label class="fw-normal ms-25" style="margin-left: 25px;">{{$subject->subjects->s_credit}}</label>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h6 class="p-0 m-0 fs-14 ms-10">3. ชื่อหลักสูตรและประเภทของรายวิชา</h6>
+                            <h6 class="p-0 m-0 fs-18 ms-10">3. ชื่อหลักสูตรและประเภทของรายวิชา</h6>
                             <div class="ms-25">
                                 <label> ชื่อหลักสูตร {{$subject->subjects->courses->c_name}}</label><br>
                                 <label> ประเภทของรายวิชา กลุ่มวิชาเฉพาะด้านเลือก</label>
@@ -225,14 +226,14 @@
                     <tr>
                         <td>
                             @foreach($subdes as $item)
-                            <h6 class="p-0 m-0 fs-14  ms-10">4. คำอธิบายรายวิชา</h6>
-                            <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาไทย</h6>
+                            <h6 class="p-0 m-0 fs-18  ms-10">4. คำอธิบายรายวิชา</h6>
+                            <h6 for="" class="p-0 m-0 fs-18  ms-25">ภาษาไทย</h6>
                             <div class="ms-10">
                                 <div class="b" style="width: 600px">
                                     <label for="" class="">{!! $item->sd_title !!}</label>
                                 </div>
                             </div>
-                            <h6 for="" class="p-0 m-0 fs-14  ms-25">ภาษาอังกฤษ</h6>
+                            <h6 for="" class="p-0 m-0 fs-18  ms-25">ภาษาอังกฤษ</h6>
                             <div class="ms-10">
                                 <div class="b" style="width: 600px">
                                     <label for="" class="">{!! $item->sd_title_eng !!}</label>

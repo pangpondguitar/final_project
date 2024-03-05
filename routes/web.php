@@ -10,7 +10,7 @@ use App\Http\Controllers\UsersPanel\UsersControllor;
 use App\Http\Controllers\AdminPanel\AdminuserController;
 use App\Http\Controllers\AdminPanel\TermsControllor;
 use App\Http\Controllers\AdminPanel\TeachingControllor;
-
+use App\Http\Controllers\AdminPanel\DocumentCheckController;
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
 use App\Http\Controllers\PDFController;
@@ -104,6 +104,14 @@ Route::middleware(['auth', 'role:1'])->group(function () {
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
+
+    Route::prefix('admin/document_check')->group(function () {
+        Route::controller(DocumentCheckController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.document_check');
+            Route::get('/document_check_sub/{id}', 'index')->name('admin.document_check_sub');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
     // Route::name('admin/programs.')->group(function () {
     //     Route::post('/insert', [AdminControllor::class, 'program_insert'])->name('admin.insert');
     // });
@@ -121,12 +129,14 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::prefix('users/course_spec')->group(function () {
         Route::controller(CourseSpecControllor::class)->group(function () {
             Route::get('/', 'index')->name('users.course_spec');
+            Route::get('/subject_detail/{id}', 'index')->name('users.subject_detail');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
     Route::prefix('users/pdf')->group(function () {
         Route::controller(PDFController::class)->group(function () {
             Route::get('/{id}', 'index')->name('users.pdf');
+            Route::get('export/{id}/{user_id}', 'export')->name('export.pdf');
             Route::get('/result', 'pdf_result')->name('users2.pdf');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });

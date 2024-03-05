@@ -10,6 +10,7 @@ use App\Models\Program;
 use App\Models\Subject;
 use App\Models\Course_committee;
 use App\Models\Topic_learn_results;
+use App\Models\User;
 
 use PHPUnit\Framework\Constraint\Count;
 
@@ -251,5 +252,52 @@ class CourseController extends Controller
 
 
         return view('admin.course_detail', compact('id', 'subject'));
+    }
+    public function get_teacher($id)
+    {
+        $course = Course::find($id);
+        $committee = Course_committee::where('c_id', $id)->get();
+        $teachers = User::with('user_detail')->whereHas('user_detail', function ($query) use ($course) {
+            $query->where('p_id', $course->p_id);
+        })->get();
+
+        $teachersWithoutCommittee = User::with('user_detail')
+            ->whereHas('user_detail', function ($query) use ($course) {
+                $query->where('p_id', $course->p_id);
+            })
+            ->whereDoesntHave('committee', function ($query) use ($id) {
+                $query->where('c_id', $id);
+            })
+            ->get();
+
+
+
+        return response()->json([
+            'teachers' => $teachersWithoutCommittee,
+            '$committee' => $committee
+
+        ], 200);
+    }
+    public function add_committee($id, $user_id)
+    {
+        $committee = new Course_committee();
+        $committee->c_id = $id;
+        $committee->id = $user_id;
+        $committee->save();
+    }
+    public function get_committee($id)
+    {
+        $committee = Course_committee::with('user.user_detail')->where('c_id', $id)->get();
+        // $committeeData = $committee->map(function ($item) {
+        //     return $item->user->user_detail;
+        // });
+        return response()->json([
+            'committee' => $committee
+        ], 200);
+    }
+    public function delete_committee($id)
+    {
+        $committee = Course_committee::find($id);
+        $committee->delete();
     }
 }

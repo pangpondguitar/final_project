@@ -57,7 +57,7 @@ onMounted(async () => {
     <div class="row">
         <Components_menu @selectMenu="handleMenuClick" />
         <Components_subject :id="props.id" v-if="menu == 1" />
-        <Components_commmittee v-if="menu == 2" />
+        <Components_commmittee :id="props.id" v-if="menu == 2" />
         <Components_edit :id="props.id" v-if="menu == 3" />
         <Components_doc v-if="menu == 4" :id="props.id" />
     </div>

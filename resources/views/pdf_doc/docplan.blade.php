@@ -47,19 +47,24 @@
 
         body {
             font-family: "THSarabunNew";
-            font-size: 11px !important;
+            font-size: 14px !important;
             padding-left: 30px;
             padding-right: 30px;
             padding-top: 10px;
+        }
+
+        .fs-16 {
+            font-size: 16px !important;
+        }
+
+        .fs-18 {
+            font-size: 18px !important;
         }
 
         .fs-14 {
             font-size: 14px !important;
         }
 
-        .fs-16 {
-            font-size: 16px !important;
-        }
 
         .table-1 {
             width: 100%;
@@ -196,15 +201,15 @@
 <body>
     <div class="" id="result_sub">
         @if($subject->subjects->doc_type == 1)
-        <h6 for="" class="fs-14">6.แผนการสอน</h6>
+        <h6 for="" class="fs-18">6.แผนการสอน</h6>
         @else
-        <h6 for="" class="fs-14">6.แผนการฝึกประสบการณ์ภาคสนาม</h6>
+        <h6 for="" class="fs-18">6.แผนการฝึกประสบการณ์ภาคสนาม</h6>
         @endif
         <table style="width: 100%;">
             <thead>
                 <tr>
                     <td class="text-center m-10" style="width: 10% !important;">
-                        <h6 class="m-10">
+                        <h6 class="m-10 fs-14">
                             สัปดาห์ที่<br>
                             (จํานวน<br>
                             ชั่วโมง)
@@ -215,7 +220,7 @@
                         <div>
 
                             <div class="column">
-                                <h6> {{$item['pt_title']}}</h6>
+                                <h6 class="fs-14"> {{$item['pt_title']}}</h6>
                             </div>
 
                         </div>
@@ -227,7 +232,7 @@
             <tbody>
                 @foreach($plan_week as $pwId => $weekItem)
                 <tr>
-                    <td class="text-center" style="width: 10%;">
+                    <td class="text-center " style="width: 10%;">
                         {{ $weekItem['week'] }} <br>
                         ({{ $weekItem['hour'] }})
                     </td>
@@ -260,29 +265,29 @@
 
 
         </table>
-        <h6 class="fs-14" style="margin-top: 15px;">สรุปจํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h6>
+        <h6 class="fs-18" style="margin-top: 15px;">สรุปจํานวนชั่วโมงที่ใช้ต่อภาคการศึกษา</h6>
         <table class="table2">
             <thead>
                 <tr class="text-center var-middle">
                     <td class="var-middle">
-                        <h6 class="fs-14">
+                        <h6 class="fs-18">
                             ภาคทฤษฎีการบรรยาย
                         </h6>
                     </td>
                     <td class="var-middle" style="width: 30%;">
-                        <h6 class="fs-14">
+                        <h6 class="fs-18">
                             ภาคปฏิบัติ <br>
 
                             (การฝึกปฏิบัติ/ภาคสนาม/การฝึกงาน)
                         </h6>
                     </td>
                     <td class="var-middle" style="width: 20%;">
-                        <h6 class="fs-14">
+                        <h6 class="fs-18">
                             การศึกษาด้วยตนเอง
                         </h6>
                     </td>
                     <td class="var-middle">
-                        <h6 class="fs-14">
+                        <h6 class="fs-18">
                             รวม
                         </h6>
                     </td>
@@ -294,16 +299,16 @@
                 <tr class="text-center">
                     @foreach($sum_plan_week as $item)
                     <td class="text-center py-1">
-                        <label for="" class="fs-16 text-center">{{$item->psh_describe}}</label>
+                        <label for="" class="fs-18 text-center">{{$item->psh_describe}}</label>
                     </td>
                     <td class="text-center py-1">
-                        <label for="" class="fs-16 text-center">{{$item->psh_practice}}</label>
+                        <label for="" class="fs-18 text-center">{{$item->psh_practice}}</label>
                     </td>
                     <td class="text-center py-1">
-                        <label for="" class="fs-16 text-center">{{$item->psh_self}}</label>
+                        <label for="" class="fs-18 text-center">{{$item->psh_self}}</label>
                     </td>
                     <td class="text-center py-1">
-                        <label for="" class="fs-16 text-center">{{$item->psh_describe + $item->psh_practice + $item->psh_self}}</label>
+                        <label for="" class="fs-18 text-center">{{$item->psh_describe + $item->psh_practice + $item->psh_self}}</label>
                     </td>
                     @endforeach
 

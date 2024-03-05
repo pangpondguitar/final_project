@@ -47,16 +47,15 @@
 
         body {
             font-family: "THSarabunNew";
-            font-size: 14px !important;
+            font-size: 20px !important;
             margin-left: 30px;
             margin-right: 30px;
             margin-top: 55px;
             margin-bottom: 130px;
         }
 
-        .fs-14 {
-            font-size: 14px !important;
-            ;
+        .fs-20 {
+            font-size: 20px !important;
         }
 
         table {
@@ -132,7 +131,7 @@
 </head>
 
 <body>
-    <h6 class="fs-14"> วัตถุประสงค์ของหลักสูตร เพื่อผลิตบัณฑิตให้มีคุณลักษณะดังนี้</h6>
+    <h6 class="fs-20"> วัตถุประสงค์ของหลักสูตร เพื่อผลิตบัณฑิตให้มีคุณลักษณะดังนี้</h6>
     <table class="table1">
         <tbody>
             @php $num = 1; @endphp
@@ -150,16 +149,16 @@
     </table>
 
 
-    <h6 class="fs-14" style="margin-top: 25px;"> รายละเอียดผลลัพธ์การเรียนรู้แต่ละด้านตามมาตรฐานคุณวุฒิระดับอุดมศึกษา ประกอบด้วย</h6>
+    <h6 class="fs-20" style="margin-top: 25px;"> รายละเอียดผลลัพธ์การเรียนรู้แต่ละด้านตามมาตรฐานคุณวุฒิระดับอุดมศึกษา ประกอบด้วย</h6>
     @foreach($result_data_detail as $item)
     <table class="table1">
         <tbody>
             <tr>
                 <td>
-                    <h6 class="fs-14 m-4">{{$item['topic_num']}}</h6>
+                    <h6 class="fs-20 m-4">{{$item['topic_num']}}</h6>
                 </td>
                 <td class="m-4">
-                    <h6 class="fs-14">{{$item['topic']}}</h6>
+                    <h6 class="fs-20">{{$item['topic']}}</h6>
                 </td>
             </tr>
         </tbody>
@@ -188,11 +187,11 @@
             <tr>
                 <td>
 
-                    <h6 class="fs-14 m-4">3.</h6>
+                    <h6 class="fs-20 m-4">3.</h6>
 
                 </td>
                 <td class="m-4">
-                    <h6 class="fs-14">ความรู้</h6>
+                    <h6 class="fs-20">ความรู้</h6>
                 </td>
             </tr>
         </tbody>
@@ -229,11 +228,11 @@
             <tr>
                 <td>
 
-                    <h6 class="fs-14 m-4">3.</h6>
+                    <h6 class="fs-20 m-4">3.</h6>
 
                 </td>
                 <td class="m-4">
-                    <h6 class="fs-14">ความรู้</h6>
+                    <h6 class="fs-20">ความรู้</h6>
                 </td>
             </tr>
         </tbody>
@@ -269,11 +268,11 @@
             <tr>
                 <td>
 
-                    <h6 class="fs-14 m-4">3.</h6>
+                    <h6 class="fs-20 m-4">3.</h6>
 
                 </td>
                 <td class="m-4">
-                    <h6 class="fs-14">ความรู้</h6>
+                    <h6 class="fs-20">ความรู้</h6>
                 </td>
             </tr>
         </tbody>

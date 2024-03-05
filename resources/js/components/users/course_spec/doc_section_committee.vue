@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { defineProps, defineEmits } from 'vue';
@@ -7,6 +7,9 @@ const router = useRouter();
 let measure = ref({});
 let menu = ref([]);
 let teachers = ref({});
+let committee = ref({});
+let selectedCommittees = ref([]);
+let doc_committee = ref([]);
 menu.value = 1
 let formAdd = ({
     title: '',
@@ -23,6 +26,17 @@ const props = defineProps({
         default: "",
     },
 });
+const get_Committee = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_committee/${props.id}`);
+        committee.value = response.data.committee;
+        doc_committee.value = response.data.doc_committee;
+        console.log("commit", committee.value);
+    } catch (error) {
+        console.error('Error fetching committee:', error);
+    }
+};
+
 const getMeasure_list = async () => {
     try {
         let response = await axios.get(`/api/user_get_measure/${props.id}`);
@@ -79,37 +93,50 @@ const updateMeasure_list = () => {
         title: "Update Planing update successfully",
     });
 };
-const deleteMeasure_list = (id) => {
-    Swal.fire({
-        title: "ยืนยันลบข้อมูลสัปดาห์",
-        text: 'ยืนยันลบข้อมูล',
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ยืนยันรายการ",
-        cancelButtonText: "ยกเลิก",
-    }).then((result) => {
-        if (result.value) {
-            axios
-                .get("/api/user_delete_measure/" + id)
-                .then(() => {
-                    Swal.fire(
-                        "Delete",
-                        "Subject delete successfully",
-                        "success"
-                    );
-                })
-                .catch(() => {
-                    Swal.fire(
-                        "Failed!!",
-                        "There was somthing wrong",
-                        "Warning"
-                    );
-                });
-        }
+const addCommittee = (id) => {
+    axios
+        .post(`/api/user_add_committee/${props.id}/${id}`)
+        .then((response) => {
+            get_Committee();
+        })
+        .catch((error) => { });
+
+    toast.fire({
+        icon: "success",
+        title: "Week hour add successfully",
     });
 };
+const deleteCommittee = (id) => {
+
+    axios
+        .get(`/api/user_delete_committee/${props.id}/${id}`)
+        .then((response) => {
+            get_Committee();
+        })
+        .catch((error) => { });
+
+    toast.fire({
+        icon: "success",
+        title: "remove committee successfully",
+    });
+};
+const toggleCommittee = (id) => {
+    console.log(`isSelected(${id}):`, isSelected(id));
+    console.log(selectedCommittees.value);
+    // if (isSelected(id)) {
+    //     addCommittee(id);
+    // } else {
+    //     deleteCommittee(id);
+    // }
+}
+
+const isSelected = (id) => {
+    return selectedCommittees.value.includes(id);
+}
+
+const isInDocCommittee = (id) => {
+    return doc_committee.value.map(item => item.id).includes(id);
+}
 const openEditModal = (item) => {
     console.log(item);
     editing.value = true;
@@ -122,8 +149,11 @@ const openEditModal = (item) => {
 }
 onMounted(async () => {
     await get_teachers();
+    await get_Committee();
+    selectedCommittees.value = doc_committee
 });
 </script>
+
 <template>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog  modal-lg">
@@ -168,15 +198,21 @@ onMounted(async () => {
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <ul class="list-group list-group-flush" v-for="teacher in teachers" :key="teacher.ts_id">
-                            <li class="list-group-item list-group-item-action" v-for="termTeach in teacher.terms_sub_teach"
-                                :key="termTeach.tst_id">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action" v-for="item in committee" :key="item.id">
 
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-start">
+                                    <div class="me-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" :value="item.id"
+                                                :checked="isInDocCommittee(item.id)" id="fcustomCheck1{{item.id}}"
+                                                @change="toggleCommittee(item.id)" v-model="selectedCommittees">
+                                        </div>
+
+                                    </div>
                                     <div>
-                                        <h6 for="" class="fw-normal mb-0 text-muted"> {{
-                                            termTeach.users.user_detail.user_d_name
-                                        }}
+                                        <h6 for="" class="fw-normal mb-0 text-muted">
+                                            {{ item.user.user_detail.user_d_name }}
                                         </h6>
                                     </div>
 
@@ -184,15 +220,15 @@ onMounted(async () => {
                             </li>
                         </ul>
                     </div>
-                </div>
+                    </div>
                 <div class="row mt-4">
                     <h6>อาจารย์ผู้สอนรายวิชา</h6>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <ul class="list-group list-group-flush" v-for="teacher in teachers" :key="teacher.ts_id">
-                            <li class="list-group-item list-group-item-action" v-for="termTeach in teacher.terms_sub_teach"
-                                :key="termTeach.tst_id">
+                            <li class="list-group-item list-group-item-action"
+                                v-for="termTeach in teacher.terms_sub_teach" :key="termTeach.tst_id">
 
                                 <div class="d-flex justify-content-start">
                                     <div class="me-2">
@@ -203,8 +239,8 @@ onMounted(async () => {
                                     </div>
                                     <div>
                                         <h6 for="" class="fw-normal mb-0 text-muted"> {{
-                                            termTeach.users.user_detail.user_d_name
-                                        }}
+                                termTeach.users.user_detail.user_d_name
+                            }}
                                         </h6>
                                     </div>
 

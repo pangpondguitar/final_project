@@ -1,4 +1,3 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -14,7 +13,7 @@ import Components_committee from '../../../components/users/course_spec/doc_sect
 import Components_prep_plan from '../../../components/users/course_spec/doc_section_prep_plan.vue';
 import Components_measure_prac from '../../../components/users/course_spec/doc_section_measure_prac.vue';
 import Components_adjust from '../../../components/users/course_spec/doc_section_adjust.vue';
-
+import Components_send from '../../../components/users/course_spec/doc_section_send.vue';
 const router = useRouter();
 let programs = ref([]);
 let menu = ref([]);
@@ -46,13 +45,12 @@ onMounted(async () => {
         <Components_committee :id="props.id" v-if="menu == 6" />
         <Components_prep_plan :id="props.id" v-if="menu == 7" />
         <Components_measure_prac :id="props.id" v-if="menu == 8" />
-        <Components_adjust :id="props.id" v-if="menu == 9" />
+        <Components_send :id="props.id" v-if="menu == 10" />
     </div>
 </template>
+
 <style>
 .text-truncate {
     max-width: 80%;
 }
 </style>
-
-

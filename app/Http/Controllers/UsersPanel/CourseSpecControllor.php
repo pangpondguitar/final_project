@@ -29,7 +29,9 @@ use App\Models\Adjust_people_list;
 use App\Models\Adjust_repeat;
 use App\Models\Objective;
 use App\Models\Subject_description;
-
+use App\Models\Course_committee;
+use App\Models\Docfile;
+use App\Models\Docfile_status;
 use Illuminate\Support\Str;
 
 class CourseSpecControllor extends Controller
@@ -496,5 +498,76 @@ class CourseSpecControllor extends Controller
         $subdes->sd_title = $request->title;
         $subdes->sd_title_eng = $request->title_eng;
         $subdes->save();
+    }
+    public function get_committee($id)
+    {
+
+        $term_sub = Terms_sub::with('subjects.courses')->find($id);
+
+        $course = $term_sub->subjects->courses->c_id;
+        $doc_committee = Doc_committee::where('ts_id', $id)->get();
+        $committee = Course_committee::with('user.user_detail')->where('c_id', $course)->get();
+        return response()->json([
+            'committee' => $committee,
+            'doc_committee' => $doc_committee
+        ], 200);
+    }
+    public function add_committee($id, $user_id)
+    {
+        $committee = new Doc_committee();
+        $committee->id = $user_id;
+        $committee->ts_id = $id;
+        $committee->save();
+    }
+    public function delete_committee($id, $user_id)
+    {
+        $committee = Doc_committee::where('ts_id', $id)->where('id', $user_id)->firstOrFail();
+        $committee->delete();
+    }
+
+    public function get_doc_file($id)
+    {
+        $docfile = Docfile::where('ts_id', $id)->get();
+        return response()->json([
+            'docfile' => $docfile
+        ], 200);
+    }
+    public function get_docfile_finish($id)
+    {
+        $docfile = Docfile::find($id);
+
+        $filePath = public_path('uploads/file_doc/' . $docfile->df_name);
+
+        return response()->stream(
+            function () use ($filePath) {
+                readfile($filePath);
+            },
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $docfile->df_name . '"',
+            ]
+        );
+    }
+    public function delete_docfile($id)
+    {
+        $docfile = Docfile::find($id);
+
+        if (!$docfile) {
+            return response()->json(['message' => 'ไม่พบข้อมูลที่ต้องการลบ'], 404);
+        }
+
+        $df_id = $docfile->df_id;
+
+        // ลบข้อมูลใน Docfile_status ที่มี df_id เป็น FK
+        Docfile_status::where('df_id', $df_id)->delete();
+
+        // ลบข้อมูลใน Docfile
+        $docfile->delete();
+
+        $filePath = public_path('uploads/file_doc/' . $docfile->df_name);
+        unlink($filePath);
+
+        return response()->json(['message' => 'ลบข้อมูลเรียบร้อยแล้ว'], 200);
     }
 }

@@ -58,4 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Users_detail::class, 'id');
     }
+
+
+    public function committee()
+    {
+        return $this->hasMany(Course_committee::class, 'id');
+    }
 }

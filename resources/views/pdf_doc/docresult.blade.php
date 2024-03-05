@@ -45,9 +45,16 @@
             src: url("{{ public_path('/assets/my-fonts/Sarabun-BoldItalic.ttf') }}") format('truetype');
         }
 
+        @font-face {
+            font-family: 'Arial';
+            font-style: normal;
+            font-weight: normal;
+            src: url("{{ public_path('/assets/my-fonts2/ArialCE.ttf') }}") format('truetype');
+        }
+
         body {
             font-family: "THSarabunNew";
-            font-size: 11px !important;
+            font-size: 16px !important;
             margin-left: 35px;
             margin-right: 35px;
             margin-top: 10px;
@@ -89,12 +96,12 @@
             font-size: 16px;
         }
 
-        .fs-15 {
-            font-size: 15px;
+        .fs-18 {
+            font-size: 18px;
         }
 
-        .fs-14 {
-            font-size: 12px;
+        .fs-16 {
+            font-size: 16px !important;
             padding-bottom: 0px;
             margin-bottom: 0px;
             margin-top: 0px;
@@ -165,19 +172,19 @@
 
 <body>
     <div class="" id="result_sub">
-        <h6 class="fs-15 p-0 m-0">5. ผลลัพธ์การเรียนรู้ของรายวิชา</h6>
+        <h6 class="fs-18 p-0 m-0">5. ผลลัพธ์การเรียนรู้ของรายวิชา</h6>
 
         <table>
             <thead>
                 <tr>
                     <td rowspan="3" style="width: 20% !important; ">
-                        <h6 class="fs-14"> จุดมุ่งหมายของรายวิชา</h6>
+                        <h6 class="fs-16"> จุดมุ่งหมายของรายวิชา</h6>
                     </td>
                     <td colspan="{{$count_all_details}}">
-                        <h6 class="p-0 m-0 fs-14 ">ผลลัพธ์การเรียนรู้ตามมาตรฐานคุณวุฒิระดับอุดมศึกษา พ.ศ. 2552</h6>
+                        <h6 class="p-0 m-0 fs-16 ">ผลลัพธ์การเรียนรู้ตามมาตรฐานคุณวุฒิระดับอุดมศึกษา พ.ศ. 2552</h6>
                     </td>
                     <td colspan="3" rowspan="2">
-                        <h6 class="fs-14"> วัตถุประสงค์ของ<br>หลักสูตร</h6>
+                        <h6 class="fs-16"> วัตถุประสงค์ของ<br>หลักสูตร</h6>
                     </td>
                 </tr>
                 <tr>
@@ -240,7 +247,7 @@
                     </td>
                     @foreach($list_result_detail as $item)
                     <td>
-
+                        <p>&#x26AB;</p>
                     </td>
                     @endforeach
                     <td>

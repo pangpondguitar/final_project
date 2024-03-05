@@ -9,7 +9,8 @@ use App\Http\Controllers\AdminPanel\CourseController;
 
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
-
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\AdminPanel\DocumentCheckController;
 use App\Models\Course_committee;
 
 /*
@@ -56,6 +57,8 @@ Route::get('admin_get_courses_program/{id}', [CourseController::class, 'get_prog
 Route::get('admin_get_courses_subjects/{id}', [CourseController::class, 'get_subjects']);
 Route::get('admin_get_single_course/{id}', [CourseController::class, 'get_single_course']);
 Route::post('admin_add_course', [CourseController::class, 'add_course']);
+Route::get('admin_get_teacher/{id}', [CourseController::class, 'get_teacher']);
+
 
 
 Route::post('admin_add_subject/{id}', [CourseController::class, 'add_subject']);
@@ -68,6 +71,17 @@ Route::get('admin_get_topic_result/{id}/{doc}', [CourseController::class, 'topic
 Route::post('admin_add_topic_result/{id}', [CourseController::class, 'add_topic_result']);
 Route::get('admin_update_topic_result/{id}', [CourseController::class, 'update_topic_result']);
 Route::get('admin_delete_topic_result/{id}', [CourseController::class, 'delete_topic_result']);
+
+Route::get('admin_get_committee/{id}', [CourseController::class, 'get_committee']);
+Route::post('admin_add_committee/{id}/{user_id}', [CourseController::class, 'add_committee']);
+Route::get('admin_delete_committee/{id}', [CourseController::class, 'delete_committee']);
+
+Route::get('get_subjectAll_term/{id}/{t_id}', [DocumentCheckController::class, 'get_subject']);
+Route::get('admin_get_docfile_status/{id}', [DocumentCheckController::class, 'get_docfile_status']);
+Route::get('admin_get_teachers/{id}', [DocumentCheckController::class, 'get_teachers']);
+Route::get('admin_get_docfile/{id}', [DocumentCheckController::class, 'get_doc_file']);
+Route::get('admin_confirm_docfile_status/{id}', [DocumentCheckController::class, 'confirm_docfile_status']);
+
 
 //users
 Route::get('get_profile/{id}', [ProfileControllor::class, 'get_profile']);
@@ -151,3 +165,14 @@ Route::get('user_delete_objective/{id}', [CourseSpecControllor::class, 'delete_o
 Route::get('user_get_subdes/{id}', [CourseSpecControllor::class, 'get_subdes']);
 Route::post('user_add_subdes/{id}', [CourseSpecControllor::class, 'add_subdes']);
 Route::post('user_update_subdes', [CourseSpecControllor::class, 'update_subdes']);
+
+
+Route::get('user_get_committee/{id}', [CourseSpecControllor::class, 'get_committee']);
+Route::post('user_add_committee/{id}/{user_id}', [CourseSpecControllor::class, 'add_committee']);
+Route::get('user_delete_committee/{id}/{user_id}', [CourseSpecControllor::class, 'delete_committee']);
+
+
+Route::get('user_get_doc_show/{id}', [PDFController::class, 'get_doc_show']);
+Route::get('user_get_docfile/{id}', [CourseSpecControllor::class, 'get_doc_file']);
+Route::get('user_get_docfile_finish/{id}', [CourseSpecControllor::class, 'get_docfile_finish']);
+Route::get('user_delete_docfile/{id}', [CourseSpecControllor::class, 'delete_docfile']);

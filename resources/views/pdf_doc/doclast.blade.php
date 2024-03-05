@@ -14,48 +14,49 @@
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-ExtraLight.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/Sarabun-ExtraLight.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/THSarabunNew.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: bold;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-Regular.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew Bold.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: normal;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-ExtraLightItalic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew Italic.ttf') }}") format('truetype');
         }
 
         @font-face {
             font-family: 'THSarabunNew';
             font-style: italic;
             font-weight: bold;
-            src: url("{{ public_path('/assets/my-fonts/Sarabun-Italic.ttf') }}") format('truetype');
+            src: url("{{ public_path('/assets/my-fonts2/THSarabunNew BoldItalic.ttf') }}") format('truetype');
         }
+
 
         body {
             font-family: "THSarabunNew";
-            font-size: 14px !important;
+            font-size: 18px !important;
             margin-left: 35px;
             margin-right: 35px;
             margin-top: 10px;
         }
 
 
-        .fs-14 {
-            font-size: 14px !important;
+        .fs-18 {
+            font-size: 18px !important;
         }
 
         .fs-16 {
@@ -125,26 +126,26 @@
 
 <body>
     <div class="" id="result_sub">
-        <h6 class="fs-14">7. การวัดและประเมินผลการศึกษา</h6>
+        <h6 class="fs-18">7. การวัดและประเมินผลการศึกษา</h6>
 
         <table class="table1">
             <thead>
                 <tr>
                     <td style="width:80%;">
-                        <h6 class="fs-14">รายการ</h6>
+                        <h6 class="fs-18">รายการ</h6>
                     </td>
                     <td>
-                        <h6 class="fs-14">ร้อยละ</h6>
+                        <h6 class="fs-18">ร้อยละ</h6>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 @foreach($measure_list as $item)
                 <tr>
-                    <td class="fs-14 text-start">
+                    <td class="fs-18 text-start">
                         <div style="margin-left: 5px;"> {{ $item->ml_title}}</div>
                     </td>
-                    <td class="fs-14 ">
+                    <td class="fs-18 ">
                         {{ $item->ml_value}}
                     </td>
                 </tr>
@@ -155,11 +156,11 @@
             <tfoot>
                 <tr>
                     <td>
-                        <h6> รวม</h6>
+                        <h6 class="fs-18"> รวม</h6>
                     </td>
 
                     <td>
-                        <h6> {{$sum_measure_list}}</h6>
+                        <h6 class="fs-18"> {{$sum_measure_list}}</h6>
                     </td>
 
 
@@ -167,11 +168,11 @@
             </tfoot>
         </table>
 
-        <h6 class="fs-14" style="margin-top: 20px;">8. ทรัพยากรประกอบการเรียนการสอน</h6>
+        <h6 class="fs-18" style="margin-top: 20px;">8. ทรัพยากรประกอบการเรียนการสอน</h6>
         @foreach($resource as $item)
-        <div style="margin-left: 25px;"> {!! $item->rs_title !!}</div>
+        <div style="margin-left: 25px;" class="fs-18"> {!! $item->rs_title !!}</div>
         @endforeach
-        <h6 class="fs-14" style="margin-top: 20px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
+        <h6 class="fs-18" style="margin-top: 20px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
     </div>
 </body>
 

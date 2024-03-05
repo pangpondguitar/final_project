@@ -39,4 +39,8 @@ class Terms_sub extends Model
     {
         return $this->belongsTo(Terms::class,  't_id');
     }
+    public function docfile()
+    {
+        return $this->hasMany(Docfile::class, 'ts_id');
+    }
 }
