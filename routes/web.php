@@ -13,6 +13,11 @@ use App\Http\Controllers\AdminPanel\TeachingControllor;
 use App\Http\Controllers\AdminPanel\DocumentCheckController;
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
+use App\Http\Controllers\PresidentPanel\PresidentController;
+use App\Http\Controllers\PresidentPanel\DocumentReportController;
+use App\Http\Controllers\PresidentPanel\CourseProgramController;
+use App\Http\Controllers\ManagerPanel\ManagerController;
+use App\Http\Controllers\ManagerPanel\DocumentSummaryController;
 use App\Http\Controllers\PDFController;
 use App\Models\Terms;
 
@@ -138,6 +143,47 @@ Route::middleware(['auth', 'role:2'])->group(function () {
             Route::get('/{id}', 'index')->name('users.pdf');
             Route::get('export/{id}/{user_id}', 'export')->name('export.pdf');
             Route::get('/result', 'pdf_result')->name('users2.pdf');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+});
+Route::middleware(['auth', 'role:3'])->group(function () {
+    Route::get('president/home', [PresidentController::class, 'index'])->name('president.home');
+    Route::prefix('president/profile')->group(function () {
+        Route::controller(ProfileControllor::class)->group(function () {
+            Route::get('/', 'index')->name('president.profile');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('president/course')->group(function () {
+        Route::controller(CourseProgramController::class)->group(function () {
+            Route::get('/', 'index')->name('president.course');
+            Route::get('/course_detail/{id}', 'index')->name('president.course_detail');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('president/doc_report')->group(function () {
+        Route::controller(DocumentReportController::class)->group(function () {
+            Route::get('/', 'index')->name('president.document_report');
+            Route::get('/doc_report_detail/{id}', 'doc_report_detail')->name('president.report_detail');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('president/teaching')->group(function () {
+        Route::controller(DocumentReportController::class)->group(function () {
+            Route::get('/', 'index')->name('president.teaching');
+            Route::get('/teaching_detail/{id}', 'teaching_detail')->name('president.teaching_detail');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+});
+Route::middleware(['auth', 'role:4'])->group(function () {
+    Route::get('manager/home', [ManagerController::class, 'index'])->name('manager.home');
+
+    Route::prefix('manager/doc_report')->group(function () {
+        Route::controller(DocumentSummaryController::class)->group(function () {
+            Route::get('/', 'index')->name('manager.document_report');
+            Route::get('/doc_report_detail/{id}', 'index')->name('manager.report_detail');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });

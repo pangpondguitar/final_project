@@ -18,6 +18,10 @@ class HomeController extends Controller
                 return view('admin.home');
             } else if ($user_type == '2') {
                 return view('users.home');
+            } else if ($user_type == '3') {
+                return view('president.home');
+            } else if ($user_type == '4') {
+                return view('manager.home');
             } else {
                 return redirect()->back();
             }

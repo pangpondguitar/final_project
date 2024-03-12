@@ -11,7 +11,10 @@ use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\AdminPanel\DocumentCheckController;
+use App\Http\Controllers\PresidentPanel\DocumentReportController;
+use App\Http\Controllers\PresidentPanel\CourseProgramController;
 use App\Models\Course_committee;
+use App\Http\Controllers\ManagerPanel\DocumentSummaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -176,3 +179,16 @@ Route::get('user_get_doc_show/{id}', [PDFController::class, 'get_doc_show']);
 Route::get('user_get_docfile/{id}', [CourseSpecControllor::class, 'get_doc_file']);
 Route::get('user_get_docfile_finish/{id}', [CourseSpecControllor::class, 'get_docfile_finish']);
 Route::get('user_delete_docfile/{id}', [CourseSpecControllor::class, 'delete_docfile']);
+
+//president
+Route::get('president_get_user_data/{id}', [DocumentReportController::class, 'get_user_data']);
+Route::get('president_get_subjectAll_term/{id}/{t_id}', [DocumentReportController::class, 'get_subject']);
+Route::get('president_get_teacher/{id}/{t_id}', [DocumentReportController::class, 'get_teacher']);
+Route::get('president_get_teacher_detail/{id}', [DocumentReportController::class, 'get_teacher_detail']);
+Route::get('president_get_single_term/{id}', [DocumentReportController::class, 'get_single_term']);
+
+
+Route::get('president_get_program/{id}', [CourseProgramController::class, 'get_program']);
+Route::get('president_get_single_course/{id}', [CourseProgramController::class, 'get_single_course']);
+Route::get('manager_get_subjectAll_term/{id}/{t_id}', [DocumentSummaryController::class, 'get_subject']);
+Route::get('manager_get_program/{id}', [DocumentSummaryController::class, 'get_program']);
