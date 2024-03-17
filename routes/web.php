@@ -13,6 +13,7 @@ use App\Http\Controllers\AdminPanel\TeachingControllor;
 use App\Http\Controllers\AdminPanel\DocumentCheckController;
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
+use App\Http\Controllers\UsersPanel\PerformanceController;
 use App\Http\Controllers\PresidentPanel\PresidentController;
 use App\Http\Controllers\PresidentPanel\DocumentReportController;
 use App\Http\Controllers\PresidentPanel\CourseProgramController;
@@ -143,6 +144,13 @@ Route::middleware(['auth', 'role:2'])->group(function () {
             Route::get('/{id}', 'index')->name('users.pdf');
             Route::get('export/{id}/{user_id}', 'export')->name('export.pdf');
             Route::get('/result', 'pdf_result')->name('users2.pdf');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('users/performance')->group(function () {
+        Route::controller(PerformanceController::class)->group(function () {
+            Route::get('/', 'index')->name('users.performance');
+            Route::get('/addperformance', 'index')->name('users.addperformance');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });

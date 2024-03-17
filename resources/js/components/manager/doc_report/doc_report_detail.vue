@@ -121,24 +121,25 @@ onMounted(async () => {
         </div>
         <div class="col-lg-12">
             <div class="card ">
-                <div class="card-body pt-3">
+                <div class="card-body ">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <label class=" text-muted ">ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label>
+                            <h5 class=" mb-0">สถานะการจัดส่ง มคอ</h5>
+                            <label class=" mt-0 text-muted ms-0 fw-normal ">ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label>
                         </div>
-
+                        <div>
+                            <select v-model="selectedTerm" class="form-control select-year mt-3" @change="term">
+                                <option value="" disabled>Select term</option>
+                                <option v-for="item in terms" :key="item.id" :value="item.t_id">{{ item.t_name }} /
+                                    {{
+                item.t_year }}</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div>
-                                <select v-model="selectedTerm" class="form-control select-year" @change="term">
-                                    <option value="" disabled>Select term</option>
-                                    <option v-for="item in terms" :key="item.id" :value="item.t_id">{{ item.t_name }} /
-                                        {{
-                item.t_year }}</option>
-                                </select>
-                            </div>
+
                         </div>
                         <div class="col-lg-12">
 
@@ -325,10 +326,17 @@ onMounted(async () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 col-md-12">
-                            <Bar id="my-chart-id" :options="chartOptions" :data="chartData" class="mt-4" />
 
-                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="col-lg-8 col-sm-12 col-md-12">
+                        <h5 class=" mb-0">แผนภาพแสดงสถานะการจัดส่ง มคอ</h5>
+                        <label class=" mt-0 text-muted ms-0 fw-normal ">ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label>
+                        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" class="mt-2" />
 
                     </div>
                 </div>

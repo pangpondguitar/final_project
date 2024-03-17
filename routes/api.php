@@ -9,7 +9,9 @@ use App\Http\Controllers\AdminPanel\CourseController;
 
 use App\Http\Controllers\UsersPanel\ProfileControllor;
 use App\Http\Controllers\UsersPanel\CourseSpecControllor;
+use App\Http\Controllers\UsersPanel\PerformanceController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PerformanceReportController;
 use App\Http\Controllers\AdminPanel\DocumentCheckController;
 use App\Http\Controllers\PresidentPanel\DocumentReportController;
 use App\Http\Controllers\PresidentPanel\CourseProgramController;
@@ -180,11 +182,21 @@ Route::get('user_get_docfile/{id}', [CourseSpecControllor::class, 'get_doc_file'
 Route::get('user_get_docfile_finish/{id}', [CourseSpecControllor::class, 'get_docfile_finish']);
 Route::get('user_delete_docfile/{id}', [CourseSpecControllor::class, 'delete_docfile']);
 
+Route::get('user_get_performance_file/{id}', [PerformanceController::class, 'get_performance_file']);
+Route::get('user_get_performance_file_byid/{id}', [PerformanceController::class, 'get_performance_file_byid']);
+Route::get('user_open_performance_file/{id}', [PerformanceController::class, 'open_performance_file']);
+Route::post('user_performance_Addfile/{id}', [PerformanceController::class, 'performance_Addfile']);
+Route::get('user_get_performance_file_edit_byid/{id}', [PerformanceController::class, 'get_performance_file_edit_byid']);
+Route::post('user_performance_Edit/{id}', [PerformanceController::class, 'performance_Edit']);
+Route::post('user_performance_add_file_edit/{id}', [PerformanceController::class, 'performance_add_file_edit']);
+Route::get('user_delete_performance_file/{id}', [PerformanceController::class, 'performance_file_delete']);
+Route::get('user_delete_performance/{id}', [PerformanceController::class, 'performance_delete']);
+Route::get('user_get_teacher/{id}', [PerformanceController::class, 'get_teacher']);
 //president
 Route::get('president_get_user_data/{id}', [DocumentReportController::class, 'get_user_data']);
 Route::get('president_get_subjectAll_term/{id}/{t_id}', [DocumentReportController::class, 'get_subject']);
 Route::get('president_get_teacher/{id}/{t_id}', [DocumentReportController::class, 'get_teacher']);
-Route::get('president_get_teacher_detail/{id}', [DocumentReportController::class, 'get_teacher_detail']);
+Route::get('president_get_teacher_detail/{id}/{t_id}', [DocumentReportController::class, 'get_teacher_detail']);
 Route::get('president_get_single_term/{id}', [DocumentReportController::class, 'get_single_term']);
 
 
@@ -192,3 +204,7 @@ Route::get('president_get_program/{id}', [CourseProgramController::class, 'get_p
 Route::get('president_get_single_course/{id}', [CourseProgramController::class, 'get_single_course']);
 Route::get('manager_get_subjectAll_term/{id}/{t_id}', [DocumentSummaryController::class, 'get_subject']);
 Route::get('manager_get_program/{id}', [DocumentSummaryController::class, 'get_program']);
+
+
+//reportPerformance
+Route::get('performance_count_check/{id}', [PerformanceReportController::class, 'performance_count_check']);

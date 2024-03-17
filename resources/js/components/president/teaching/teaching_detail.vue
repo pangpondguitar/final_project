@@ -39,7 +39,7 @@ const get_UserProgram = async () => {
 const get_Teacher_Detail = async () => {
     try {
         console.log(currentTerm.value);
-        let response = await axios.get(`/api/president_get_teacher_detail/${props.id}`);
+        let response = await axios.get(`/api/president_get_teacher_detail/${props.id}/${props.t_id}`);
         teachers.value = response.data.teachers;
         count_success.value = response.data.count_success;
         count_wait.value = response.data.count_wait;

@@ -62,7 +62,7 @@ onMounted(async () => {
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header px-3 py-3">
+                <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="mb-0"> รายวิชาทั้งหมด</h5>
@@ -77,63 +77,93 @@ onMounted(async () => {
                         </div>
                     </div>
                 </div>
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 td-doc">
-                                รายวิชา
-                            </th>
+                <div class=" table-responsive">
+                    <table class="table align-items-center mb-0 table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 th-1">
+                                    รายวิชา
+                                </th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    สถานะ</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    สถานะ</th>
+                                <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    รายละเอียด</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items in subjects" :key="items.ts_id">
+                                <td>
+                                    <div class="d-flex px-3 ">
 
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                สถานะ</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                รายละเอียด</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="items in subjects" :key="items.ts_id">
-                            <td>
-                                <div class="d-flex px-3 ">
-
-                                    <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 fw-semibold">{{ items.subjects.s_name }}</h6>
-                                        <p class="text-sm fw-normal  text-secondary mb-0">รหัสวิชา <span
-                                                class="text-success">{{ items.subjects.s_num }}</span> </p>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td class="align-middle text-center text-sm">
-                                <div v-if="items.docfile.length > 0">
-
-                                    <div v-for="docfile in items.docfile" :key="docfile.df_id">
-                                        <div v-for="status in docfile.docfile_status.slice(-1)" :key="status.dfs_id">
-                                            <span class="badge badge-warning text-warning"
-                                                v-if="status.dfs_status == '0'">Waiting to check
-                                            </span>
-                                            <span class="badge badge-success text-success"
-                                                v-if="status.dfs_status == '1'">Success
-                                            </span>
-                                            <span class="badge badge-dark text-dark"
-                                                v-if="status.dfs_status == '2'">Make again
-                                            </span>
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <p class="mb-0 text-muted text-md  ">{{ items.subjects.s_name }}</p>
+                                            <p class="text-sm fw-normal  text-muted mb-0 mt-0">รหัสวิชา <span
+                                                    class="">{{ items.subjects.s_num }}</span> </p>
                                         </div>
                                     </div>
-                                </div>
-                                <div v-else>
-                                    <span class="badge badge-danger text-danger">no documents</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center">
-                                <div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="avatar-group mt-2 text-center">
+                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            aria-label="Ryan Tompson" data-bs-original-title="Ryan Tompson">
+                                            <img src=" /public/assets/img/team-1.jpg" alt="team1">
+                                        </a>
+                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            aria-label="Romina Hadid" data-bs-original-title="Romina Hadid">
+                                            <img src=" /public/assets/img/team-2.jpg" alt="team2">
+                                        </a>
+                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            aria-label="Alexander Smith" data-bs-original-title="Alexander Smith">
+                                            <img src=" /public/assets/img/team-3.jpg" alt="team3">
+                                        </a>
+                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Jessica Doe"
+                                            data-bs-original-title="Jessica Doe">
+                                            <img src=" /public/assets/img/team-4.jpg" alt="team4">
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <div v-if="items.docfile.length > 0">
 
-                                    <button class="btn btn-light btn-sm mb-0"
-                                        @click="document_check_detail(items.ts_id)">ดูรายละเอียด</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                        <div v-for="docfile in items.docfile" :key="docfile.df_id">
+                                            <div v-for="status in docfile.docfile_status.slice(-1)"
+                                                :key="status.dfs_id">
+                                                <span class="badge bg-gradient-warning shadow"
+                                                    v-if="status.dfs_status == '0'">Waiting to check
+                                                </span>
+                                                <span class="badge bg-gradient-success shadow px-4"
+                                                    v-if="status.dfs_status == '1'">Success
+                                                </span>
+                                                <span class="badge badge-dark text-dark shadow"
+                                                    v-if="status.dfs_status == '2'">Make again
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <span class="badge bg-gradient-danger shadow">no documents</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <div>
+
+                                        <button class=" btn-sm mb-0 btn btn bg-gradient-dark fw-normal px-4"
+                                            @click="document_check_detail(items.ts_id)">ดูรายละเอียด</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -150,10 +180,6 @@ onMounted(async () => {
 }
 
 .th-1 {
-    width: 45%;
-}
-
-.td-doc {
-    width: 50%;
+    width: 35% !important;
 }
 </style>

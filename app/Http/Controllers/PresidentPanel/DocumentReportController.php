@@ -91,10 +91,30 @@ class DocumentReportController extends Controller
     }
 
 
-    public function get_teacher_detail($id)
+    public function get_teacher_detail($id, $t_id)
     {
-        $teachers = User::with('user_detail')->with('terms_sub_teaches.terms_sub.subjects')->with('terms_sub_teaches.terms_sub.docfile.docfile_status')->where('id', $id)->get();
+        // $teachers = User::with('user_detail')
+        //     ->with(['terms_sub_teaches.terms_sub.subjects', 'terms_sub_teaches.terms_sub.docfile.docfile_status'])
+        //     ->whereHas('terms_sub_teaches.terms_sub', function ($query) use ($t_id) {
+        //         $query->where('t_id', $t_id);
+        //     })
+        //     ->where('id', $id)
+        //     ->get();
 
+        $teachers = User::with('user_detail')
+            ->with([
+                'terms_sub_teaches' => function ($query) use ($t_id) {
+                    $query->whereHas('terms_sub', function ($subQuery) use ($t_id) {
+                        $subQuery->where('t_id', $t_id);
+                    });
+                },
+                'terms_sub_teaches.terms_sub' => function ($query) use ($t_id) {
+                    $query->where('t_id', $t_id);
+                },
+                'terms_sub_teaches.terms_sub.subjects',
+                'terms_sub_teaches.terms_sub.docfile.docfile_status'
+            ],)
+            ->where('id', $id)->get();
         // $subjects = $user
         $count_success = 0;
         $count_wait = 0;

@@ -54,7 +54,7 @@ class CourseSpecControllor extends Controller
             ->where('t_id', $t_id)
             ->whereHas('terms_sub_teach.users', function ($query) use ($id) {
                 $query->where('id', $id);
-            })->get();
+            })->with('docfile.docfile_status')->get();
         return response()->json([
             'subjects' => $subjects
         ], 200);

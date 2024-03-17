@@ -108,7 +108,7 @@ const term = async (event) => {
 
 const updateChartData = () => {
     if (chartData.value && chartData.value.datasets && chartData.value.datasets[0]) {
-        chartData.value.datasets[0].data = [count_success.value, count_wait.value, count_doc.value];
+        chartData.value.datasets[0].data = [count_success.value, count_wait.value, count_redoc.value, count_doc.value];
     }
 };
 const statusDocCheck = (status) => {

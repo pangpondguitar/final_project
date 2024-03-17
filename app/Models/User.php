@@ -68,4 +68,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Terms_sub_teach::class, 'id');
     }
+    public function performance()
+    {
+        return $this->hasMany(User::class,  'id');
+    }
 }

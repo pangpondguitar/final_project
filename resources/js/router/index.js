@@ -15,8 +15,10 @@ import userCourseSpec from "../components/users/course_spec/index.vue";
 import userSubject_detail from "../components/users/course_spec/subject_detail.vue";
 import subdoc from "../components/users/course_spec/subdoc.vue";
 import subdoc_sec from "../components/users/course_spec/subdoc_sec.vue";
-import notFound from "../components/notFound.vue";
-
+import userPerformance from "../components/users/performance/index.vue";
+import userAddPerformance from "../components/users/performance/add_performance.vue";
+import usereditPerformance from "../components/users/performance/edit_performance.vue";
+import userPerformanceDetail from "../components/users/performance/performance_detail.vue";
 //president
 import presidentHome from "../components/president/index.vue";
 import presidentDocReport from "../components/president/doc_report/index.vue";
@@ -31,6 +33,9 @@ import presidentTeachingDetail from "../components/president/teaching/teaching_d
 import managerHome from "../components/manager/index.vue";
 import managerDocReport from "../components/manager/doc_report/index.vue";
 import managerDocReport_Detail from "../components/manager/doc_report/doc_report_detail.vue";
+
+import notFound from "../components/notFound.vue";
+
 const routes = [
     {
         path: "/admin/teaching",
@@ -96,7 +101,24 @@ const routes = [
         component: subdoc_sec,
         props: true,
     },
-
+    {
+        path: "/users/performance",
+        component: userPerformance,
+    },
+    {
+        path: "/users/performance/addperformance",
+        component: userAddPerformance,
+    },
+    {
+        path: "/users/performance/performance_detail/:id",
+        component: userPerformanceDetail,
+        props: true,
+    },
+    {
+        path: "/users/performance/editperformance/:id",
+        component: usereditPerformance,
+        props: true,
+    },
     {
         path: "/:pathMatch(.*)*",
         component: notFound,
