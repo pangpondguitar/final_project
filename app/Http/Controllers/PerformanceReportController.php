@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class PerformanceReportController extends Controller
 {
+    public function index_president()
+    {
+        return view('president.performance_report.index');
+    }
+
     public function performance_count_check($id)
     {
         $performanceCounts = Performance::select('pf_year', DB::raw('COUNT(*) as count'))

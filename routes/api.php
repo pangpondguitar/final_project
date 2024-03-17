@@ -208,3 +208,4 @@ Route::get('manager_get_program/{id}', [DocumentSummaryController::class, 'get_p
 
 //reportPerformance
 Route::get('performance_count_check/{id}', [PerformanceReportController::class, 'performance_count_check']);
+Route::get('performance_teacher/{id}', [PerformanceReportController::class, 'performance_teacher']);

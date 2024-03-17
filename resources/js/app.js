@@ -29,6 +29,7 @@ window.toast = toast;
 // import router from './router';
 
 // createApp(App).use(router).mount("#app");
+
 const app = createApp(App)
 createApp(App).use(CKEditor)
 createApp(App).use(router).use( CKEditor ).mount("#app")

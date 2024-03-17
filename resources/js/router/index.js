@@ -29,6 +29,9 @@ import presidentProfile from "../components/president/profile/index.vue";
 import presidentTeaching from "../components/president/teaching/index.vue";
 import presidentTeachingDetail from "../components/president/teaching/teaching_detail.vue";
 
+import presidentPerformanceReport from "../components/president/performance_report/index.vue";
+import presidentPerformanceReportDetail from "../components/president/performance_report/performance_detail.vue";
+
 //manager
 import managerHome from "../components/manager/index.vue";
 import managerDocReport from "../components/manager/doc_report/index.vue";
@@ -152,6 +155,15 @@ const routes = [
     {
         path: "/president/teaching/teaching_detail/:id/:t_id",
         component: presidentTeachingDetail,
+        props: true,
+    },
+    {
+        path: "/president/performance_report",
+        component: presidentPerformanceReport,
+    },
+    {
+        path: "/president/performance_report/performance_report_detail/:id",
+        component: presidentPerformanceReportDetail,
         props: true,
     },
 
