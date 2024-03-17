@@ -4,76 +4,152 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const router = useRouter();
-import { defineProps, defineEmits } from 'vue';
-let user = ref({});
-let program = ref("");
-let course = ref({});
-let teacher_count = ref('');
 
+let programs = ref([]);
+let terms = ref({});
+let currentTerm = ref("");
+let subjects = ref("");
+let performance = ref([]);
+let teacher = ref({});
+let selectedTerm = ref("");
 const userId = document.getElementById('app').getAttribute('data-user-id');
-let User_pId = ref('')
+const props = defineProps({
+    id: {
+        type: String,
+        default: "",
+    },
+});
 
-const get_UserProgram = async () => {
+const getPerformance_file = async () => {
     try {
-        let response = await axios.get(`/api/president_get_user_data/${userId}`);
-        user.value = response.data.user;
-        User_pId.value = user.value.p_id
+        let response = await axios.get(`/api/user_get_performance_file/${props.id}`);
+        performance.value = response.data.performance;
+        console.log('performance', performance.value);
     } catch (error) {
-        console.error("Error fetching user:", error);
+        console.error('Error fetching performance:', error);
+    }
+};
+const get_teacher = async () => {
+    try {
+        let response = await axios.get(`/api/user_get_teacher/${props.id}`);
+        teacher.value = response.data.teacher;
+        console.log(teacher.value);
+    } catch (error) {
+        console.error('Error fetching performance:', error);
     }
 };
 
-const get_Program = async () => {
-    try {
-        let response = await axios.get(`/api/president_get_program/${User_pId.value}`);
-        program.value = response.data.program;
-        course.value = response.data.course;
-        teacher_count.value = response.data.teacher_count;
-        console.log('program', program.value);
-    } catch (error) {
-        console.error("Error fetching program:", error);
-    }
+const PerformanceDetail = (id) => {
+    router.push(`/president/performance_report/performance_view/${id}`);
 };
-
-const Course_detail = (id) => {
-    router.push('/president/course/course_detail/' + id);
-};
-
+let input = ref("");
+const fruits = ["apple", "banana", "orange"];
+function filteredList() {
+    return performance.value.filter((item) =>
+        item.pf_name.toLowerCase().includes(input.value.toLowerCase()) || item.pf_year.toLowerCase().includes(input.value.toLowerCase())
+    );
+}
 onMounted(async () => {
-    await get_UserProgram();
-    await get_Program();
+    await getPerformance_file();
+    await get_teacher();
 });
 </script>
 
 <template>
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body pt-3 ">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="mb-0 "> หลักสูตรทั้งหมด</h5>
-                            <h4 class="fw-normal text-muted h6">หลักสูตรทั้งหมด</h4>
-                        </div>
-                    </div>
-
-
-
+    <div class="page-header min-height-200 border-radius-xl mt-4"
+        style="background-image: url('../../../assets/img/curved-images/curved0.jpg');">
+        <span class="mask bg-gradient-primary opacity-6"></span>
+    </div>
+    <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
+        <div class="row gx-4">
+            <div class="col-auto">
+                <div class="avatar avatar-xl position-relative">
+                    <img src=" /public/assets/img/team-2.jpg" alt="profile_image"
+                        class="w-100 border-radius-lg shadow-sm">
                 </div>
             </div>
-            <div class="card mt-3">
-                <div class="card-body pt-3">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="mb-0 "> หลักสูตรทั้งหมด</h5>
-                            <h4 class="fw-normal text-muted h6">หลักสูตรทั้งหมด</h4>
+            <div class="col-auto my-auto">
+                <div class="h-100" v-for="item in teacher" :key="item.id">
+                    <h5 class="mb-1">
+                        {{ item.user_detail.user_d_name
+                        }}
+                    </h5>
+                    <p class="mb-0 font-weight-bold text-sm">
+                        {{ item.user_detail.user_d_name2
+                        }}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-8 me-auto text-left">
+            <h5>ผลงานทางวิชาการของอาจารย์</h5>
+            <p>ผลงานทางวิชาการเป็นข้อมูลที่สำคัญในการแสดงให้เห็นว่าอาจารย์ประจำและนักวิจัยได้สร้างสรรค์ขึ้นเพื่อแสดงให้เห็นถึงความก้าวหน้าทางวิชาการและการพัฒนาองค์ความรู้อย่างต่อเนื่อง.
+            </p>
+
+        </div>
+
+    </div>
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <label for="" class="">ค้นหาผลงานทางวิชาการ</label>
+            <input type="text" v-model="input" placeholder="Search Performance..." class="form-control" />
+
+            <div class="item error" v-if="input && !filteredList().length">
+                <p>ไม่พบข้อมูล!</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 mb-4" v-for=" item in filteredList()" :key="item.id">
+            <div class="card h-100">
+                <div class="card-body p-3">
+                    <div class="d-flex">
+                        <div class="">
+                            <img src="/public/assets/img/pdf (9).png" alt="slack_logo" class="img-perfor">
+                        </div>
+                        <div class="ms-3 my-auto">
+
+
+                        </div>
+                        <div class="ms-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-link text-secondary ps-0 pe-2" id="navbarDropdownMenuLink"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-v text-lg" aria-hidden="true"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end me-sm-n4 me-n3"
+                                    aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="javascript:;"
+                                        @click="PerformanceDetail(item.pf_id)">ดูรายละเอียด</a>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+                    <h6 class="mb-0">{{ item.pf_name }}</h6>
+
+                    <p class="text-sm mb-0">รายละเอียด : {{ item.pf_detail }} </p>
+                    <p class="text-sm mb-0">วันที่ : {{ item.pf_date }} </p>
+                    <p class="text-sm mb-3">ปีที่เผยแพร่ : {{ item.pf_year }} </p>
+                    <p class="text-sm fw-bold">ไฟล์เอกสาร : {{ item.performance_file.length }} ไฟล์</p>
+                    <hr class="horizontal dark">
 
                 </div>
             </div>
         </div>
     </div>
-</template>
 
-<style></style>
+</template>
+<style>
+.img-perfor {
+    width: 40px;
+}
+
+.card-add-new-project {
+    height: 240px !important;
+}
+</style>

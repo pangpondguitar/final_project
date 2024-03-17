@@ -70,6 +70,6 @@ class User extends Authenticatable
     }
     public function performance()
     {
-        return $this->hasMany(User::class,  'id');
+        return $this->hasMany(Performance::class,  'id');
     }
 }

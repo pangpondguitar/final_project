@@ -119,6 +119,14 @@ Route::middleware(['auth', 'role:1'])->group(function () {
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
+    Route::prefix('admin/performance_report')->group(function () {
+        Route::controller(PerformanceReportController::class)->group(function () {
+            Route::get('/', 'index_admin')->name('admin.performance_report');
+            Route::get('/performance_report_detail/{id}', 'index_admin')->name('admin.performance_report_detail');
+            Route::get('/performance_view/{id}', 'index_admin')->name('admin.performance_view');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
     // Route::name('admin/programs.')->group(function () {
     //     Route::post('/insert', [AdminControllor::class, 'program_insert'])->name('admin.insert');
     // });
@@ -188,7 +196,8 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::prefix('president/performance_report')->group(function () {
         Route::controller(PerformanceReportController::class)->group(function () {
             Route::get('/', 'index_president')->name('president.performance_report');
-            Route::get('/doc_report_detail/{id}', 'performance_report_detail')->name('president.performance_report_detail');
+            Route::get('/performance_report_detail/{id}', 'index_president')->name('president.performance_report_detail');
+            Route::get('/performance_view/{id}', 'index_president')->name('president.performance_view');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
