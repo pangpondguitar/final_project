@@ -188,21 +188,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <td colspan="3">
-                        <div class="mx-10"> คุณธรรมและ <br>จริยธรรม</div>
-                    </td>
-                    <td colspan="3">
-                        <div class="mx-10"> ความรู้</div>
-                    </td>
-                    <td colspan="5">
-                        <div class="mx-50"> ทักษะทางปัญญา</div>
-                    </td>
-                    <td colspan="3">
-                        <div class="mx-10"> ทักษะความสัมพันธ์<br>ระหว่างบุลคล<br>และความ<br>รับผิดชอบ</div>
-                    </td>
-                    <td colspan="3">
-                        <div class="mx-10"> ทักษะการ<br>วิเคราะห์เชิง<br>ตัวเลขการ<br>สื่อสารและการ<br>ใช้เทคโนโลยี<br>สารสนเทส</div>
-                    </td> -->
                     @foreach($count_list_detail as $item)
                     <td colspan="{{$item->count}}">
                         <div class="mx-10">{{$item->tlr_title}}</div>

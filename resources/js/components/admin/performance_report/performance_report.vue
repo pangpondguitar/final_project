@@ -122,13 +122,13 @@ export default {
         const router = useRouter();
 
         const goToPerformanceReportDetail = (id) => {
-            router.push(`/president/performance_report/performance_report/${id}`);
+            router.push(`/admin/performance_report/performance_report_detail/${id}`);
         };
 
         return {
             goToPerformanceReportDetail
         };
-        console.log(this.input);
+
     },
     data() {
         return {
@@ -151,11 +151,10 @@ export default {
     },
 
     mounted() {
-        const userId = document.getElementById('app').getAttribute('data-user-id');
-        console.log(userId);
-        console.log(this.user.p_id);
-        console.log(this.User_pId);
-        this.get_UserProgram(userId);
+        // const userId = document.getElementById('app').getAttribute('data-user-id');
+
+        this.performance_count_check(this.id);
+        this.get_Teacher(this.id);
     },
     methods: {
         get_Teacher: async function (id) {
@@ -232,10 +231,16 @@ export default {
             });
         },
         Report_detail(id) {
-            router.push('/president/performance_report/performance_report_detail' + id);
+            router.push('/admin/performance_report/performance_detail/' + id);
         }
 
-    }
+    },
+    props: {
+        id: {
+            type: String,
+            required: true
+        }
+    },
 }
 </script>
 

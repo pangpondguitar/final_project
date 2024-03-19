@@ -8,6 +8,11 @@ import courses_detail_Admin from "../components/admin/courses/courses_detail.vue
 import document_check_Admin from "../components/admin/document_check/index.vue";
 import document_check_sub_Admin from "../components/admin/document_check/document_check.vue";
 import document_check_detail_Admin from "../components/admin/document_check/document_detail.vue";
+
+import performanceIndex_Admin from "../components/admin/performance_report/index.vue";
+import performance_report_Admin from "../components/admin/performance_report/performance_report.vue";
+import performance_detail_Admin from "../components/admin/performance_report/performance_detail.vue";
+import performance_view_Admin from "../components/admin/performance_report/performance_view.vue";
 //users
 import userHome from "../components/users/index.vue";
 import userProfile from "../components/users/profile/index.vue";
@@ -75,6 +80,25 @@ const routes = [
     {
         path: "/admin/document_check/document_check_detail/:id",
         component: document_check_detail_Admin,
+        props: true,
+    },
+    {
+        path: "/admin/performance_report",
+        component: performanceIndex_Admin,
+    },
+    {
+        path: "/admin/performance_report/performance_report/:id",
+        component: performance_report_Admin,
+        props: true,
+    },
+    {
+        path: "/admin/performance_report/performance_report_detail/:id",
+        component: performance_detail_Admin,
+        props: true,
+    },
+    {
+        path: "/admin/performance_report/performance_view/:id",
+        component: performance_view_Admin,
         props: true,
     },
     {

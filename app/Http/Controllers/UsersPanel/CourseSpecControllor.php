@@ -32,6 +32,7 @@ use App\Models\Subject_description;
 use App\Models\Course_committee;
 use App\Models\Docfile;
 use App\Models\Docfile_status;
+use App\Models\Learn_results_remark;
 use Illuminate\Support\Str;
 
 class CourseSpecControllor extends Controller
@@ -154,6 +155,86 @@ class CourseSpecControllor extends Controller
             'result_detail' => $result_detail
         ], 200);
     }
+
+    public function get_result_detail_All($id)
+    {
+        $result_detail = Learn_results_detail::where('ts_id', $id)->get();
+
+        $course = Terms_sub::with('subjects.courses')->where('ts_id', $id)->first();
+        $c_id = $course->subjects->courses->c_id;
+        $doc_type = $course->subjects->doc_type;
+
+        $result_topic = Topic_learn_results::where('c_id', $c_id)->where('doc_type', $doc_type)->get();
+        $data = [];
+        $num = 1;
+        foreach ($result_topic as $item) {
+            $sub_num = 1;
+            $topic = $item['tlr_id'];
+            foreach ($result_detail as $item) {
+                if ($item['tlr_id'] == $topic) {
+                    $data[] = [
+                        'num' => $num . '.' . $sub_num,
+                        'lrd_id' => $item->lrd_id,
+                        'title' => $item->lrd_title,
+                        'tlr_id' => $item->tlr_id
+                    ];
+                    $sub_num += 1;
+                }
+            }
+            $num += 1;
+        }
+
+        return response()->json([
+            'result_detail' => $data
+        ], 200);
+    }
+    public function get_result_remark($id)
+    {
+        $remark = Learn_results_remark::where('lrl_id', $id)->get();
+        return response()->json([
+            'remark' => $remark
+        ]);
+    }
+    // public function update_result_remark(Request $request)
+    // {
+    //     foreach ($request->lrd_id as $item) {
+    //         $remark = new Learn_results_remark();
+    //         $remark->lrd_id = $item;
+    //         $remark->lrl_id = $request->lrl_id;
+    //         $remark->save();
+    //     }
+    // }
+
+    public function update_result_remark(Request $request)
+    {
+        $lrl_id = $request->lrl_id;
+        $existingIds = Learn_results_remark::where('lrl_id', $lrl_id)->pluck('lrd_id')->toArray();
+
+        if (empty($request->lrd_id)) {
+            // ลบข้อมูลทั้งหมดที่เกี่ยวข้องกับ lrl_id ที่กำหนด
+            Learn_results_remark::where('lrl_id', $lrl_id)->delete();
+            return;
+        }
+        foreach ($request->lrd_id as $item) {
+            if (in_array($item, $existingIds)) {
+                unset($existingIds[array_search($item, $existingIds)]);
+            } else {
+                // เพิ่มข้อมูลใหม่เข้าไปในฐานข้อมูล
+                $remark = new Learn_results_remark();
+                $remark->lrd_id = $item;
+                $remark->lrl_id = $request->lrl_id;
+                $remark->save();
+            }
+        }
+
+        // ลบข้อมูลที่ไม่มีอยู่ในข้อมูลใหม่
+        Learn_results_remark::where('lrl_id', $lrl_id)->whereIn('lrd_id', $existingIds)->delete();
+
+        // return response()->json([
+        //     'remark' => $existingIds
+        // ]);
+    }
+
     public function add_result_detail(Request $request, $id)
     {
         $result_detail = new Learn_results_detail();

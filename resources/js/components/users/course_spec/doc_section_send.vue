@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
@@ -206,4 +206,103 @@ onMounted(async () => {
 </template>
 
 
-<style></style>
+<style></style> -->
+<template>
+    <!-- <div>
+        <label v-for="item in mark" :key="item.id">
+            <input
+                type="checkbox"
+                :value="item.id"
+                v-model="checkedItems"
+                @change="updateCheckedItems"
+            />
+            {{ item.name }}
+        </label>
+    </div> -->
+    <div>
+        <label v-for="item in result" :key="item.id">
+            <input
+                type="checkbox"
+                :value="item.lrd_id"
+                v-model="checkedItems"
+                @change="updateCheckedItems"
+            />
+            {{ item.lrd_id }}
+        </label>
+    </div>
+</template>
+
+<script>
+import axios from "axios";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+export default {
+    data() {
+        return {
+            items: [], // เก็บข้อมูลจาก API
+            checkedItems: [], // เก็บ ID ของรายการที่ถูกเลือก
+            result_detail_all: [],
+            result: [],
+            mark: [
+                { id: "1", checked: false },
+                { id: "2", checked: false },
+                { id: "3", checked: false },
+                { id: "4", checked: false },
+            ],
+            mark2: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }],
+        };
+    },
+    methods: {
+        // getLearnResult_Detail_All: async function () {
+        //     try {
+        //         let response = await axios.get(
+        //             `/api/user_get_result_detail_All/1`
+        //         );
+        //         result_detail_all.value = response.data.result_detail;
+        //         console.log("result_detail", result_detail_all.value);
+        //     } catch (error) {
+        //         console.error("Error fetching result_list:", error);
+        //     }
+        // },
+        updateCheckedItems() {
+            // ทำอะไรก็ตามที่คุณต้องการกับ checkedItems หลังจากมีการเปลี่ยนแปลง
+            console.log("Checked Items:", this.checkedItems);
+        },
+        get_Teacher: async function (id) {
+            try {
+                let response = await axios.get(
+                    `/api/user_get_result_detail_All/1`
+                );
+                this.result = response.data.result_detail;
+
+                // this.mark.forEach((item) => {
+                //     const foundInMark2 = this.mark2.some(
+                //         (item2) => item.id === item2.id
+                //     );
+                //     if (foundInMark2) {
+                //         item.checked = true; // ตั้งค่า checked เป็น true หากพบ ID ใน mark2
+                //         this.checkedItems.push(item.id); // เพิ่ม ID เข้าไปใน checkedItems
+                //         console.log("Pushed item ID:", item.id); // แสดงค่า ID ที่ถูก push เข้าไปใน checkedItems
+                //     }
+                // });
+
+                this.result.forEach((item) => {
+                    const foundInMark2 = this.mark2.some(
+                        (markItem) => item.lrd_id.toString() === markItem.id
+                    );
+                    if (foundInMark2) {
+                        item.checked = true; // ตั้งค่า checked เป็น true หากพบ lrd_id ใน mark2
+                        this.checkedItems.push(item.lrd_id); // เพิ่ม ID เข้าไปใน checkedItems
+                        console.log("Pushed item ID:", item.lrd_id); // แสดงค่า ID ที่ถูก push เข้าไปใน checkedItems
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching user:", error);
+            }
+        },
+    },
+    mounted() {
+        this.get_Teacher();
+    },
+};
+</script>

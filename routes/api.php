@@ -192,6 +192,11 @@ Route::post('user_performance_add_file_edit/{id}', [PerformanceController::class
 Route::get('user_delete_performance_file/{id}', [PerformanceController::class, 'performance_file_delete']);
 Route::get('user_delete_performance/{id}', [PerformanceController::class, 'performance_delete']);
 Route::get('user_get_teacher/{id}', [PerformanceController::class, 'get_teacher']);
+
+Route::get('user_get_result_detail_All/{id}', [CourseSpecControllor::class, 'get_result_detail_All']);
+Route::get('user_get_result_remark/{id}', [CourseSpecControllor::class, 'get_result_remark']);
+Route::post('user_update_result_remark', [CourseSpecControllor::class, 'update_result_remark']);
+
 //president
 Route::get('president_get_user_data/{id}', [DocumentReportController::class, 'get_user_data']);
 Route::get('president_get_subjectAll_term/{id}/{t_id}', [DocumentReportController::class, 'get_subject']);

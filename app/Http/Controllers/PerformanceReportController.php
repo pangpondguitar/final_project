@@ -16,7 +16,10 @@ class PerformanceReportController extends Controller
     {
         return view('president.performance_report.index');
     }
-
+    public function index_admin()
+    {
+        return view('admin.performance_report');
+    }
     public function performance_count_check($id)
     {
         $performanceCounts = Performance::select('pf_year', DB::raw('COUNT(*) as count'))

@@ -14,4 +14,9 @@ class Learn_results_list extends Model
         'lrl_title',
         'ts_id'
     ];
+
+    public function learn_result_remark()
+    {
+        return $this->hasMany(Learn_results_remark::class, 'lrl_id');
+    }
 }

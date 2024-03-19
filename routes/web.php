@@ -121,7 +121,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     });
     Route::prefix('admin/performance_report')->group(function () {
         Route::controller(PerformanceReportController::class)->group(function () {
-            Route::get('/', 'index_admin')->name('admin.performance_report');
+            Route::get('/', 'index_admin')->name('admin.performance_index');
+            Route::get('/performance_report/{id}', 'index_admin')->name('admin.performance_report');
             Route::get('/performance_report_detail/{id}', 'index_admin')->name('admin.performance_report_detail');
             Route::get('/performance_view/{id}', 'index_admin')->name('admin.performance_view');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
