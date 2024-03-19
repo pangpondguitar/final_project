@@ -524,7 +524,7 @@ onMounted(async () => {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 class="modal-title fs-5" id="exampleModalLabel">
-                            แก้ไขวัตถุประสงค์ของรายวิชา
+                            แก้ไขวัตถุประสงค์ของรายวิชาtttt
                         </h2>
                         <button
                             type="button"
