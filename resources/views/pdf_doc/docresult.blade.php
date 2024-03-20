@@ -168,6 +168,20 @@
             text-align: start !important;
         }
     </style>
+    <style>
+        .circle {
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .checkmark {
+            font-size: 20px;
+            color: green;
+        }
+    </style>
 </head>
 
 <body>
@@ -183,7 +197,7 @@
                     <td colspan="{{$count_all_details}}">
                         <h6 class="p-0 m-0 fs-16 ">ผลลัพธ์การเรียนรู้ตามมาตรฐานคุณวุฒิระดับอุดมศึกษา พ.ศ. 2552</h6>
                     </td>
-                    <td colspan="3" rowspan="2">
+                    <td colspan="{{$count_all_objective}}" rowspan="2">
                         <h6 class="fs-16"> วัตถุประสงค์ของ<br>หลักสูตร</h6>
                     </td>
                 </tr>
@@ -201,15 +215,11 @@
                         {{ $item['num'] }}
                     </td>
                     @endforeach
+                    @foreach($objective_num as $item)
                     <td>
-                        1
+                        {{ $item['num']}}
                     </td>
-                    <td>
-                        2
-                    </td>
-                    <td>
-                        3
-                    </td>
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
@@ -230,21 +240,27 @@
                         </table>
 
                     </td>
-                    @foreach($list_result_detail as $item)
+                    @foreach($mark_result as $mark)
+
+                    @if($mark['lrl_id'] == $item['lrl_id'])
                     <td>
-                        <p>&#x26AB;</p>
+                        @if($mark['status'] == 1)
+                        <p><span class="circle"></span></p>
+                        @endif
                     </td>
+                    @endif
+
                     @endforeach
+
+                    @foreach($objective_remark as $mark)
+                    @if($mark['lrl_id'] == $item['lrl_id'])
                     <td>
-
+                        @if($mark['status'] == 1)
+                        <div style="font-family: DejaVu Sans, sans-serif;">&#10003;</div>
+                        @endif
                     </td>
-                    <td>
-
-                    </td>
-                    <td>
-
-                    </td>
-
+                    @endif
+                    @endforeach
                 </tr>
                 @endforeach
 

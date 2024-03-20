@@ -329,6 +329,20 @@
     </div>
     @endforeach
     <h6 class="fs-20" style="margin-top: 25px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
+    <label for="" style="margin-left: 38px;" class="fs-20">9.1 คณะกรรมการบริหารรายวิชา</label>
+    @foreach($committees as $item)
+    <div>
+        <label for="" class="fs-20" style="margin-left: 56px;">{{$item['num']}}. {{$item['teacher']}}</label>
+    </div>
+
+    @endforeach
+    <label for="" style="margin-left: 38px;" class="fs-20">9.2 อาจารย์ผู้สอนรายวิชา</label>
+    @foreach($teachers as $item)
+    <div>
+        <label for="" class="fs-20" style="margin-left: 56px;">{{$item['num']}}. {{$item['teacher']}}</label>
+    </div>
+
+    @endforeach
 </body>
 
 </html>

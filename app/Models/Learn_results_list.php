@@ -19,4 +19,8 @@ class Learn_results_list extends Model
     {
         return $this->hasMany(Learn_results_remark::class, 'lrl_id');
     }
+    public function objective_remark()
+    {
+        return $this->hasMany(Objective_remark::class, 'lrl_id');
+    }
 }

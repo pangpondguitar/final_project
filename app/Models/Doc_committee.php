@@ -15,4 +15,9 @@ class Doc_committee extends Model
         'id',
         'ts_id'
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

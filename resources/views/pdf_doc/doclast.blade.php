@@ -56,7 +56,7 @@
 
 
         .fs-18 {
-            font-size: 18px !important;
+            font-size: 20px !important;
         }
 
         .fs-16 {
@@ -173,6 +173,20 @@
         <div style="margin-left: 25px;" class="fs-18"> {!! $item->rs_title !!}</div>
         @endforeach
         <h6 class="fs-18" style="margin-top: 20px;">9. คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา</h6>
+        <label for="" style="margin-left: 38px;" class="fs-18">9.1 คณะกรรมการบริหารรายวิชา</label>
+        @foreach($committees as $item)
+        <div>
+            <label for="" class="fs-18" style="margin-left: 56px;">{{$item['num']}}. {{$item['teacher']}}</label>
+        </div>
+
+        @endforeach
+        <label for="" style="margin-left: 38px;" class="fs-18">9.2 อาจารย์ผู้สอนรายวิชา</label>
+        @foreach($teachers as $item)
+        <div>
+            <label for="" class="fs-18" style="margin-left: 56px;">{{$item['num']}}. {{$item['teacher']}}</label>
+        </div>
+
+        @endforeach
     </div>
 </body>
 

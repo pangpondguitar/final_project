@@ -72,4 +72,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Performance::class,  'id');
     }
+    public function doc_committee()
+    {
+        return $this->hasMany(Doc_committee::class, 'id');
+    }
 }

@@ -22,4 +22,8 @@ class Learn_results_detail extends Model
     {
         return $this->belongsTo(Topic_learn_results::class,  'tlr_id');
     }
+    public function term_sub()
+    {
+        return $this->belongsTo(Terms_sub::class, 'ts_id');
+    }
 }

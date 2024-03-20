@@ -8,17 +8,20 @@ let topic = ref({});
 let menu_detail = ref({});
 let result_list = ref([]);
 let result_detail = ref([]);
-let objective = ref({});
+let objective = ref([]);
 let result_detail_all = ref([]);
 let remark = ref([]);
 let result_list_detailId = ref({});
 let item = ref([]);
 let checkedItems = ref([]);
+let checkedItems2 = ref([]);
+let objective_remark = ref([]);
 
 const editing = ref(false);
 const editing_detail = ref(false);
 const editing_obj = ref(false);
 const modalremark = ref(false);
+
 let formAdd = ref({
     title: "",
 });
@@ -46,6 +49,10 @@ let form_remark = ref({
     id: "",
     title: "",
 });
+let form_objective_remark = ref({
+    id: "",
+    title: "",
+});
 
 const openEditModal = (item) => {
     console.log(item);
@@ -58,8 +65,12 @@ const openEditModal = (item) => {
 };
 const openRemarkModal = (item) => {
     form_remark.value.id = item.lrl_id;
+    form_objective_remark.value.id = item.lrl_id;
+
     form_remark.value.title = item.lrl_title;
     getLearnResult_Remark(item.lrl_id);
+    getObjective_Remark(item.lrl_id);
+    get_Objective();
     getLearnResult_Detail_All();
     modalremark.value = true;
     $("#ModalRemark").modal("show");
@@ -121,6 +132,15 @@ const getLearnResult_Remark = async (id) => {
         console.error("Error fetching result_list:", error);
     }
 };
+const getObjective_Remark = async (id) => {
+    try {
+        let response = await axios.get(`/api/user_getObjective_Remark/${id}`);
+        objective_remark.value = response.data.objective_remark;
+        console.log("objective_remark", objective_remark.value);
+    } catch (error) {
+        console.error("Error fetching result_list:", error);
+    }
+};
 const getLearnResult_Detail_All = async () => {
     try {
         let response = await axios.get(
@@ -128,7 +148,7 @@ const getLearnResult_Detail_All = async () => {
         );
         checkedItems.value = [];
         result_detail_all = response.data.result_detail;
-        console.log("result_detail", result_detail_all);
+
         result_detail_all.forEach((item) => {
             if (Array.isArray(remark.value) && remark.value.length > 0) {
                 const foundInMark = remark.value.some(
@@ -153,6 +173,10 @@ const getLearnResult_Detail_All = async () => {
 const updateCheckedItems = () => {
     console.log("Checked Items:", checkedItems.value);
 };
+const updateCheckedItems2 = () => {
+    console.log("Checked Items:", checkedItems2.value);
+};
+
 const menuDetail_select = (id) => {
     menu_detail.value = id;
     getLearnResult_detail();
@@ -265,7 +289,8 @@ const add_result_remark = () => {
         .post(`/api/user_update_result_remark`, formData)
         .then((response) => {
             form_remark.value.id = "";
-            $("#edit_objective").modal("hide");
+            add_objective_remark();
+            $("#ModalRemark").modal("hide");
         })
         .catch((error) => {});
 
@@ -273,6 +298,19 @@ const add_result_remark = () => {
         icon: "success",
         title: "List Result add successfully",
     });
+};
+const add_objective_remark = () => {
+    const formData = new FormData();
+    checkedItems2.value.forEach((item) => {
+        formData.append("obj_id[]", item);
+    });
+    formData.append("lrl_id", form_objective_remark.value.id);
+    axios
+        .post(`/api/user_update_objective_remark`, formData)
+        .then((response) => {
+            form_objective_remark.value.id = "";
+        })
+        .catch((error) => {});
 };
 
 const update_result_detail = () => {
@@ -328,8 +366,30 @@ const delete_result_detail = (id) => {
 const get_Objective = async () => {
     try {
         let response = await axios.get(`/api/user_get_objective/${props.id}`);
-        objective.value = response.data.objective;
-        console.log("objective", objective.value);
+        objective = response.data.objective;
+        console.log("objective", objective);
+        checkedItems2.value = [];
+        objective.forEach((item) => {
+            console.log("objectivssssse", item);
+            if (
+                Array.isArray(objective_remark.value) &&
+                objective_remark.value.length > 0
+            ) {
+                const foundInMark = objective_remark.value.some(
+                    (markItem) => item.obj_id.toString() === markItem.obj_id
+                );
+                if (foundInMark) {
+                    item.checked = true;
+                    checkedItems2.value.push(item.obj_id);
+                    console.log("Pushed item ID:", item.obj_id);
+                } else {
+                    item.checked = false; // กำหนดให้ item.checked เป็น false เมื่อไม่พบใน remark
+                }
+            } else {
+                item.checked = false;
+                console.log("remark is not an array or it's empty");
+            }
+        });
     } catch (error) {
         console.error("Error fetching objective:", error);
     }
@@ -524,7 +584,7 @@ onMounted(async () => {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h2 class="modal-title fs-5" id="exampleModalLabel">
-                            แก้ไขวัตถุประสงค์ของรายวิชาtttt
+                            แก้ไขวัตถุประสงค์ของรายวิชา
                         </h2>
                         <button
                             type="button"
@@ -586,14 +646,21 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="modal-body py-0 px-0">
-                        <ul class="list-group list-group-flush">
+                        <div class="row px-3">
+                            <div class="col-lg-12">
+                                <label for="" class="ms-3 ps-1 mt-4 fs-6"
+                                    >รายละเอียดผลลัพธ์การเรียนรู้</label
+                                >
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush px-4">
                             <li
                                 class="list-group-item"
                                 v-for="item in result_detail_all"
                                 :key="item.id"
                             >
-                                <div class="row px-3">
-                                    <div class="col-lg-11">
+                                <div class="row">
+                                    <div class="col-lg-11 px-1">
                                         <div class="d-flex">
                                             <div></div>
                                             <div>
@@ -619,6 +686,58 @@ onMounted(async () => {
                                                     :value="item.lrd_id"
                                                     v-model="checkedItems"
                                                     @change="updateCheckedItems"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="row px-3">
+                            <div class="col-lg-12">
+                                <label for="" class="ms-3 ps-1 mt-3 mb-2 fs-6"
+                                    >วัตถุประสงค์ของหลักสูตร</label
+                                >
+                            </div>
+                        </div>
+                        <ul
+                            class="list-group list-group-flush list-group-numbered px-4"
+                        >
+                            <li
+                                class="list-group-item d-flex justify-content-between"
+                                v-for="item in objective"
+                                :key="item.id"
+                            >
+                                <div class="row px-0">
+                                    <div class="col-lg-11">
+                                        <div class="d-flex">
+                                            <div></div>
+                                            <div>
+                                                <label
+                                                    for=""
+                                                    class="text-sm fw-normal text-muted"
+                                                >
+                                                    {{ item.obj_title }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="col-lg-1 d-flex align-items-center"
+                                    >
+                                        <div
+                                            class="d-flex align-items-center me-2"
+                                        >
+                                            <div class="form-check">
+                                                <input
+                                                    class="form-check-input"
+                                                    type="checkbox"
+                                                    :value="item.obj_id"
+                                                    v-model="checkedItems2"
+                                                    @change="
+                                                        updateCheckedItems2
+                                                    "
                                                 />
                                             </div>
                                         </div>
@@ -774,7 +893,7 @@ onMounted(async () => {
                         <div
                             class="ms-2 me-auto w-50 d-flex align-items-center"
                         >
-                            <h6 class="fw-normal text-muted">
+                            <h6 class="fw-normal text-muted text-sm">
                                 {{ item.lrd_title }}
                             </h6>
                         </div>
@@ -829,7 +948,7 @@ onMounted(async () => {
                         <div
                             class="ms-2 me-auto w-50 d-flex align-items-center"
                         >
-                            <h6 class="fw-normal text-muted">
+                            <h6 class="fw-normal text-muted text-sm">
                                 {{ item.obj_title }}
                             </h6>
                         </div>

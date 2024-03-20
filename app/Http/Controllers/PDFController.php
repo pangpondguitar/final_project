@@ -23,6 +23,7 @@ use App\Models\Learn_results_list;
 use App\Models\Learn_results_detail;
 use App\Models\Planning_topic;
 use App\Models\Planning_week_hour;
+use App\Models\Objective_remark;
 use App\Models\Planning_week_list;
 use App\Models\Planning_sum_hour;
 use App\Models\Doc_committee;
@@ -32,6 +33,7 @@ use App\Models\Resource;
 use App\Models\Objective;
 use App\Models\Prep_plan_topic;
 use App\Models\Subject_description;
+use App\Models\Learn_results_remark;
 use App\Models\Docfile;
 use App\Models\Docfile_status;
 use Illuminate\Support\Facades\File;
@@ -51,6 +53,7 @@ class PDFController extends Controller
             ->groupBy('topic_learn_results.tlr_id', 'tlr_title')
             ->get();
         $count_all_details = Learn_results_detail::where('ts_id', $id)->count();
+        $count_all_objective = Objective::where('ts_id', $id)->count();
         $count_all_details = mb_convert_encoding($count_all_details, 'HTML-ENTITIES', 'UTF-8');
         $list_result_detail = [];
         $j = 1;
@@ -71,6 +74,7 @@ class PDFController extends Controller
 
         foreach ($list_result as $item) {
             $result_data[] = [
+                'lrl_id' =>  $item['lrl_id'],
                 'num' => $num,
                 'title' => $item['lrl_title']
             ];
@@ -92,8 +96,37 @@ class PDFController extends Controller
         $measure_prac =   $this->get_measure_prac($id);
         $adjust_people =   $this->get_adjust_people($id);
         $adjust_repeat =   $this->get_adjust_repeat($id);
+        $result_remark = $this->get_result_remark($id);
+        $objective_num = $this->get_objective_num($objective);
+        $learn_result_detail_data = $this->get_learn_result_detail_data($id);
+        $objective_remark = $this->objective_remark_check($id);
+        $committees = $this->get_committee($id);
+
+        $teachers = $this->get_teachers($id);
+        $mark_result = [];
+
+        foreach ($result_data as $result_list) {
+            foreach ($learn_result_detail_data as $list_result_details) {
+                $remark_check = $this->get_remark_check($result_list['lrl_id'], $list_result_details['lrd_id']);
+                if ($remark_check) {
+                    $mark_result[] = [
+                        'lrl_id' => $result_list['lrl_id'],
+                        'lrd_id' => $list_result_details['lrd_id'],
+                        'status' => '1'
+                    ];
+                } else {
+                    $mark_result[] = [
+                        'lrl_id' => $result_list['lrl_id'],
+                        'lrd_id' => $list_result_details['lrd_id'],
+                        'status' => '0'
+                    ];
+                }
+            }
+        }
+
+
         // return response()->json([
-        //     'term_sub' => $result_data
+        //     'get_teachers' => $committees
         // ], 200);
 
         $m = new Merger();
@@ -109,7 +142,7 @@ class PDFController extends Controller
 
 
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf_doc.docresult', compact('count_list_detail', 'count_all_details', 'list_result_detail', 'result_data'))->setPaper('a4', 'landscape');
+        $pdf->loadView('pdf_doc.docresult', compact('count_list_detail', 'count_all_details', 'list_result_detail', 'result_data', 'result_remark', 'learn_result_detail_data', 'mark_result', 'objective_num', 'objective_remark', 'count_all_objective'))->setPaper('a4', 'landscape');
         $m->addRaw($pdf->output());
 
         $pdf = App::make('dompdf.wrapper');
@@ -121,12 +154,12 @@ class PDFController extends Controller
         $m->addRaw($pdf->output());
         if ($subject->subjects->doc_type == 2) {
             $pdf = App::make('dompdf.wrapper');
-            $pdf->loadView('pdf_doc.docprep_plan', compact('prep_plan', 'measure_list', 'sum_measure_list', 'measure_prac', 'adjust_people', 'adjust_repeat'))->setPaper('a4', 'portrait');
+            $pdf->loadView('pdf_doc.docprep_plan', compact('prep_plan', 'measure_list', 'sum_measure_list', 'measure_prac', 'adjust_people', 'adjust_repeat', 'teachers', 'committees'))->setPaper('a4', 'portrait');
             $m->addRaw($pdf->output());
         }
         if ($subject->subjects->doc_type != 2) {
             $pdf = App::make('dompdf.wrapper');
-            $pdf->loadView('pdf_doc.doclast', compact('measure_list', 'sum_measure_list', 'resource'))->setPaper('a4', 'portrait');
+            $pdf->loadView('pdf_doc.doclast', compact('measure_list', 'sum_measure_list', 'resource', 'teachers', 'committees'))->setPaper('a4', 'portrait');
             $m->addRaw($pdf->output());
         }
 
@@ -207,6 +240,9 @@ class PDFController extends Controller
         $measure_prac =   $this->get_measure_prac($id);
         $adjust_people =   $this->get_adjust_people($id);
         $adjust_repeat =   $this->get_adjust_repeat($id);
+
+
+
         // return response()->json([
         //     'term_sub' => $result_data
         // ], 200);
@@ -432,11 +468,108 @@ class PDFController extends Controller
 
         return $groupedData;
     }
+    public function get_learn_result_detail_data($id)
+    {
+        $learn_result_detail = Terms_sub::where('ts_id', $id)->with('learn_result_detail')->first();
+        return $learn_result_detail->learn_result_detail;
+    }
+
+    public function get_result_remark($id)
+    {
+        $remark = Learn_results_list::where('ts_id', $id)->with('learn_result_remark')->get();
+        return $remark;
+    }
+    public function get_objective_num($objective)
+    {
+        $num = 1;
+        $result = [];
+        foreach ($objective as $item) {
+            $result[] = [
+                'num' => $num . '.',
+                'obj_id' => $item['obj_id'],
+                'obj_title' => $item['obj_title']
+            ];
+
+            $num += 1;
+        }
+        return $result;
+    }
+    public function get_remark_check($lrl_id, $lrd_id)
+    {
+        return Learn_results_remark::where('lrl_id', $lrl_id)
+            ->where('lrd_id', $lrd_id)
+            ->exists();
+    }
+    public function objective_remark_check($id)
+    {
+
+        $list_result = Learn_results_list::where('ts_id', $id)->get();
+        $objective = Objective::where('ts_id', $id)->get();
+        $result_data = [];
+
+        foreach ($list_result as $list) {
+            $lrl_id  = $list['lrl_id'];
+            foreach ($objective as $objec) {
+                $obj_id  = $objec['obj_id'];
+                $remark =   Objective_remark::where('obj_id', $obj_id)->where('lrl_id', $lrl_id)->exists();
+
+                if ($remark) {
+                    $result_data[] = [
+                        'lrl_id' => $lrl_id,
+                        'obj_id' =>   $obj_id,
+                        'status' => '1'
+                    ];
+                } else {
+                    $result_data[] = [
+                        'lrl_id' => $lrl_id,
+                        'obj_id' =>   $obj_id,
+                        'status' => '0'
+                    ];
+                }
+            }
+        }
+        return $result_data;
+    }
+    public function get_teachers($id)
+    {
+        $teachers = Terms_sub_teach::where('ts_id', $id)->with('users.user_detail')->get();
+
+        $result = [];
+        $num = 1;
+        foreach ($teachers as $item) {
+            $result[] = [
+
+                'num' => $num,
+                'teacher' => $item->users->user_detail->user_d_name
+            ];
+            $num += 1;
+        }
+        return $result;
+    }
+    public function get_committee($id)
+    {
+        $teachers = Doc_committee::where('ts_id', $id)->with('users.user_detail')->get();
+
+        $result = [];
+        $num = 1;
+        foreach ($teachers as $item) {
+            $result[] = [
+
+                'num' => $num,
+                'teacher' => $item->users->user_detail->user_d_name
+            ];
+            $num += 1;
+        }
+        return $result;
+    }
+
+
     public function get_planning_top($subject)
     {
         $plan_week = Planning_topic::where('doc_type', $subject->subjects->doc_type)->with('planing_week_list')->get();
         return $plan_week;
     }
+
     public function get_planning_week_hours($id)
     {
         $plan_week = Planning_week_hour::where('ts_id',)->get();

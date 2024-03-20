@@ -30,9 +30,11 @@ use App\Models\Adjust_repeat;
 use App\Models\Objective;
 use App\Models\Subject_description;
 use App\Models\Course_committee;
+use App\Models\get_objective_remark;
 use App\Models\Docfile;
 use App\Models\Docfile_status;
 use App\Models\Learn_results_remark;
+use App\Models\Objective_remark;
 use Illuminate\Support\Str;
 
 class CourseSpecControllor extends Controller
@@ -88,6 +90,14 @@ class CourseSpecControllor extends Controller
             'subject' => $subject
         ], 200);
     }
+    public function get_objective_remark($id)
+    {
+        $objective_remark = Objective_remark::where('lrl_id', $id)->get();
+        return response()->json([
+            'objective_remark' => $objective_remark
+        ]);
+    }
+
     public function  get_course($id)
     {
         $course = Terms_sub::with(['subjects.courses'])
@@ -195,15 +205,7 @@ class CourseSpecControllor extends Controller
             'remark' => $remark
         ]);
     }
-    // public function update_result_remark(Request $request)
-    // {
-    //     foreach ($request->lrd_id as $item) {
-    //         $remark = new Learn_results_remark();
-    //         $remark->lrd_id = $item;
-    //         $remark->lrl_id = $request->lrl_id;
-    //         $remark->save();
-    //     }
-    // }
+
 
     public function update_result_remark(Request $request)
     {
@@ -234,6 +236,29 @@ class CourseSpecControllor extends Controller
         //     'remark' => $existingIds
         // ]);
     }
+    public function update_objective_remark(Request $request)
+    {
+        $lrl_id = $request->lrl_id;
+        $existingIds = Objective_remark::where('lrl_id', $lrl_id)->pluck('obj_id')->toArray();
+
+        if (empty($request->obj_id)) {
+            Objective_remark::where('lrl_id', $lrl_id)->delete();
+            return;
+        }
+        foreach ($request->obj_id as $item) {
+            if (in_array($item, $existingIds)) {
+                unset($existingIds[array_search($item, $existingIds)]);
+            } else {
+                $remark = new Objective_remark();
+                $remark->obj_id = $item;
+                $remark->lrl_id = $request->lrl_id;
+                $remark->save();
+            }
+        }
+        Objective_remark::where('lrl_id', $lrl_id)->whereIn('obj_id', $existingIds)->delete();
+    }
+
+
 
     public function add_result_detail(Request $request, $id)
     {
@@ -593,13 +618,30 @@ class CourseSpecControllor extends Controller
             'doc_committee' => $doc_committee
         ], 200);
     }
-    public function add_committee($id, $user_id)
+
+    public function add_committee(Request $request, $id)
     {
-        $committee = new Doc_committee();
-        $committee->id = $user_id;
-        $committee->ts_id = $id;
-        $committee->save();
+
+        $existingIds = Doc_committee::where('ts_id', $id)->pluck('id')->toArray();
+
+        if (empty($request->user_id)) {
+            Doc_committee::where('ts_id', $id)->delete();
+            return;
+        }
+        foreach ($request->user_id as $item) {
+            if (in_array($item, $existingIds)) {
+                unset($existingIds[array_search($item, $existingIds)]);
+            } else {
+                $doc_committee = new Doc_committee();
+                $doc_committee->id = $item;
+                $doc_committee->ts_id = $id;
+                $doc_committee->save();
+            }
+        }
+        Doc_committee::where('ts_id', $id)->whereIn('id', $existingIds)->delete();
     }
+
+
     public function delete_committee($id, $user_id)
     {
         $committee = Doc_committee::where('ts_id', $id)->where('id', $user_id)->firstOrFail();

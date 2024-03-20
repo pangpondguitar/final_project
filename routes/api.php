@@ -173,7 +173,7 @@ Route::post('user_update_subdes', [CourseSpecControllor::class, 'update_subdes']
 
 
 Route::get('user_get_committee/{id}', [CourseSpecControllor::class, 'get_committee']);
-Route::post('user_add_committee/{id}/{user_id}', [CourseSpecControllor::class, 'add_committee']);
+Route::post('user_add_committee/{id}', [CourseSpecControllor::class, 'add_committee']);
 Route::get('user_delete_committee/{id}/{user_id}', [CourseSpecControllor::class, 'delete_committee']);
 
 
@@ -196,6 +196,8 @@ Route::get('user_get_teacher/{id}', [PerformanceController::class, 'get_teacher'
 Route::get('user_get_result_detail_All/{id}', [CourseSpecControllor::class, 'get_result_detail_All']);
 Route::get('user_get_result_remark/{id}', [CourseSpecControllor::class, 'get_result_remark']);
 Route::post('user_update_result_remark', [CourseSpecControllor::class, 'update_result_remark']);
+Route::get('user_getObjective_Remark/{id}', [CourseSpecControllor::class, 'get_objective_remark']);
+Route::post('user_update_objective_remark', [CourseSpecControllor::class, 'update_objective_remark']);
 
 //president
 Route::get('president_get_user_data/{id}', [DocumentReportController::class, 'get_user_data']);
