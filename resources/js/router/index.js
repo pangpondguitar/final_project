@@ -13,6 +13,12 @@ import performanceIndex_Admin from "../components/admin/performance_report/index
 import performance_report_Admin from "../components/admin/performance_report/performance_report.vue";
 import performance_detail_Admin from "../components/admin/performance_report/performance_detail.vue";
 import performance_view_Admin from "../components/admin/performance_report/performance_view.vue";
+
+import DocReportIndex_Admin from "../components/admin/doc_report/index.vue";
+import DocReport_Admin from "../components/admin/doc_report/doc_report.vue";
+import DocReport_Detail_Admin from "../components/admin/doc_report/doc_report_detail.vue";
+
+
 //users
 import userHome from "../components/users/index.vue";
 import userProfile from "../components/users/profile/index.vue";
@@ -101,6 +107,23 @@ const routes = [
         component: performance_view_Admin,
         props: true,
     },
+    //admin_doc_report
+
+    {
+        path: "/admin/doc_report",
+        component: DocReportIndex_Admin
+    },
+    {
+        path: "/admin/doc_report/doc_report/:id",
+        component: DocReport_Admin,
+        props: true
+    },
+    {
+        path: "/admin/doc_report/doc_report_detail/:id",
+        component: DocReport_Detail_Admin,
+        props: true
+    },
+    // end
     {
         path: "/users/home",
         component: userHome,

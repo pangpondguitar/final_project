@@ -9,9 +9,10 @@ use App\Models\Course;
 use App\Models\Program;
 use App\Models\Subject;
 use App\Models\Course_committee;
+use App\Models\Doc_course;
 use App\Models\Topic_learn_results;
 use App\Models\User;
-
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Constraint\Count;
 
 class CourseController extends Controller
@@ -20,6 +21,72 @@ class CourseController extends Controller
     public function index()
     {
         return view('admin.course');
+    }
+
+
+
+
+    public function course_Addfile(Request $request, $id)
+    {
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $uploadedFile) {
+                $randomFileName = uniqid() . '_' . Str::random(10) . '.pdf';
+                $filePath = 'uploads/course_doc' . '/' . $randomFileName;
+
+                if (move_uploaded_file($uploadedFile, $filePath)) {
+                    $filePaths[] = $filePath;
+                    $course = new Doc_course;
+                    $course->c_id = $id;
+                    $course->dcf_name = $uploadedFile->getClientOriginalName();
+                    $course->dcf_file = $randomFileName;
+                    $course->save();
+                } else {
+                    return response()->json(['message' => 'Failed to upload files'], 500);
+                }
+            }
+            return response()->json(['message' => 'Upload successful', 'file_paths' => $filePaths], 200);
+        } else {
+            return response()->json(['message' => 'No files uploaded'], 400);
+        }
+    }
+    public function get_course_doc($id)
+    {
+        $course = Doc_course::where('c_id', $id)->get();
+        return response()->json([
+            'course' => $course
+        ], 200);
+    }
+
+    public function delete_course_doc($id)
+    {
+        $course = Doc_course::find($id);
+        $filePath = public_path('uploads/course_doc/' . $course->dcf_file);
+        unlink($filePath);
+
+        $course->delete();
+    }
+    public function open_course_doc_file($id)
+    {
+        $performanceFile = Doc_course::find($id);
+        if (!$performanceFile) {
+            return response()->json(['error' => 'ไฟล์เอกสารไม่พบ'], 404);
+        }
+
+        $filePath = public_path('uploads/course_doc/' . $performanceFile->dcf_file);
+        if (!file_exists($filePath)) {
+            return response()->json(['error' => 'ไฟล์เอกสารไม่พบ'], 404);
+        }
+        return response()->stream(
+            function () use ($filePath) {
+                readfile($filePath);
+            },
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $performanceFile->dcf_file . '"',
+            ]
+        );
     }
 
     public function get_all_programs()

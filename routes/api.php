@@ -85,8 +85,14 @@ Route::get('get_subjectAll_term/{id}/{t_id}', [DocumentCheckController::class, '
 Route::get('admin_get_docfile_status/{id}', [DocumentCheckController::class, 'get_docfile_status']);
 Route::get('admin_get_teachers/{id}', [DocumentCheckController::class, 'get_teachers']);
 Route::get('admin_get_docfile/{id}', [DocumentCheckController::class, 'get_doc_file']);
-Route::get('admin_confirm_docfile_status/{id}', [DocumentCheckController::class, 'confirm_docfile_status']);
+Route::get('admin_confirm_docfile_status/{id}/{status_con}', [DocumentCheckController::class, 'confirm_docfile_status']);
 
+
+Route::post('admin_add_course_doc/{id}', [CourseController::class, 'course_Addfile']);
+Route::get('admin_get_course_doc/{id}', [CourseController::class, 'get_course_doc']);
+Route::get('admin_delete_course_doc/{id}', [CourseController::class, 'delete_course_doc']);
+
+Route::get('user_open_course_doc_file/{id}', [CourseController::class, 'open_course_doc_file']);
 
 //users
 Route::get('get_profile/{id}', [ProfileControllor::class, 'get_profile']);
@@ -211,6 +217,8 @@ Route::get('president_get_program/{id}', [CourseProgramController::class, 'get_p
 Route::get('president_get_single_course/{id}', [CourseProgramController::class, 'get_single_course']);
 Route::get('manager_get_subjectAll_term/{id}/{t_id}', [DocumentSummaryController::class, 'get_subject']);
 Route::get('manager_get_program/{id}', [DocumentSummaryController::class, 'get_program']);
+
+Route::get('manager_get_doc_status_count/{t_id}', [DocumentSummaryController::class, 'get_doc_status_count']);
 
 
 //reportPerformance

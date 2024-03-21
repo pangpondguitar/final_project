@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const router = useRouter();
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 let user = ref({});
 let terms = ref({});
 let currentTerm = ref("");
@@ -26,36 +26,57 @@ const props = defineProps({
     },
 });
 
-let User_pId = ref('')
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+let User_pId = ref("");
+import { Bar } from "vue-chartjs";
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+} from "chart.js";
 
 const chartData = computed(() => {
     return {
-        labels: ['เสร็จสิ้น', 'รอตรวจสอบ', 'รอจัดทำใหม่', 'ยังไม่จัดทำ'],
-        datasets: [{
-            data: [count_success.value, count_wait.value, count_redoc.value, count_sub.value],
-            backgroundColor: [
-                'rgba(61, 247, 79,  0.2)', // เขียว
-                'rgba(255, 165, 0, 0.2)', // สีส้ม
-                'rgba(255, 0, 0, 0.2)', // แดง
-                'rgba(255, 0, 0, 0.2)' // แดง
-            ],
-            borderColor: [
-                'rgba(61, 247, 79, 82)', // เขียว
-                'rgba(255, 165, 0, 1)', // สีส้ม
-                'rgba(255, 0, 0, 1)',    // แดง
-                'rgba(255, 0, 0, 1)'
-            ],
-            borderWidth: 1
-        }]
+        labels: ["เสร็จสิ้น", "รอตรวจสอบ", "รอจัดทำใหม่", "ยังไม่จัดทำ"],
+        datasets: [
+            {
+                data: [
+                    count_success.value,
+                    count_wait.value,
+                    count_redoc.value,
+                    count_sub.value,
+                ],
+                backgroundColor: [
+                    "rgba(61, 247, 79,  0.2)", // เขียว
+                    "rgba(255, 165, 0, 0.2)", // สีส้ม
+                    "rgba(255, 0, 0, 0.2)", // แดง
+                    "rgba(255, 0, 0, 0.2)", // แดง
+                ],
+                borderColor: [
+                    "rgba(61, 247, 79, 82)", // เขียว
+                    "rgba(255, 165, 0, 1)", // สีส้ม
+                    "rgba(255, 0, 0, 1)", // แดง
+                    "rgba(255, 0, 0, 1)",
+                ],
+                borderWidth: 1,
+            },
+        ],
     };
 });
 const chartOptions = {
-    responsive: true
-}
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
+    responsive: true,
+};
+ChartJS.register(
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale
+);
 
 const get_Terms = async () => {
     try {
@@ -67,27 +88,28 @@ const get_Terms = async () => {
     }
 };
 
-
 const getSubject = async (page = 1) => {
     try {
-        let response = await axios.get(`/api/manager_get_subjectAll_term/${props.id}/${currentTerm.value}/?page=${page}`);
+        let response = await axios.get(
+            `/api/manager_get_subjectAll_term/${props.id}/${currentTerm.value}/?page=${page}`
+        );
         subjects.value = response.data.subjects;
         count_success.value = response.data.count_success;
         count_wait.value = response.data.count_wait;
         count_doc.value = response.data.count_doc;
         count_sub.value = response.data.count_sub;
         count_redoc.value = response.data.count_redoc;
-        console.log('subjects', count_sub.value);
+        console.log("subjects", count_sub.value);
         updateChartData();
     } catch (error) {
-        console.error('Error fetching subjects:', error);
+        console.error("Error fetching subjects:", error);
     }
 };
 const get_Program = async () => {
     try {
         let response = await axios.get(`/api/manager_get_program/${props.id}`);
         program.value = response.data.program;
-        console.log('program', program.value);
+        console.log("program", program.value);
     } catch (error) {
         console.error("Error fetching program:", error);
     }
@@ -100,11 +122,19 @@ const term = async (event) => {
 };
 
 const updateChartData = () => {
-    if (chartData.value && chartData.value.datasets && chartData.value.datasets[0]) {
-        chartData.value.datasets[0].data = [count_success.value, count_wait.value, count_doc.value];
+    if (
+        chartData.value &&
+        chartData.value.datasets &&
+        chartData.value.datasets[0]
+    ) {
+        chartData.value.datasets[0].data = [
+            count_success.value,
+            count_wait.value,
+            count_re_doc.value,
+            count_doc.value,
+        ];
     }
 };
-
 
 onMounted(async () => {
     await get_Terms();
@@ -120,29 +150,36 @@ onMounted(async () => {
             <p>รายงานการจัดส่ง มคอ.</p>
         </div>
         <div class="col-lg-12">
-            <div class="card ">
-                <div class="card-body ">
+            <div class="card">
+                <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div>
-                            <h5 class=" mb-0">สถานะการจัดส่ง มคอ</h5>
-                            <label class=" mt-0 text-muted ms-0 fw-normal ">ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label>
+                            <h5 class="mb-0">สถานะการจัดส่ง มคอ</h5>
+                            <label class="mt-0 text-muted ms-0 fw-normal"
+                                >ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label
+                            >
                         </div>
                         <div>
-                            <select v-model="selectedTerm" class="form-control select-year mt-3" @change="term">
+                            <select
+                                v-model="selectedTerm"
+                                class="form-control select-year mt-3"
+                                @change="term"
+                            >
                                 <option value="" disabled>Select term</option>
-                                <option v-for="item in terms" :key="item.id" :value="item.t_id">{{ item.t_name }} /
-                                    {{
-                item.t_year }}</option>
+                                <option
+                                    v-for="item in terms"
+                                    :key="item.id"
+                                    :value="item.t_id"
+                                >
+                                    {{ item.t_name }} / {{ item.t_year }}
+                                </option>
                             </select>
                         </div>
                     </div>
 
                     <div class="row">
+                        <div class="col-lg-12"></div>
                         <div class="col-lg-12">
-
-                        </div>
-                        <div class="col-lg-12">
-
                             <!-- <div class="row mt-3">
                                 <div class="col-3 py-3 ">
                                     <div class="d-flex mb-2">
@@ -287,64 +324,95 @@ onMounted(async () => {
                                 </div>
                             </div> -->
                             <div class="row mt-1">
-                                <div class="col-lg-3 g-4 ">
-                                    <div class="card bg-gradient-success p-1 ">
-                                        <div class="card-body text-center   ">
-                                            <h6 class="text-white fw-normal">เสร็จสิ้น <i
-                                                    class="bi bi-check-circle"></i> </h6>
-                                            <h2 class="text-white mb-0">{{ count_success }}</h2>
-                                            <p for="" class="text-white mb-0">รายการ</p>
+                                <div class="col-lg-3 g-4">
+                                    <div class="card bg-gradient-success p-1">
+                                        <div class="card-body text-center">
+                                            <h6 class="text-white fw-normal">
+                                                เสร็จสิ้น
+                                                <i
+                                                    class="bi bi-check-circle"
+                                                ></i>
+                                            </h6>
+                                            <h2 class="text-white mb-0">
+                                                {{ count_success }}
+                                            </h2>
+                                            <p for="" class="text-white mb-0">
+                                                รายการ
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3  g-4 ">
-                                    <div class="card   p-1 card-course-detail">
-                                        <div class="card-body text-center   ">
-                                            <h6 class=" ">รอตรวจสอบ <i class="bi bi-clock-history"></i></h6>
-                                            <h2 class="mb-0 ">{{ count_wait }}</h2>
-                                            <p for="" class=" mb-0 ">รายการ</p>
+                                <div class="col-lg-3 g-4">
+                                    <div class="card p-1 card-course-detail">
+                                        <div class="card-body text-center">
+                                            <h6 class=" ">
+                                                รอตรวจสอบ
+                                                <i
+                                                    class="bi bi-clock-history"
+                                                ></i>
+                                            </h6>
+                                            <h2 class="mb-0">
+                                                {{ count_wait }}
+                                            </h2>
+                                            <p for="" class="mb-0">รายการ</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3  g-4 ">
-                                    <div class="card   p-1 card-course-detail">
-                                        <div class="card-body text-center   ">
-                                            <h6 class=" ">รอจัดทำใหม่ <i class="bi bi-clock-history"></i></h6>
-                                            <h2 class="mb-0 ">{{ count_redoc }}</h2>
-                                            <p for="" class=" mb-0 ">รายการ</p>
+                                <div class="col-lg-3 g-4">
+                                    <div class="card p-1 card-course-detail">
+                                        <div class="card-body text-center">
+                                            <h6 class=" ">
+                                                รอจัดทำใหม่
+                                                <i
+                                                    class="bi bi-clock-history"
+                                                ></i>
+                                            </h6>
+                                            <h2 class="mb-0">
+                                                {{ count_redoc }}
+                                            </h2>
+                                            <p for="" class="mb-0">รายการ</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 g-4  ">
-                                    <div class="card  p-1 card-course-detail ">
-                                        <div class="card-body text-center   ">
-                                            <h6 class="">ยังไม่จัดทำ <i class="bi bi-ban"></i></h6>
-                                            <h2 class="mb-0">{{ count_doc }}</h2>
-                                            <p for="" class=" mb-0">รายการ</p>
+                                <div class="col-lg-3 g-4">
+                                    <div class="card p-1 card-course-detail">
+                                        <div class="card-body text-center">
+                                            <h6 class="">
+                                                ยังไม่จัดทำ
+                                                <i class="bi bi-ban"></i>
+                                            </h6>
+                                            <h2 class="mb-0">
+                                                {{ count_doc }}
+                                            </h2>
+                                            <p for="" class="mb-0">รายการ</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
             <div class="card mt-3">
                 <div class="card-body">
-                    <div class="col-lg-8 col-sm-12 col-md-12">
-                        <h5 class=" mb-0">แผนภาพแสดงสถานะการจัดส่ง มคอ</h5>
-                        <label class=" mt-0 text-muted ms-0 fw-normal ">ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label>
-                        <Bar id="my-chart-id" :options="chartOptions" :data="chartData" class="mt-2" />
-
+                    <h5 class="mb-0">แผนภาพแสดงสถานะการจัดส่ง มคอ</h5>
+                    <label class="mt-0 text-muted ms-0 fw-normal"
+                        >ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label
+                    >
+                    <div class="d-flex justify-content-center">
+                        <div class="col-lg-8 col-sm-12 col-md-12">
+                            <Bar
+                                id="my-chart-id"
+                                :options="chartOptions"
+                                :data="chartData"
+                                class="mt-2"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </template>
 
 <style>
@@ -366,7 +434,7 @@ onMounted(async () => {
 }
 
 .gra-info {
-    background: linear-gradient(135deg, #F36265 0%, #961276 100%);
+    background: linear-gradient(135deg, #f36265 0%, #961276 100%);
 }
 
 .gra-warning {
@@ -374,6 +442,6 @@ onMounted(async () => {
 }
 
 .gra-danger {
-    background: linear-gradient(135deg, #F36265 0%, #961276 100%);
+    background: linear-gradient(135deg, #f36265 0%, #961276 100%);
 }
 </style>

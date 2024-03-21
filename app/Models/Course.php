@@ -35,4 +35,9 @@ class Course extends Model
     {
         return $this->hasMany(Topic_learn_results::class, 'c_id');
     }
+
+    public function doc_course()
+    {
+        return $this->hasMany(Doc_course::class, 'c_id');
+    }
 }

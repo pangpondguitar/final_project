@@ -199,6 +199,7 @@ class PDFController extends Controller
             ->groupBy('topic_learn_results.tlr_id', 'tlr_title')
             ->get();
         $count_all_details = Learn_results_detail::where('ts_id', $id)->count();
+        $count_all_objective = Objective::where('ts_id', $id)->count();
         $count_all_details = mb_convert_encoding($count_all_details, 'HTML-ENTITIES', 'UTF-8');
         $list_result_detail = [];
         $j = 1;
@@ -219,6 +220,7 @@ class PDFController extends Controller
 
         foreach ($list_result as $item) {
             $result_data[] = [
+                'lrl_id' =>  $item['lrl_id'],
                 'num' => $num,
                 'title' => $item['lrl_title']
             ];
@@ -240,11 +242,37 @@ class PDFController extends Controller
         $measure_prac =   $this->get_measure_prac($id);
         $adjust_people =   $this->get_adjust_people($id);
         $adjust_repeat =   $this->get_adjust_repeat($id);
+        $result_remark = $this->get_result_remark($id);
+        $objective_num = $this->get_objective_num($objective);
+        $learn_result_detail_data = $this->get_learn_result_detail_data($id);
+        $objective_remark = $this->objective_remark_check($id);
+        $committees = $this->get_committee($id);
 
+        $teachers = $this->get_teachers($id);
+        $mark_result = [];
+
+        foreach ($result_data as $result_list) {
+            foreach ($learn_result_detail_data as $list_result_details) {
+                $remark_check = $this->get_remark_check($result_list['lrl_id'], $list_result_details['lrd_id']);
+                if ($remark_check) {
+                    $mark_result[] = [
+                        'lrl_id' => $result_list['lrl_id'],
+                        'lrd_id' => $list_result_details['lrd_id'],
+                        'status' => '1'
+                    ];
+                } else {
+                    $mark_result[] = [
+                        'lrl_id' => $result_list['lrl_id'],
+                        'lrd_id' => $list_result_details['lrd_id'],
+                        'status' => '0'
+                    ];
+                }
+            }
+        }
 
 
         // return response()->json([
-        //     'term_sub' => $result_data
+        //     'get_teachers' => $committees
         // ], 200);
 
         $m = new Merger();
@@ -260,7 +288,7 @@ class PDFController extends Controller
 
 
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf_doc.docresult', compact('count_list_detail', 'count_all_details', 'list_result_detail', 'result_data'))->setPaper('a4', 'landscape');
+        $pdf->loadView('pdf_doc.docresult', compact('count_list_detail', 'count_all_details', 'list_result_detail', 'result_data', 'result_remark', 'learn_result_detail_data', 'mark_result', 'objective_num', 'objective_remark', 'count_all_objective'))->setPaper('a4', 'landscape');
         $m->addRaw($pdf->output());
 
         $pdf = App::make('dompdf.wrapper');
@@ -272,12 +300,12 @@ class PDFController extends Controller
         $m->addRaw($pdf->output());
         if ($subject->subjects->doc_type == 2) {
             $pdf = App::make('dompdf.wrapper');
-            $pdf->loadView('pdf_doc.docprep_plan', compact('prep_plan', 'measure_list', 'sum_measure_list', 'measure_prac', 'adjust_people', 'adjust_repeat'))->setPaper('a4', 'portrait');
+            $pdf->loadView('pdf_doc.docprep_plan', compact('prep_plan', 'measure_list', 'sum_measure_list', 'measure_prac', 'adjust_people', 'adjust_repeat', 'teachers', 'committees'))->setPaper('a4', 'portrait');
             $m->addRaw($pdf->output());
         }
         if ($subject->subjects->doc_type != 2) {
             $pdf = App::make('dompdf.wrapper');
-            $pdf->loadView('pdf_doc.doclast', compact('measure_list', 'sum_measure_list', 'resource'))->setPaper('a4', 'portrait');
+            $pdf->loadView('pdf_doc.doclast', compact('measure_list', 'sum_measure_list', 'resource', 'teachers', 'committees'))->setPaper('a4', 'portrait');
             $m->addRaw($pdf->output());
         }
 

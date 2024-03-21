@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="p_pic" class="fs-6 mb-0">กรุณาเลือกไฟล์รูปภาพ</label>
-                    <input type="file" class="form-control" id="p_img">
+                    <!-- <input type="file" class="form-control" id="p_img"> -->
                     <label for="p_name" class="fs-6 mt-1 mb-0">ป้อนชื่อสาขา</label>
                     <input type="text" class="form-control" placeholder="ป้อนชื่อสาขา" id="p_name" name="p_name">
                     <label for="p_detail" class="fs-6 mt-1 mb-0">รายละเอียด</label>
@@ -42,7 +42,7 @@
                         <p class="text-sm">รายการสาขา(ทั้งหมด)</p>
                     </div>
                     <div>
-                        <a href="" class="btn btn-outline-secondary fs-6" data-bs-toggle="modal" data-bs-target="#exampleModal">เพิ่มสาขา + </a>
+                        <a href="" class="btn  bg-gradient-dark  text-sm " data-bs-toggle="modal" data-bs-target="#exampleModal">เพิ่มสาขา + </a>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         <div class="card card-blog card-plain h-100 py-3">
                             <div class="position-relative">
                                 <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="../assets/img/home-decor-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    <img src="../assets/img/book_program.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                                 </a>
                             </div>
                             <div class="card-body px-1 pb-0">
@@ -71,7 +71,7 @@
                                 </p>
 
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <a type="button" class="btn btn-outline-primary btn-sm mb-0" href="{{ route('program.edit', $item->p_id)}}">View Project</a>
+                                    <a type="button" class="btn btn-outline-primary btn-sm mb-0" href="{{ route('program.edit', $item->p_id)}}">รายละเอียดเพิ่มเติม</a>
                                     <div class="avatar-group mt-2">
                                         <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
                                             <img alt="Image placeholder" src="../assets/img/team-1.jpg">

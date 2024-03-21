@@ -57,11 +57,11 @@ class DocumentCheckController extends Controller
             'docfile' => $docfile
         ], 200);
     }
-    public function confirm_docfile_status($id)
+    public function confirm_docfile_status($id, $status_con)
     {
         $status = new Docfile_status();
         $status->df_id = $id;
-        $status->dfs_status = 1;
+        $status->dfs_status = $status_con;
         $status->save();
     }
 }
