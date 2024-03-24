@@ -12,4 +12,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'dist', // กำหนดเป็น 'dist' เพื่อให้ไดเร็กทอรี Output เป็น "dist"
+      },
 });
