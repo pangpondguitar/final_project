@@ -15,9 +15,15 @@ class AdminuserController extends Controller
 {
     public function index()
     {
-        $users = User::where('user_type', '2')->with('user_detail')->paginate(10);
+        return view('admin.users.index');
+    }
+    public function get_all_user()
+    {
+        $users = User::with('user_detail')->where('user_type', '!=', 1)->where('user_status', 1)->get();
 
-        return view('admin.users', compact('users'));
+        return response()->json([
+            'users' => $users
+        ], 200);
     }
     public function insert_user(Request $request)
     {

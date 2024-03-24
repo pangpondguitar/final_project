@@ -86,17 +86,25 @@ Route::middleware(['auth', 'role:1'])->group(function () {
             Route::get('/subject/search/{id}', 'subject_search')->name('admin.course_detail.subject_search');
         });
     });
+    // Route::prefix('admin/users')->group(function () {
+    //     Route::controller(AdminuserController::class)->group(function () {
+    //         Route::get('/', 'index')->name('admin.users');
+    //         Route::get('/detail/{id}', 'user_detail')->name('admin.user_detail');
+    //         Route::get('/insert', 'user_insert')->name('admin.user_insert');
+    //         Route::get('/delete/{id}', 'delete')->name('admin.user_delete');
+    //         Route::post('/insert_check', 'user_insert_check')->name('admin.user_insert_check');
+    //         Route::post('/edit_check/{id}', 'user_edit_check')->name('admin.user_edit_check');
+    //         Route::post('/edit_password/{id}', 'user_edit_password')->name('admin.user_edit_password');
+    //     });
+    // });
+
     Route::prefix('admin/users')->group(function () {
         Route::controller(AdminuserController::class)->group(function () {
             Route::get('/', 'index')->name('admin.users');
-            Route::get('/detail/{id}', 'user_detail')->name('admin.user_detail');
-            Route::get('/insert', 'user_insert')->name('admin.user_insert');
-            Route::get('/delete/{id}', 'delete')->name('admin.user_delete');
-            Route::post('/insert_check', 'user_insert_check')->name('admin.user_insert_check');
-            Route::post('/edit_check/{id}', 'user_edit_check')->name('admin.user_edit_check');
-            Route::post('/edit_password/{id}', 'user_edit_password')->name('admin.user_edit_password');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
+
     Route::prefix('admin/terms')->group(function () {
         Route::controller(TermsControllor::class)->group(function () {
             Route::get('/', 'index')->name('admin.terms');

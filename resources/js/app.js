@@ -9,6 +9,7 @@
 // require('./bootstrap');
 
 import { createApp } from 'vue'
+import PrimeVue from 'primevue/config';
 import axios from 'axios';
 // import App from './App.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
@@ -31,6 +32,7 @@ window.toast = toast;
 // createApp(App).use(router).mount("#app");
 
 const app = createApp(App)
+createApp(App).use(PrimeVue)
 createApp(App).use(CKEditor)
 createApp(App).use(router).use( CKEditor ).mount("#app")
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPanel\AdminuserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +87,9 @@ Route::get('admin_get_docfile_status/{id}', [DocumentCheckController::class, 'ge
 Route::get('admin_get_teachers/{id}', [DocumentCheckController::class, 'get_teachers']);
 Route::get('admin_get_docfile/{id}', [DocumentCheckController::class, 'get_doc_file']);
 Route::get('admin_confirm_docfile_status/{id}/{status_con}', [DocumentCheckController::class, 'confirm_docfile_status']);
+
+Route::get('admin_get_all_users/', [AdminuserController::class, 'get_all_user']);
+
 
 
 Route::post('admin_add_course_doc/{id}', [CourseController::class, 'course_Addfile']);
