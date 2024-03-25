@@ -19,12 +19,50 @@ class AdminuserController extends Controller
     }
     public function get_all_user()
     {
-        $users = User::with('user_detail')->where('user_type', '!=', 1)->where('user_status', 1)->get();
+        $users = User::with('user_detail.program')->where('user_type', '!=', 1)->get();
 
         return response()->json([
             'users' => $users
         ], 200);
     }
+    public function add_user(Request $request)
+    {
+        $user = new User();
+
+        $user_check = User::where('username', $request->username)->exists();
+
+        if ($user_check) {
+            return response()->json(['message' => 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว'], 400);
+        }
+        // $user->username = $request->username;
+        // $user->email = $request->email;
+        // $user->password = $request->password;
+
+        // $last_userid = $user->id;
+        // $user_d = new Users_detail();
+        // $user_d->user_d_name = $request->name;
+        // $user_d->user_d_name2 = $request->name2;
+        // $user_d->user_d_add = $request->address;
+        // $user_d->user_d_email = $request->email;
+        // $user_d->user_d_phone = $request->phone;
+        // $user_d->id = $last_userid;
+        // $user_d->p_id = $request->program;
+        // $user->save();
+    }
+    public function delete_user($id)
+    {
+        $user =  User::find($id);
+        $user_detail = Users_detail::where('id', $id);
+        $user_detail->delete();
+        $user->delete();
+    }
+    public function update_user($id)
+    {
+        $user =  User::find($id);
+        $user->delete();
+    }
+
+
     public function insert_user(Request $request)
     {
 
@@ -36,6 +74,8 @@ class AdminuserController extends Controller
         ]);
         return redirect()->back();
     }
+
+
     public function user_detail($id)
     {
         $programs = Program::all();

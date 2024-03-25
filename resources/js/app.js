@@ -34,5 +34,5 @@ window.toast = toast;
 const app = createApp(App)
 createApp(App).use(PrimeVue)
 createApp(App).use(CKEditor)
-createApp(App).use(router).use( CKEditor ).mount("#app")
+createApp(App).use(router).use( CKEditor ).use(PrimeVue).mount("#app")
 

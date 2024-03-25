@@ -1,0 +1,82 @@
+{
+  "node_modules/primevue/resources/themes/aura-light-green/fonts/Inter-italic.var.woff2": {
+    "file": "assets/Inter-italic.var-4Q_raY2J.woff2",
+    "src": "node_modules/primevue/resources/themes/aura-light-green/fonts/Inter-italic.var.woff2"
+  },
+  "node_modules/primevue/resources/themes/aura-light-green/fonts/Inter-roman.var.woff2": {
+    "file": "assets/Inter-roman.var-vq-Vth46.woff2",
+    "src": "node_modules/primevue/resources/themes/aura-light-green/fonts/Inter-roman.var.woff2"
+  },
+  "public/assets/img/book (5).png": {
+    "file": "assets/book (5)-r1iBsS4n.png",
+    "src": "public/assets/img/book (5).png"
+  },
+  "public/assets/img/education.jpeg": {
+    "file": "assets/education-PWX3m3Pu.jpeg",
+    "src": "public/assets/img/education.jpeg"
+  },
+  "public/assets/img/man (1).png": {
+    "file": "assets/man (1)-merSeQWG.png",
+    "src": "public/assets/img/man (1).png"
+  },
+  "public/assets/img/not-result.jpg": {
+    "file": "assets/not-result-Q78XkaZ7.jpg",
+    "src": "public/assets/img/not-result.jpg"
+  },
+  "public/assets/img/pdf (9).png": {
+    "file": "assets/pdf (9)-Hl-s6eA-.png",
+    "src": "public/assets/img/pdf (9).png"
+  },
+  "public/assets/img/team-1.jpg": {
+    "file": "assets/team-1-ySKCPtxT.jpg",
+    "src": "public/assets/img/team-1.jpg"
+  },
+  "public/assets/img/team-2.jpg": {
+    "file": "assets/team-2-z84sDxnC.jpg",
+    "src": "public/assets/img/team-2.jpg"
+  },
+  "public/assets/img/team-3.jpg": {
+    "file": "assets/team-3-PLQ62gOq.jpg",
+    "src": "public/assets/img/team-3.jpg"
+  },
+  "public/assets/img/team-4.jpg": {
+    "file": "assets/team-4-IW9Hbj5q.jpg",
+    "src": "public/assets/img/team-4.jpg"
+  },
+  "public/assets/img/user (9).png": {
+    "file": "assets/user (9)-8KD2uZ_P.png",
+    "src": "public/assets/img/user (9).png"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-vJnSaukc.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "assets": [
+      "assets/book (5)-r1iBsS4n.png",
+      "assets/man (1)-merSeQWG.png",
+      "assets/not-result-Q78XkaZ7.jpg",
+      "assets/pdf (9)-Hl-s6eA-.png",
+      "assets/team-1-ySKCPtxT.jpg",
+      "assets/team-2-z84sDxnC.jpg",
+      "assets/team-3-PLQ62gOq.jpg",
+      "assets/team-4-IW9Hbj5q.jpg",
+      "assets/user (9)-8KD2uZ_P.png",
+      "assets/logo-empty-19noTfe_.png",
+      "assets/education-PWX3m3Pu.jpeg",
+      "assets/Inter-roman.var-vq-Vth46.woff2",
+      "assets/Inter-italic.var-4Q_raY2J.woff2"
+    ],
+    "css": [
+      "assets/app-DOOptWRD.css"
+    ],
+    "file": "assets/app-MIjUTNUh.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/components/users/assets/logo-empty.png": {
+    "file": "assets/logo-empty-19noTfe_.png",
+    "src": "resources/js/components/users/assets/logo-empty.png"
+  }
+}

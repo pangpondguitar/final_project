@@ -101,6 +101,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::prefix('admin/users')->group(function () {
         Route::controller(AdminuserController::class)->group(function () {
             Route::get('/', 'index')->name('admin.users');
+            Route::get('/add_user', 'index')->name('admin.add_user');
+            Route::get('/edit_user', 'index')->name('admin.edit_user');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });

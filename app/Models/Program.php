@@ -20,4 +20,8 @@ class Program extends Model
     {
         return $this->hasMany(Course::class, 'p_id');
     }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'p_id');
+    }
 }

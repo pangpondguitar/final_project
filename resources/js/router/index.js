@@ -19,8 +19,8 @@ import DocReport_Admin from "../components/admin/doc_report/doc_report.vue";
 import DocReport_Detail_Admin from "../components/admin/doc_report/doc_report_detail.vue";
 
 import Users_Admin from "../components/admin/users/index.vue";
-// import Users_Add from "../components/admin/users/doc_report_detail.vue";
-// import UserEdit from "../components/admin/users/doc_report_detail.vue";
+import User_AddAdmin from "../components/admin/users/add_user.vue";
+import User_EditAdmin from "../components/admin/users/edit_user.vue";
 
 //users
 import userHome from "../components/users/index.vue";
@@ -113,6 +113,15 @@ const routes = [
     {
         path:"/admin/users",
         component: Users_Admin
+    },
+    {
+        path:"/admin/users/add_user",
+        component: User_AddAdmin
+    },
+     {
+        path:"/admin/users/edit_user/:id",
+        component: User_EditAdmin,
+        props: true
     },
     //admin_doc_report
     {

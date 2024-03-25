@@ -24,4 +24,8 @@ class Users_detail extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'p_id');
+    }
 }
