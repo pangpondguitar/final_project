@@ -16,6 +16,7 @@ class Users_detail extends Model
         'user_d_add',
         'user_d_email',
         'user_d_phone',
+        'user_d_pic',
         'id',
         'p_id',
     ];

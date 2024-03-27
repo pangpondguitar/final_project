@@ -59,6 +59,9 @@ const filteredUsers = computed(() => {
 const Add_user = (id) => {
     router.push("/admin/users/add_user/");
 };
+const Edit_user = (id) => {
+    router.push("/admin/users/edit_user/" + id);
+};
 
 const filteredList = () => {
     return users.value.filter((item) =>
@@ -109,7 +112,7 @@ onMounted(async () => {
                             <input v-model="input" placeholder="Keyword Search" class="form-control" />
                         </div>
                         <div class="item error" v-if="input && !filteredList().length">
-                            <p>ไม่พบข้อมูล!</p>
+                            <p class="text-sm ms-1 mt-1"> ไม่พบข้อมูล!</p>
                         </div>
                     </div>
                 </div>
@@ -122,10 +125,15 @@ onMounted(async () => {
 
                             </div>
                             <div class="d-flex">
-                                <div>
-                                    <img src="../../../../../public/assets/img/bruce-mars.jpg"
+                                <div v-if="data.user_detail.user_d_pic != ''">
+                                    <img :src="'/uploads/profile_pic/' + data.user_detail.user_d_pic"
                                         class="avatar avatar-sm me-3" />
                                 </div>
+                                <div v-else>
+                                    <img src="../../../../../public/assets/img/user.png"
+                                        class="avatar avatar-sm me-3" />
+                                </div>
+
                                 <div class="d-flex flex-column justify-content-center">
                                     <h6 class="mb-0 text-sm">{{ data.user_detail.user_d_name }}</h6>
                                     <p class="text-xs text-secondary mb-0">{{ data.user_detail.user_d_name2 }}</p>
@@ -172,7 +180,8 @@ onMounted(async () => {
                     <Column field="user_detail.user_d_name2" header="Controllor">
                         <template v-slot:body="{ data }">
                             <div :style="{ width: '100px' }">
-                                <a href=" " class="text-secondary font-weight-bold ms-3" data-toggle="tooltip">
+                                <a class="text-secondary font-weight-bold ms-3" data-toggle="tooltip"
+                                    @click="Edit_user(data.id)">
                                     <i class="bi bi-pen"></i>
                                 </a>
                                 <a class="text-danger font-weight-bold ms-4" data-toggle="tooltip"

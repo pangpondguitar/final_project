@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('user_d_add')->nullable();
             $table->string('user_d_email');
             $table->string('user_d_phone');
+            $table->string('user_d_pic');
             $table->string('id');
             $table->string('p_id')->nullable();;
             $table->timestamps();

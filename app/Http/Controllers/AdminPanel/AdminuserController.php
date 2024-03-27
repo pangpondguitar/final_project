@@ -10,6 +10,7 @@ use App\Models\Users_detail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Course;
 use App\Models\Program;
+use Illuminate\Support\Str;
 
 class AdminuserController extends Controller
 {
@@ -28,27 +29,105 @@ class AdminuserController extends Controller
     public function add_user(Request $request)
     {
         $user = new User();
-
         $user_check = User::where('username', $request->username)->exists();
 
         if ($user_check) {
-            return response()->json(['message' => 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว'], 400);
+            return response()->json(['message_err' => 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว'], 400);
         }
-        // $user->username = $request->username;
-        // $user->email = $request->email;
-        // $user->password = $request->password;
 
-        // $last_userid = $user->id;
-        // $user_d = new Users_detail();
-        // $user_d->user_d_name = $request->name;
-        // $user_d->user_d_name2 = $request->name2;
-        // $user_d->user_d_add = $request->address;
-        // $user_d->user_d_email = $request->email;
-        // $user_d->user_d_phone = $request->phone;
-        // $user_d->id = $last_userid;
-        // $user_d->p_id = $request->program;
-        // $user->save();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->user_type = $request->user_type;
+        $user->user_status = '1';
+        $user->password = Hash::make($request->password);
+
+        $user->save();
+        $last_userid = $user->id;
+
+        $user_d = new Users_detail();
+        $user_d->user_d_name = $request->name;
+        $user_d->user_d_name2 = $request->name2;
+        $user_d->user_d_add = $request->address;
+        $user_d->user_d_email = $request->email;
+        $user_d->user_d_phone = $request->phone;
+        if ($request->hasFile('file')) {
+            $uploadedFile = $request->file('file');
+            $extension = $uploadedFile->getClientOriginalExtension(); // รับนามสกุลของไฟล์
+
+            $randomFileName = uniqid() . '_' . Str::random(10) . '.' . $extension;
+            $filePath = 'uploads/profile_pic' . '/' . $randomFileName;
+            if (move_uploaded_file($uploadedFile, $filePath)) {
+                $filePaths[] = $filePath;
+                $user_d->user_d_pic = $randomFileName;
+            } else {
+                // return response()->json(['message' => 'Failed to upload file'], 500);
+            }
+        } else {
+            $user_d->user_d_pic = 'user.png';
+        }
+
+        $user_d->id = $last_userid;
+        $user_d->p_id = $request->program;
+        $user_d->save();
+
+        return response()->json(['success' => 'user_add_success'], 200);
     }
+
+    public function update_users(Request $request, $id)
+    {
+        $user =  User::find($id);
+        if ($user->username != $request->username) {
+            $user_check = User::where('username', $request->username)->exists();
+
+            if ($user_check) {
+                return response()->json(['message_err' => 'ชื่อผู้ใช้งานนี้มีอยู่แล้ว'], 400);
+            }
+        }
+
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->user_type = $request->user_type;
+        if ($request->status == true) {
+            $status = 1;
+        } elseif ($request->status == false) {
+            $status = 0;
+        }
+        $user->user_status = $status;
+        $user->save();
+
+        $user_d = Users_detail::where('id', $id)->first();
+        $user_d->user_d_name = $request->name;
+        $user_d->user_d_name2 = $request->name2;
+        $user_d->user_d_add = $request->address;
+        $user_d->user_d_email = $request->email;
+        $user_d->user_d_phone = $request->phone;
+
+        if ($request->hasFile('file')) {
+            $uploadedFile = $request->file('file');
+            $extension = $uploadedFile->getClientOriginalExtension();
+
+            $randomFileName = uniqid() . '_' . Str::random(10) . '.' . $extension;
+            $filePath = 'uploads/profile_pic' . '/' . $randomFileName;
+            if ($user_d->user_d_pic != '') {
+                $fileDir = 'uploads/profile_pic/';
+                unlink($fileDir . $user_d->user_d_pic);
+            }
+            if (move_uploaded_file($uploadedFile, $filePath)) {
+                $filePaths[] = $filePath;
+                $user_d->user_d_pic = $randomFileName;
+            } else {
+            }
+        } else {
+        }
+
+        $user_d->p_id = $request->program;
+        $user_d->save();
+
+        return response()->json(['success' => 'user_add_success'], 200);
+    }
+
+
     public function delete_user($id)
     {
         $user =  User::find($id);
@@ -56,6 +135,15 @@ class AdminuserController extends Controller
         $user_detail->delete();
         $user->delete();
     }
+    public function get_single_user($id)
+    {
+        $user =  User::where('id', $id)->with('user_detail')->first();
+        return response()->json([
+            'user' => $user
+        ]);
+    }
+
+
     public function update_user($id)
     {
         $user =  User::find($id);

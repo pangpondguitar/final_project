@@ -89,7 +89,9 @@ Route::get('admin_get_docfile/{id}', [DocumentCheckController::class, 'get_doc_f
 Route::get('admin_confirm_docfile_status/{id}/{status_con}', [DocumentCheckController::class, 'confirm_docfile_status']);
 
 Route::get('admin_get_all_users/', [AdminuserController::class, 'get_all_user']);
-Route::get('admin_add_users/', [AdminuserController::class, 'add_user']);
+Route::post('admin_add_users/', [AdminuserController::class, 'add_user']);
+Route::get('admin_get_users_by_id/{id}', [AdminuserController::class, 'get_single_user']);
+Route::post('admin_update_users/{id}', [AdminuserController::class, 'update_users']);
 
 
 Route::post('admin_add_course_doc/{id}', [CourseController::class, 'course_Addfile']);
