@@ -88,12 +88,13 @@ class AdminuserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->user_type = $request->user_type;
-        if ($request->status == true) {
-            $status = 1;
-        } elseif ($request->status == false) {
-            $status = 0;
+
+        // return response()->json(['message_err' =>  $request->status]);
+        if ($request->status == "true") {
+            $user->user_status = '1';
+        } elseif ($request->status == "false") {
+            $user->user_status = '0';
         }
-        $user->user_status = $status;
         $user->save();
 
         $user_d = Users_detail::where('id', $id)->first();

@@ -16,6 +16,7 @@ let selectedImage = ref('/assets/img/eskimo.png');
 let imageUrl = ref('');
 let imageUrlAvatar = ref('/assets/img/user.png');
 let selectedUsertype = ref('');
+let user_status = ref(true);
 const user_type = ref('');
 
 const toast = useToast();
@@ -88,7 +89,13 @@ const getUser_ById = async () => {
             p_id: userData.user_detail.p_id,
         };
 
-
+        if (form.value.status == '0') {
+            user_status.value = false
+            console.log(user_status.value);
+        } else {
+            user_status.value = true
+            console.log(user_status.value);
+        }
         form.value.status == 0;
 
 
@@ -110,7 +117,7 @@ const UpdateUser = () => {
     formData.append("username", form.value.username);
     formData.append("email", form.value.email);
     formData.append("user_type", selectedUsertype.value);
-    formData.append("status", form.value.status);
+    formData.append("status", user_status.value);
     formData.append("name", form.value.name);
     formData.append("name2", form.value.name2);
     formData.append("address", form.value.address);
@@ -157,7 +164,9 @@ const previewImage = () => {
         imageUrl.value = event.target.result;
     };
 }
-
+const switchcheck = () => {
+    console.log(user_status.value)
+}
 
 const User_home = () => {
     router.push("/admin/users");
@@ -203,7 +212,7 @@ onMounted(async () => {
                             <small class="text-muted me-2">สถานะการใช้งาน</small>
                             <div class="form-check form-switch mb-0">
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault0"
-                                    v-model="form.status">
+                                    v-model="user_status" @change="switchcheck">
                             </div>
                         </div>
                     </div>

@@ -44,6 +44,7 @@ const get_Committee = async () => {
         committee = response.data.committee;
         doc_committee.value = response.data.doc_committee;
         console.log("Doc comiittee", doc_committee.value);
+
         committee.forEach((item) => {
             if (
                 Array.isArray(doc_committee.value) &&
@@ -64,6 +65,7 @@ const get_Committee = async () => {
                 console.log("remark is not an array or it's empty");
             }
         });
+
         console.log("commit", committee);
     } catch (error) {
         console.error("Error fetching committee:", error);
@@ -92,7 +94,7 @@ const addMeasure_list = () => {
             formAdd.value.title = "";
             getMeasure_list();
         })
-        .catch((error) => {});
+        .catch((error) => { });
 
     toast.fire({
         icon: "success",
@@ -113,7 +115,7 @@ const updateMeasure_list = () => {
 
             $("#edit").modal("hide");
         })
-        .catch((error) => {});
+        .catch((error) => { });
 
     toast.fire({
         icon: "success",
@@ -128,8 +130,8 @@ const add_Committee = () => {
     });
     axios
         .post(`/api/user_add_committee/${props.id}`, formData)
-        .then((response) => {})
-        .catch((error) => {});
+        .then((response) => { })
+        .catch((error) => { });
     toast.fire({
         icon: "success",
         title: "List Result add successfully",
@@ -143,63 +145,30 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="exampleModalLabel">
                         เพิ่มสัปดาห์การสอน
                     </h2>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                    ></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="p-1">
-                        <label for="s_num" class="fs-6 py-1 mb-0"
-                            >สัปดาห์ที่สอน</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="ป้อนชื่อรายวิชา"
-                            id="s_num"
-                            v-model="formEdit.title"
-                        />
-                        <label for="s_name" class="fs-6 py-1 mb-0"
-                            >จำนวนชั่วโมง</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="ป้อนชื่อรายวิชา"
-                            id="s_name"
-                            v-model="formEdit.value"
-                        />
+                        <label for="s_num" class="fs-6 py-1 mb-0">สัปดาห์ที่สอน</label>
+                        <input type="text" class="form-control" placeholder="ป้อนชื่อรายวิชา" id="s_num"
+                            v-model="formEdit.title" />
+                        <label for="s_name" class="fs-6 py-1 mb-0">จำนวนชั่วโมง</label>
+                        <input type="text" class="form-control" placeholder="ป้อนชื่อรายวิชา" id="s_name"
+                            v-model="formEdit.value" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        data-bs-dismiss="modal"
-                    >
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         ปิด
                     </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        @click="updateMeasure_list()"
-                    >
+                    <button type="submit" class="btn btn-primary" @click="updateMeasure_list()">
                         บันทึกข้อมูล
                     </button>
                 </div>
@@ -213,8 +182,7 @@ onMounted(async () => {
                     <h5 class="mb-0">
                         คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา
                     </h5>
-                    <label class="mb-0 ms-0 text-muted"
-                        >คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา
+                    <label class="mb-0 ms-0 text-muted">คณะกรรมการบริหารรายวิชา/อาจารย์ผู้สอนรายวิชา
                     </label>
                 </div>
             </div>
@@ -225,42 +193,28 @@ onMounted(async () => {
                 <div class="row">
                     <div class="col-lg-12">
                         <ul class="list-group list-group-flush">
-                            <li
-                                class="list-group-item list-group-item-action"
-                                v-for="item in committee"
-                                :key="item.cm_id"
-                            >
+                            <li class="list-group-item list-group-item-action" v-for="item in committee"
+                                :key="item.cm_id">
                                 <div class="d-flex justify-content-start">
                                     <div class="me-2">
                                         <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                :value="item.user.id"
-                                                v-model="checkedItems"
-                                                @change="updateCheckedItems"
-                                            />
+                                            <input class="form-check-input" type="checkbox" :value="item.user.id"
+                                                v-model="checkedItems" @change="updateCheckedItems" />
                                         </div>
                                     </div>
                                     <div>
-                                        <h6
-                                            for=""
-                                            class="fw-normal mb-0 text-muted text-sm"
-                                        >
+                                        <h6 for="" class="fw-normal mb-0 text-muted text-sm">
                                             {{
-                                                item.user.user_detail
-                                                    .user_d_name
-                                            }}
+                                item.user.user_detail
+                                    .user_d_name
+                            }}
                                         </h6>
                                     </div>
                                 </div>
                             </li>
                         </ul>
 
-                        <button
-                            class="btn bg-gradient-primary mt-3 fw-normal"
-                            @click="add_Committee()"
-                        >
+                        <button class="btn bg-gradient-primary mt-3 fw-normal" @click="add_Committee()">
                             บันทึกข้อมูล
                         </button>
                     </div>
@@ -270,34 +224,22 @@ onMounted(async () => {
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <ul
-                            class="list-group list-group-flush"
-                            v-for="teacher in teachers"
-                            :key="teacher.ts_id"
-                        >
-                            <li
-                                class="list-group-item list-group-item-action"
-                                v-for="termTeach in teacher.terms_sub_teach"
-                                :key="termTeach.tst_id"
-                            >
+                        <ul class="list-group list-group-flush" v-for="teacher in teachers" :key="teacher.ts_id">
+                            <li class="list-group-item list-group-item-action"
+                                v-for="termTeach in teacher.terms_sub_teach" :key="termTeach.tst_id">
                                 <div class="d-flex justify-content-start">
                                     <div class="me-2">
                                         <div>
-                                            <i
-                                                class="ni ni-circle-08 text-dark text-gradient text-lg opacity-10 mt-1"
-                                                aria-hidden="true"
-                                            ></i>
+                                            <i class="ni ni-circle-08 text-dark text-gradient text-lg opacity-10 mt-1"
+                                                aria-hidden="true"></i>
                                         </div>
                                     </div>
                                     <div>
-                                        <h6
-                                            for=""
-                                            class="fw-normal mb-0 text-muted text-sm"
-                                        >
+                                        <h6 for="" class="fw-normal mb-0 text-muted text-sm">
                                             {{
-                                                termTeach.users.user_detail
-                                                    .user_d_name
-                                            }}
+                                termTeach.users.user_detail
+                                    .user_d_name
+                            }}
                                         </h6>
                                     </div>
                                 </div>

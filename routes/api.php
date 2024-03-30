@@ -47,9 +47,11 @@ Route::get('get_subject/{id}/{t_id}', [TeachingControllor::class, 'get_subject']
 Route::get('get_all_teachers/{id}', [TeachingControllor::class, 'get_all_teachers']);
 Route::get('get_all_teaching/{id}', [TeachingControllor::class, 'get_all_teaching']);
 Route::post('add_sub', [teachingControllor::class, 'add_sub']);
+Route::post('add_subjects/{t_id}/{p_id}', [teachingControllor::class, 'add_subject']);
+
 Route::get('delete_sub/{id}', [TeachingControllor::class, 'delete_sub']);
 Route::get('delete_Teacher/{id}', [TeachingControllor::class, 'delete_Teacher']);
-Route::get('get_term_sub/{id}/{p_id}', [TeachingControllor::class, 'get_term_sub']);
+Route::get('get_term_sub/{id}/{p_id}', [TeachingControllor::class, 'get_term_subs']);
 Route::post('add_teacher', [teachingControllor::class, 'add_teacher']);
 
 

@@ -91,6 +91,34 @@ class TeachingControllor extends Controller
 
         $terms_sub->save();
     }
+
+
+    public function add_subject(Request $request, $t_id, $p_id)
+    {
+        $subjectsId = $request->subjectsId;
+
+        $existingIds = Terms_sub::where('t_id', $t_id)->pluck('s_id')->toArray();
+
+        if (empty($subjectsId)) {
+            Terms_sub::where('t_id', $t_id)
+                ->with('subjects.courses.program')->whereHas('subjects.courses.program', function ($query) use ($p_id) {
+                    $query->where('p_id', $p_id);
+                })
+                ->delete();
+            return;
+        }
+        foreach ($subjectsId as $item) {
+            if (in_array($item, $existingIds)) {
+                unset($existingIds[array_search($item, $existingIds)]);
+            } else {
+                $term_sub = new Terms_sub();
+                $term_sub->t_id = $t_id;
+                $term_sub->s_id = $item;
+                $term_sub->save();
+            }
+        }
+        Terms_sub::where('t_id', $t_id)->whereIn('s_id', $existingIds)->delete();
+    }
     public function get_term_sub($id, $p_id)
     {
 
@@ -105,6 +133,18 @@ class TeachingControllor extends Controller
                 $query->where('p_id', $p_id);
             })
             ->paginate(10);
+
+        return response()->json([
+            'term_sub' => $term_sub
+        ], 200);
+    }
+    public function get_term_subs($id, $p_id)
+    {
+        $term_sub = Terms_sub::where('t_id', $id)
+            ->with('subjects.courses.program')->whereHas('subjects.courses.program', function ($query) use ($p_id) {
+                $query->where('p_id', $p_id);
+            })
+            ->get();
 
         return response()->json([
             'term_sub' => $term_sub
