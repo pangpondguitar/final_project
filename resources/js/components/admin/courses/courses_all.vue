@@ -1,12 +1,12 @@
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
+import Skeleton_Course_list from '../../skeleton/course_course.vue';
 const router = useRouter();
 let courses = ref([]);
 let program = ref([]);
+const isLoadingData = ref(true);
 let form = ref({
     c_name: '',
     c_name2: ''
@@ -21,6 +21,7 @@ const get_courses = async () => {
     try {
         let response = await axios.get(`/api/admin_get_courses/${props.id}`);
         courses.value = response.data.courses;
+        isLoadingData.value = false;
         console.log('courses', courses.value);
     } catch (error) {
         console.error('Error fetching courses:', error);
@@ -92,10 +93,13 @@ onMounted(async () => {
             </div>
         </div>
     </div>
-    <div class="row">
+    <div v-if="isLoadingData != false">
+        <Skeleton_Course_list />
+    </div>
+    <div v-else class="row">
         <div class="col-12 mt-4">
             <div class="card mb-4">
-                <div class="card-header pb-0 p-3">
+                <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="mb-0">{{ program.p_name }}</h5>
@@ -103,31 +107,34 @@ onMounted(async () => {
                         </div>
                         <div>
                             <div>
-                                <a href="" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">เพิ่มหลักสูตร</a>
+                                <a href="" class="btn bg-gradient-dark text-sm fw-normal" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">เพิ่มหลักสูตร <i class="bi bi-bookmark-plus"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-3">
+                <div class="card-body pt-0">
                     <div class="row">
                         <div class="col-lg-12" v-for="item in courses" :key="item.id">
-                            <div class="card bg-gradient-default my-1">
-                                <div class="card-body">
+                            <div class="card bg-gradient-default my-2 ">
+                                <div class="card-body m-2">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <h5 class="card-title text-dark text-gradient"> {{ item.c_name }}</h5>
 
                                             <blockquote class="blockquote text-white mb-0">
                                                 <p class="text-dark ms-3"> {{ item.c_name2 }}</p>
-                                                <footer class="blockquote-footer text-gradient text-info text-sm ms-3">
-                                                    Someone famous in <cite title="Source Title">Source Title</cite>
+                                                <footer
+                                                    class="blockquote-footer text-gradient text-primary text-sm ms-3">
+                                                    หลักสูตรที่เปิดสอน <cite title="Source Title"> {{ program.p_name
+                                                        }}</cite>
                                                 </footer>
                                             </blockquote>
                                         </div>
                                         <div>
-                                            <button class="btn btn-outline-info"
-                                                @click="courses_detail(item.c_id)">ดูรายละเอียด</button>
+                                            <button class="btn bg-gradient-primary "
+                                                @click="courses_detail(item.c_id)">ดูรายละเอียด </button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,5 +146,3 @@ onMounted(async () => {
         </div>
     </div>
 </template>
-
-
