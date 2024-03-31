@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //         Route::get('/', 'index')->name('admin.teaching');
 //     });
 // });
+Route::get('get_single_term/{id}', [TeachingControllor::class, 'get_single_term']);
 
 Route::get('get_all_programs', [TeachingControllor::class, 'get_all_programs']);
 Route::get('get_all_terms', [TeachingControllor::class, 'get_all_terms']);
@@ -48,6 +49,7 @@ Route::get('get_all_teachers/{id}', [TeachingControllor::class, 'get_all_teacher
 Route::get('get_all_teaching/{id}', [TeachingControllor::class, 'get_all_teaching']);
 Route::post('add_sub', [teachingControllor::class, 'add_sub']);
 Route::post('add_subjects/{t_id}/{p_id}', [teachingControllor::class, 'add_subject']);
+Route::post('add_teacher_sub/{id}', [teachingControllor::class, 'add_teacher_sub']);
 
 Route::get('delete_sub/{id}', [TeachingControllor::class, 'delete_sub']);
 Route::get('delete_Teacher/{id}', [TeachingControllor::class, 'delete_Teacher']);

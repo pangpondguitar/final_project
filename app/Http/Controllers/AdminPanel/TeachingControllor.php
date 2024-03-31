@@ -56,11 +56,25 @@ class TeachingControllor extends Controller
     }
     public function get_all_teaching($id)
     {
-
         $teaching = Terms_sub::with('terms_sub_teach.users.user_detail')->where('ts_id', $id)->get();
-
+        $data = [];
+        foreach ($teaching as $item) {
+            $user = $item->terms_sub_teach;
+            foreach ($user as $item) {
+                $data[] = [
+                    'id' => $item->id
+                ];
+            }
+        }
         return response()->json([
-            'teaching' => $teaching
+            'teaching' => $data
+        ], 200);
+    }
+    public function get_single_term($id)
+    {
+        $single_term = Terms::find($id);
+        return response()->json([
+            'single_term' => $single_term
         ], 200);
     }
     public function get_all_teachers($id)
@@ -119,6 +133,30 @@ class TeachingControllor extends Controller
         }
         Terms_sub::where('t_id', $t_id)->whereIn('s_id', $existingIds)->delete();
     }
+
+    public function add_teacher_sub(Request $request, $id)
+    {
+        $userId = $request->userId;
+
+        $existingIds = Terms_sub_teach::where('ts_id', $id)->pluck('id')->toArray();
+
+        if (empty($userId)) {
+            Terms_sub_teach::where('ts_id', $id)->delete();
+            return;
+        }
+        foreach ($userId as $item) {
+            if (in_array($item, $existingIds)) {
+                unset($existingIds[array_search($item, $existingIds)]);
+            } else {
+                $term_sub_teacher = new Terms_sub_teach();
+                $term_sub_teacher->ts_id = $id;
+                $term_sub_teacher->id = $item;
+                $term_sub_teacher->save();
+            }
+        }
+        Terms_sub_teach::where('ts_id', $id)->whereIn('id', $existingIds)->delete();
+    }
+
     public function get_term_sub($id, $p_id)
     {
 
