@@ -120,7 +120,7 @@ onMounted(async () => {
 <template>
     <div class="col-lg-12">
         <div class="card mb-3">
-            <div class="card-header pb-0 p-3">
+            <div class="card-header pb-0 ">
                 <div class="d-flex justify-content-between">
                     <div>
                         <h5 class="mb-0">จัดการข้อมูล มคอ.</h5>
@@ -128,13 +128,13 @@ onMounted(async () => {
                     </div>
                     <div class="ms-5">
                         <button
-                            class="btn btn-outline-danger me-2 active"
+                            class="btn bg-gradient-danger me-2 active"
                             @click="subMenu(1)"
                         >
                             <i class="bi bi-journal-bookmark-fill"></i>
                         </button>
                         <button
-                            class="btn btn-outline-dark"
+                            class="btn bg-gradient-dark"
                             @click="subMenu(2)"
                         >
                             <i class="bi bi-gear-fill"></i>
@@ -172,7 +172,7 @@ onMounted(async () => {
                                     :key="item.id"
                                 >
                                     <td
-                                        class="align-middle text-center text-sm ps-3"
+                                        class="align-middle text-center text-sm ps-4"
                                     >
                                         {{ item.s_num }}
                                     </td>
@@ -185,7 +185,7 @@ onMounted(async () => {
                                                     {{ item.s_name }}
                                                 </h6>
                                                 <h6
-                                                    class="text-sm text-secondary mb-0 text-sm fw-normal"
+                                                    class="text-xs text-secondary mb-0 text-sm fw-normal"
                                                 >
                                                     {{ item.s_name2 }}
                                                 </h6>

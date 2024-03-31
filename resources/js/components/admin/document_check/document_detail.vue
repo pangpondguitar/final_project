@@ -128,8 +128,8 @@ onMounted(async () => {
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="mb-1">อาจารย์ผู้สอน</h5>
-                            <p class="text-xs">อาจารย์ผู้สอนรายวิชา</p>
+                            <h5 class="mb-0">อาจารย์ผู้สอน</h5>
+                            <p class="text-sm">อาจารย์ผู้สอนรายวิชา</p>
                         </div>
                     </div>
                 </div>
@@ -176,8 +176,8 @@ onMounted(async () => {
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="mb-1">สถานะการจัดทำมคอ.</h5>
-                            <p class="text-xs">สถานะการจัดทำ มคอ. รายวิชา</p>
+                            <h5 class="mb-0">สถานะการจัดทำมคอ.</h5>
+                            <p class="text-sm">สถานะการจัดทำ มคอ. รายวิชา</p>
                         </div>
                     </div>
                 </div>

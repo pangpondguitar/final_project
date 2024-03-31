@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import Skeleton_List from "../../skeleton/index_list.vue";
 
 const router = useRouter();
 let programs = ref([]);
 const isLoadingData = ref(true);
-import Skeleton_List from "../../skeleton/index_list.vue";
 const getProgram = async () => {
     try {
         let response = await axios.get("/api/admin_get_all_programs");
@@ -44,8 +44,8 @@ onMounted(async () => {
                 </div>
                 <div class="card-body pt-3" v-if="programs.length > 0">
                     <ul class="list-group" v-for="item in programs  " :key="item.id">
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                            <div class="avatar avatar-md me-3">
+                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
+                            <div class="avatar avatar-sm me-3">
                                 <img src="/public/assets/img/book.png" alt="kal" class="border-radius-lg  ">
                             </div>
                             <div class="d-flex align-items-start flex-column justify-content-center"

@@ -64,10 +64,15 @@ onMounted(async () => {
     </div>
     <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
         <div class="row gx-4">
-            <div class="col-auto">
+            <div class="col-auto" v-for="item in teacher" :key="item.id">
                 <div class="avatar avatar-xl position-relative">
-                    <img src=" /public/assets/img/team-2.jpg" alt="profile_image"
-                        class="w-100 border-radius-lg shadow-sm">
+                    <div v-if="data.user_detail.user_d_pic != ''">
+                        <img :src="'/uploads/profile_pic/' + item.user_detail.user_d_pic" alt="profile_image"
+                            class="w-100 ">
+                    </div>
+                    <div v-else>
+                        <img src="../../../../../public/assets/img/user.png" class="avatar avatar-sm me-3" />
+                    </div>
                 </div>
             </div>
             <div class="col-auto my-auto">

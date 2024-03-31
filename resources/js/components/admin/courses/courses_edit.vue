@@ -208,7 +208,7 @@ onMounted(async () => {
                 <div class="row d-flex text-end mt-3">
                     <div class="col-lg-12">
                         <button
-                            class="btn bg-gradient-success mb-0 px-5 fw-normal text-sm"
+                            class="btn bg-gradient-dark mb-0 px-5 fw-normal text-sm"
                             @click="update_course()"
                         >
                             บันทึกข้อมูล
@@ -286,7 +286,7 @@ onMounted(async () => {
                 <div class="row d-flex text-end mt-3">
                     <div class="col-lg-12">
                         <button
-                            class="btn bg-gradient-success mb-0 px-5 fw-normal text-sm"
+                            class="btn bg-gradient-dark mb-0 px-5 fw-normal text-sm"
                             @click="AddFile()"
                         >
                             บันทึกข้อมูล

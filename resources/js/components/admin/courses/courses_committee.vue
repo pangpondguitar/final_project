@@ -85,7 +85,7 @@ onMounted(async () => {
 <template>
     <div class="col-lg-12">
         <div class="card mb-3">
-            <div class="card-header pb-0 p-3">
+            <div class="card-header pb-0 ">
                 <div class="d-flex justify-content-between">
                     <div>
                         <h5 class="mb-0">คณะกรรมการหลักสูตร</h5>
@@ -104,13 +104,25 @@ onMounted(async () => {
                                 </div>
                             </div>
                             <a href="javascript:;">
-                                <img class="img-icon-commit " src=" /public/assets/img/man (1).png">
+                               
+                                <!-- <img :src="'/uploads/profile_pic/' + item.user_detail.user_d_pic"
+                                        class="avatar avatar-sm me-3" />
+                                <img class="img-icon-commit " src=" /public/assets/img/man (1).png"> -->
+
+                                <div v-if=" item.user.user_detail.user_d_pic != ''">
+                                    <img :src="'/uploads/profile_pic/' +  item.user.user_detail.user_d_pic"
+                                        class="img-icon-commit" />
+                                </div>
+                                <div v-else>
+                                    <img src="../../../../../public/assets/img/user.png"
+                                        class="img-icon-commit" />
+                                </div>
                             </a>
                             <div class="card-body">
                                 <h5 class="card-title">{{ item.user.user_detail.user_d_name }}</h5>
                                 <h6 class="category text-info text-gradient">{{ item.user.user_detail.user_d_name2
                                     }}</h6>
-                                <p class="card-description">
+                                <p class="card-description text-sm">
                                     "Don't walk behind me; I may not lead. Don't walk in front of me; I may not
                                     follow.
                                     Just
@@ -120,25 +132,10 @@ onMounted(async () => {
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- <div class="col-lg-3">
-                        <div class="card h-100 card-plain border" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <div class="card-body d-flex flex-column justify-content-center text-center">
-                                <a href="javascript:;">
-                                    <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
-                                    <h5 class=" text-secondary"> เพิ่มกรรมการ </h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="" v-if="committee.length == 0">
                     <div class="d-flex justify-content-center">
-
                         <img class="img-committ-not " src=" /public/assets/img/not-result.jpg">
-
-
                     </div>
                     <div class="d-flex justify-content-center text-center">
 
@@ -160,14 +157,21 @@ onMounted(async () => {
             <div class="carousel__item">
                 <div class="card card-plain text-center py-4 h-100 mx-2 bg-white">
                     <a href="javascript:;">
-                        <img class="img-icon-commit " src=" /public/assets/img/man (1).png">
+                        <div v-if=" item.user_detail.user_d_pic != ''">
+                                    <img :src="'/uploads/profile_pic/' +  item.user_detail.user_d_pic"
+                                        class="img-icon-commit" />
+                                </div>
+                                <div v-else>
+                                    <img src="../../../../../public/assets/img/user.png"
+                                        class="img-icon-commit" />
+                                </div>
                     </a>
                     <div class="card-body">
-                        <label class="card-title fw-normal h6">{{ item.user_detail.user_d_name }}</label><br>
-                        <span class="text-muted">{{ item.user_detail.user_d_name2 }}</span>
+                        <label class="card-title  mb-1 h6">{{ item.user_detail.user_d_name }}</label><br>
+                        <span class="text-muted text-sm">{{ item.user_detail.user_d_name2 }}</span>
                     </div>
                     <div class="row d-flex justify-content-center">
-                        <button class="btn btn-dark col-6" @click="addCommittee(item.id)">เพิ่ม</button>
+                        <button class="btn bg-gradient-dark col-6 " @click="addCommittee(item.id)">เพิ่ม</button>
                     </div>
                 </div>
             </div>

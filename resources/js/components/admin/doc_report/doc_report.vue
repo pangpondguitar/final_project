@@ -536,7 +536,7 @@ onMounted(async () => {
 
     <div class="row">
         <div class="col">
-            <div class="card mt-3">
+            <div class="card mt-3 mb-0">
                 <div class="card-header px-4">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -563,8 +563,8 @@ onMounted(async () => {
                         </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center mb-0 table-hover">
+                <div class="table-responsive mb-0">
+                    <table class="table align-items-center mb-0 table-hover pb-0">
                         <thead>
                             <tr>
                                 <th

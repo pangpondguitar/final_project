@@ -50,53 +50,7 @@ onMounted(async () => {
 
 <template>
     <div class="row">
-        <!-- <div class="col-lg-5 ">
-            <div class="row">
-                <div class="col">
-                    <div class="card bg-gradient-primary">
-                        <div class="card-body p-3">
-                            <div class="row">
-                                <div class="col-8 my-auto">
-                                    <div class="numbers">
-                                        <p class="text-white text-sm mb-0 text-capitalize font-weight-bold opacity-7">
-                                            Wheather today</p>
-                                        <h5 class="text-white font-weight-bolder mb-0">
-                                            San Francisco - 29°C
-                                        </h5>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-end">
-                                    <img class="w-50" src="../../assets/img/small-logos/icon-sun-cloud.png" alt="image sun">
-                                    <h5 class="mb-0 text-white text-end me-1">Cloudy</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h1 class="text-gradient text-primary"><span id="status1" countto="21">21</span> <span
-                                    class="text-lg ms-n2">°C</span></h1>
-                            <h6 class="mb-0 font-weight-bolder">Living Room</h6>
-                            <p class="opacity-8 mb-0 text-sm">Temperature</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mt-md-0 mt-4">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h1 class="text-gradient text-primary"> <span id="status2" countto="44">44</span> <span
-                                    class="text-lg ms-n1">%</span></h1>
-                            <h6 class="mb-0 font-weight-bolder">Outside</h6>
-                            <p class="opacity-8 mb-0 text-sm">Humidity</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+    
         <div class="col">
             <div class="card">
                 <div class="card-header pb-2">
@@ -132,12 +86,12 @@ onMounted(async () => {
                     <tbody>
                         <tr v-for="items in subjects" :key="items.id">
                             <td>
-                                <div class="d-flex px-3 ">
+                                <div class="d-flex px-3 py-1 ">
                                     <!-- <div>
                                         <img src="/public/assets/img/book (5).png" class="avatar me-3" alt="avatar image">
                                     </div> -->
                                     <div class="d-flex flex-column justify-content-center">
-                                        <p class="mb-0 text-muted text-md  ">{{ items.subjects.s_name }}</p>
+                                        <label class="mb-0 ms-0  text-sm   ">{{ items.subjects.s_name }}</label>
                                         <p class="text-sm fw-normal  text-muted mb-0 mt-0">รหัสวิชา <span class="">{{
                                 items.subjects.s_num }}</span> </p>
                                     </div>
@@ -213,6 +167,6 @@ onMounted(async () => {
 }
 
 .th-1 {
-    width: 45%;
+    width: 40% !important;
 }
 </style>

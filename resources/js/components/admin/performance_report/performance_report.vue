@@ -77,9 +77,19 @@
                                 <tr v-for="item in this.filteredList()" :key="item.id">
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div>
-                                                <img class="img-icon-t-p text-center  avatar avatar-sm me-2 ms-2"
-                                                    src="/public/assets/img/user (9).png">
+                                            <div >
+                                                <div v-if="item.user_detail
+                                            .user_d_pic != ''
+                                        ">
+                                                    <img :src="'/uploads/profile_pic/' +
+                                        item.user_detail
+                                            .user_d_pic
+                                        " class="avatar avatar-sm me-2 ms-2" />
+                                                </div>
+                                                <div v-else>
+                                                    <img src="../../../../../public/assets/img/user.png"
+                                                        class="avatar avatar-sm me-2 ms-2" />
+                                                </div>
                                             </div>
                                             <div class="ms-1">
                                                 <h6 class="text-dark mb-0 text-sm  "> {{

@@ -343,7 +343,7 @@ onMounted(async () => {
                     <div class="row">
                         <div class="col-lg-12 ps-3 mt-2">
                             <h1 class="modal-title fs-5  mb-0 pb-0 " id="ModalRemark">
-                                เพิ่มอาจารย์ผู้สอนในรายวิชาfilteredListSubject
+                                เพิ่มอาจารย์ผู้สอนในรายวิชา
                             </h1>
                             <p class="py-0 ps-0  ms-0 text-muted text-sm mb-1">{{ form.title }}</p>
                         </div>

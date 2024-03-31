@@ -18,8 +18,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+                    <button type="button" class="btn bg-white text-dark text-sm fw-normal " data-bs-dismiss="modal">ปิด</button>
+                    <button type="submit" class="btn bg-gradient-dark text-sm fw-normal ">บันทึกข้อมูล</button>
                 </div>
             </div>
         </div>
@@ -29,24 +29,14 @@
 <div class="row">
     <div class="col-lg-12 mt-4">
         <div class="card ">
-            <div class="card-header pb-0 p-3">
+            <div class="card-header pb-0">
                 <h5 class="mb-0">ภาคเรียน</h5>
                 <p class="text-sm">ภาคเรียนการศึกษา(ทั้งหมด)</p>
                 <div class="d-flex justify-content-between">
                     <div>
-                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-danger ">เพิ่มภาคเรียน</button>
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn bg-gradient-danger text-sm fw-normal ">เพิ่มภาคเรียน</button>
                     </div>
-                    <div>
-                        <form method=" GET" action="  ">
-                            <div class="d-flex">
-                                <div class="">
-                                    <input type="text" class="form-control" placeholder="ค้นหาผู้ใช้งาน...." name="keyword">
-                                </div>
-                                <button class="btn btn-outline-secondary ms-2" type="submit">ค้นหา</button>
-                            </div>
-                        </form>
-
-                    </div>
+                  
                 </div>
 
             </div>

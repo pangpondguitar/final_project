@@ -62,10 +62,12 @@ onMounted(async () => {
     </div>
     <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
         <div class="row gx-4">
-            <div class="col-auto">
+            <div class="col-auto" v-for="item in teacher" :key="item.id">
                 <div class="avatar avatar-xl position-relative">
-                    <img src=" /public/assets/img/team-2.jpg" alt="profile_image"
-                        class="w-100 border-radius-lg shadow-sm">
+                    
+                        <img src="/public/uploads/profile_pic/6608dfa720c3e_3gx5TXpvfl.png" alt="slack_logo" class="img-perfor">
+
+                       
                 </div>
             </div>
             <div class="col-auto my-auto">

@@ -3,9 +3,11 @@ import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
+import Skeleton_List from "../../skeleton/list_subject.vue";
 const router = useRouter();
 import { defineProps, defineEmits } from 'vue';
 // let programs = ref([]);
+const isLoadingData = ref(true);
 let terms = ref({});
 let currentTerm = ref("");
 let subjects = ref("");
@@ -31,6 +33,7 @@ const getSubject = async () => {
     try {
         let response = await axios.get(`/api/get_subjectAll_term/${props.id}/${currentTerm.value}`);
         subjects.value = response.data.subjects;
+        isLoadingData.value = false;
         console.log('subjects', subjects.value);
     } catch (error) {
         console.error('Error fetching subjects:', error);
@@ -59,7 +62,10 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="row">
+     <div v-if="isLoadingData != false" class="mt-4">
+        <Skeleton_List />
+    </div>
+    <div  v-else class="row mt-4">
         <div class="col">
             <div class="card">
                 <div class="card-header pb-0">
@@ -81,55 +87,35 @@ onMounted(async () => {
                     <table class="table align-items-center mb-0 table-hover">
                         <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 th-1">
+                                <th class="  text-sm text-dark  th-1">
                                     รายวิชา
                                 </th>
                                 <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    class="text-center   text-sm text-dark ">
+                                    รหัสวิชา</th>
+                                <th
+                                    class="text-center   text-sm text-dark ">
                                     สถานะ</th>
                                 <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    สถานะ</th>
-                                <th
-                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    class="text-center   text-sm text-dark ">
                                     รายละเอียด</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="items in subjects" :key="items.ts_id">
                                 <td>
-                                    <div class="d-flex px-3 ">
+                                    <div class="d-flex px-3 py-1 ">
 
                                         <div class="d-flex flex-column justify-content-center">
-                                            <p class="mb-0 text-muted text-md  ">{{ items.subjects.s_name }}</p>
+                                            <label class="mb-0 ms-0   text-sm ">{{ items.subjects.s_name }}</label>
                                             <p class="text-sm fw-normal  text-muted mb-0 mt-0">รหัสวิชา <span
                                                     class="">{{ items.subjects.s_num }}</span> </p>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="avatar-group mt-2 text-center">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                            aria-label="Ryan Tompson" data-bs-original-title="Ryan Tompson">
-                                            <img src=" /public/assets/img/team-1.jpg" alt="team1">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                            aria-label="Romina Hadid" data-bs-original-title="Romina Hadid">
-                                            <img src=" /public/assets/img/team-2.jpg" alt="team2">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                            aria-label="Alexander Smith" data-bs-original-title="Alexander Smith">
-                                            <img src=" /public/assets/img/team-3.jpg" alt="team3">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Jessica Doe"
-                                            data-bs-original-title="Jessica Doe">
-                                            <img src=" /public/assets/img/team-4.jpg" alt="team4">
-                                        </a>
-                                    </div>
+                                    <p class="text-sm fw-normal  text-muted mb-0 mt-0"> <span
+                                                    class="">{{ items.subjects.s_num }}</span> </p>
                                 </td>
                                 <td class="align-middle text-center text-sm">
                                     <div v-if="items.docfile.length > 0">
@@ -169,7 +155,7 @@ onMounted(async () => {
     </div>
 </template>
 
-<style>
+<style scoped>
 .text-truncate {
     max-width: 80%;
 }
@@ -180,6 +166,6 @@ onMounted(async () => {
 }
 
 .th-1 {
-    width: 35% !important;
+    width: 27% !important;
 }
 </style>

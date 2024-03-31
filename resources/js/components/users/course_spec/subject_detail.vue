@@ -150,38 +150,28 @@ onMounted(async () => {
             </div> -->
             <div class="row">
                 <div class="col-lg-6">
-                    <div
-                        class="card bg-gradient-dark shadow"
-                        @click="Subdoc_fisrt(props.id)"
-                    >
+                    <div class="card bg-gradient-dark shadow" @click="Subdoc_fisrt(props.id)">
                         <div class="card-body">
                             <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
                                 <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                             </div> -->
                             <div class="h2 text-white">3</div>
                             <h5 class="mt-1 mb-0 text-white fw-normal">
-                                อาจารย์ผู้สอน<span
-                                    class="text-secondary text-sm"
-                                ></span>
+                                อาจารย์ผู้สอน<span class="text-secondary text-sm"></span>
                             </h5>
                             <p class="mb-0 text-white">ทั้งหมด</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div
-                        class="card bg-gradient-warning"
-                        @click="Subdoc_fisrt(props.id)"
-                    >
+                    <div class="card bg-gradient-primary" @click="Subdoc_fisrt(props.id)">
                         <div class="card-body">
                             <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
                                 <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                             </div> -->
                             <div class="h2 text-white">2</div>
                             <h5 class="mt-1 mb-0 text-white fw-normal">
-                                อาจารย์ผู้สอน<span
-                                    class="text-secondary text-sm"
-                                ></span>
+                                อาจารย์ผู้สอน<span class="text-secondary text-sm"></span>
                             </h5>
                             <p class="mb-0 text-white">ทั้งหมด</p>
                         </div>
@@ -199,138 +189,80 @@ onMounted(async () => {
                                             <h5 class="mb-0">
                                                 สถานะการจัดทำ มคอ.
                                             </h5>
-                                            <span class="text-xs fw-normal"
-                                                >รายละเอียดสถานะการส่ง มคอ</span
-                                            >
+                                            <span class="text-xs fw-normal">รายละเอียดสถานะการส่ง มคอ</span>
                                         </div>
                                         <div>
-                                            <span class="badge badge-success"
-                                                >ตรวจสอบแล้ว</span
-                                            >
+                                            <span class="badge badge-success">ตรวจสอบแล้ว</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-4" v-show="docfile.length == 1">
                                 <div class="d-flex">
-                                    <img
-                                        class="pdf-icon"
-                                        src=" /public/assets/img/pdf (9).png"
-                                        @click="Open_Docfile()"
-                                    />
-                                    <i
-                                        class="bi bi-trash3 text-danger ms-3"
-                                        @click="delete_Docfile()"
-                                    ></i>
+                                    <img class="pdf-icon" src=" /public/assets/img/pdf (9).png"
+                                        @click="Open_Docfile()" />
+                                    <i class="bi bi-trash3 text-danger ms-3" @click="delete_Docfile()"></i>
                                 </div>
                             </div>
                             <div class="row" v-if="docfile.length == 0">
                                 <div class="col-lg-12">
-                                    <div
-                                        class="card bg-light text-center card-empty-doc mt-2"
-                                    >
+                                    <div class="card bg-light text-center card-empty-doc mt-2">
                                         <div class="card-body p-5">
-                                            <img
-                                                class="pdf-icon"
-                                                src=" /public/assets/img/pdf (9).png"
-                                            />
+                                            <img class="pdf-icon" src=" /public/assets/img/pdf (9).png" />
                                             <p>ยังไม่มีไฟล์เอกสารในขณะนี้</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="timeline timeline-one-side mt-4"
-                                v-if="doc_status.length > 0"
-                            >
-                                <div
-                                    class="timeline-block mb-3"
-                                    v-for="item in doc_status"
-                                    :key="item.id"
-                                >
+                            <div class="timeline timeline-one-side mt-4" v-if="doc_status.length > 0">
+                                <div class="timeline-block mb-3" v-for="item in doc_status" :key="item.id">
                                     <span class="timeline-step">
-                                        <i
-                                            class="ni ni-bell-55 text-warning text-gradient"
-                                            v-if="item.dfs_status == 0"
-                                        ></i>
-                                        <i
-                                            class="ni ni-bell-55 text-success text-gradient"
-                                            v-if="item.dfs_status == 1"
-                                        ></i>
-                                        <i
-                                            class="ni ni-bell-55 text-success text-secondary"
-                                            v-if="item.dfs_status == 2"
-                                        ></i>
+                                        <i class="ni ni-bell-55 text-warning text-gradient"
+                                            v-if="item.dfs_status == 0"></i>
+                                        <i class="ni ni-bell-55 text-success text-gradient"
+                                            v-if="item.dfs_status == 1"></i>
+                                        <i class="ni ni-bell-55 text-success text-secondary"
+                                            v-if="item.dfs_status == 2"></i>
                                     </span>
-                                    <div
-                                        class="timeline-content"
-                                        v-if="item.dfs_status == 0"
-                                    >
-                                        <h6
-                                            class="text-dark text-sm font-weight-bold mb-0"
-                                        >
+                                    <div class="timeline-content" v-if="item.dfs_status == 0">
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                             สถานะ : รอตรวจสอบ
                                         </h6>
-                                        <p
-                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0"
-                                        >
+                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                             วันที่ยืนยันรายการ :
                                             {{ FormatDate(item.created_at) }}
                                         </p>
                                     </div>
-                                    <div
-                                        class="timeline-content"
-                                        v-if="item.dfs_status == 1"
-                                    >
-                                        <h6
-                                            class="text-dark text-sm font-weight-bold mb-0"
-                                        >
+                                    <div class="timeline-content" v-if="item.dfs_status == 1">
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                             สถานะ : เสร็จสิ้น
                                         </h6>
-                                        <p
-                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0"
-                                        >
+                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                             วันที่ยืนยันรายการ :
                                             {{ FormatDate(item.created_at) }}
                                         </p>
                                     </div>
-                                    <div
-                                        class="timeline-content"
-                                        v-if="item.dfs_status == 2"
-                                    >
-                                        <h6
-                                            class="text-dark text-sm font-weight-bold mb-0"
-                                        >
+                                    <div class="timeline-content" v-if="item.dfs_status == 2">
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                             สถานะ : จัดทำเอกสารใหม่อีกครั้ง
                                         </h6>
-                                        <p
-                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0"
-                                        >
+                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                             วันที่ยืนยันรายการ :
                                             {{ FormatDate(item.created_at) }}
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="timeline timeline-one-side mt-4"
-                                v-if="doc_status.length == 0"
-                            >
+                            <div class="timeline timeline-one-side mt-4" v-if="doc_status.length == 0">
                                 <div class="timeline-block mb-3">
                                     <span class="timeline-step">
-                                        <i
-                                            class="ni ni-html5 text-danger text-gradient"
-                                        ></i>
+                                        <i class="ni ni-html5 text-danger text-gradient"></i>
                                     </span>
                                     <div class="timeline-content">
-                                        <h6
-                                            class="text-dark text-sm font-weight-bold mb-0"
-                                        >
+                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                             สถานะ : ยังไม่จัดทำเอกสาร
                                         </h6>
-                                        <p
-                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0"
-                                        >
+                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                             ยังไม่จัดทำเอกสาร มคอ.
                                         </p>
                                     </div>
@@ -347,50 +279,32 @@ onMounted(async () => {
                     <div class="row">
                         <div class="col-md-6">
                             <h5 class="mb-0">อาจารย์ผู้สอน</h5>
-                            <span class="text-xs fw-normal"
-                                >อาจารย์ผู้สอนรายวิชา</span
-                            >
+                            <span class="text-xs fw-normal">อาจารย์ผู้สอนรายวิชา</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-3">
-                    <ul
-                        class="list-group"
-                        v-for="teacher in teachers"
-                        :key="teacher.ts_id"
-                    >
-                        <li
-                            class="list-group-item border-0 d-flex align-items-center px-0 mb-2 border border-bottom"
-                            v-for="termTeach in teacher.terms_sub_teach"
-                            :key="termTeach.tst_id"
-                        >
+                    <ul class="list-group" v-for="teacher in teachers" :key="teacher.ts_id">
+                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 border border-bottom"
+                            v-for="termTeach in teacher.terms_sub_teach" :key="termTeach.tst_id">
                             <div class="avatar me-3">
                                 <div
-                                    class="icon icon-shape icon-shape-bg shadow text-center border-radius-md shadow-none"
-                                >
-                                    <i
-                                        class="ni ni-money-coins text-lg text-info text-gradient opacity-10"
-                                        aria-hidden="true"
-                                    ></i>
+                                    class="icon icon-shape icon-shape-bg shadow text-center border-radius-md shadow-none">
+                                    <i class="ni ni-money-coins text-lg text-info text-gradient opacity-10"
+                                        aria-hidden="true"></i>
                                 </div>
                             </div>
-                            <div
-                                class="d-flex align-items-start flex-column justify-content-center"
-                            >
+                            <div class="d-flex align-items-start flex-column justify-content-center">
                                 <h6 class="mb-0">
                                     {{
-                                        termTeach.users.user_detail.user_d_name
-                                    }}
+            termTeach.users.user_detail.user_d_name
+        }}
                                 </h6>
                                 <p class="mb-0 text-xs">
                                     Hi! I need more information..
                                 </p>
                             </div>
-                            <a
-                                class="btn btn-link pe-3 ps-0 mb-0 ms-auto"
-                                href="javascript:;"
-                                >Reply</a
-                            >
+                            <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Reply</a>
                         </li>
                     </ul>
                 </div>
@@ -402,114 +316,66 @@ onMounted(async () => {
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h5 class="mb-0">ไฟล์เอกสาร มคอ.</h5>
-                                    <span class="fw-normal text-xs"
-                                        >จัดทำไฟล์เอกสาร มคอ.</span
-                                    >
+                                    <span class="fw-normal text-xs">จัดทำไฟล์เอกสาร มคอ.</span>
                                 </div>
                                 <div>
                                     <span class="badge badge-danger">pdf</span>
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div
-                                    class="card card-select-doc"
-                                    @click="Subdoc_fisrt(props.id)"
-                                    v-show="
-                                        subject.doc_type == 1 &&
-                                        docfile.length == 0
-                                    "
-                                >
+                                <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)" v-show="subject.doc_type == 1 &&
+            docfile.length == 0
+            ">
                                     <div class="card-body">
-                                        <div
-                                            class="icon icon-shape bg-gradient-info shadow text-center"
-                                        >
-                                            <i
-                                                class="ni ni-curved-next opacity-10"
-                                                aria-hidden="true"
-                                            ></i>
+                                        <div class="icon icon-shape bg-gradient-info shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0">
                                             มคอ.3
-                                            <span class="text-secondary text-sm"
-                                                >m</span
-                                            >
+                                            <span class="text-secondary text-sm">m</span>
                                         </h5>
                                         <p class="mb-0">จัดทำ มคอ3</p>
                                     </div>
                                 </div>
 
-                                <div
-                                    class="card card-do-success"
-                                    v-show="
-                                        subject.doc_type == 1 &&
-                                        docfile.length == 1
-                                    "
-                                >
+                                <div class="card card-do-success" v-show="subject.doc_type == 1 &&
+            docfile.length == 1
+            ">
                                     <div class="card-body">
-                                        <div
-                                            class="icon icon-shape bg-gradient-success shadow text-center"
-                                        >
-                                            <i
-                                                class="ni ni-curved-next opacity-10"
-                                                aria-hidden="true"
-                                            ></i>
+                                        <div class="icon icon-shape bg-gradient-success shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0 text-success">
                                             จัดทำ มคอ.3
                                         </h5>
-                                        <label class="text-dark ms-0"
-                                            >สถานะเสร็จสิ้น</label
-                                        >
+                                        <label class="text-dark ms-0">สถานะเสร็จสิ้น</label>
                                     </div>
                                 </div>
-                                <div
-                                    class="card card-select-doc"
-                                    @click="Subdoc_fisrt(props.id)"
-                                    v-show="
-                                        subject.doc_type == 2 &&
-                                        docfile.length == 0
-                                    "
-                                >
+                                <div class="card card-select-doc" @click="Subdoc_fisrt(props.id)" v-show="subject.doc_type == 2 &&
+            docfile.length == 0
+            ">
                                     <div class="card-body">
-                                        <div
-                                            class="icon icon-shape bg-gradient-danger shadow text-center"
-                                        >
-                                            <i
-                                                class="ni ni-curved-next opacity-10"
-                                                aria-hidden="true"
-                                            ></i>
+                                        <div class="icon icon-shape bg-gradient-danger shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0">
                                             มคอ.4
-                                            <span class="text-secondary text-sm"
-                                                >m</span
-                                            >
+                                            <span class="text-secondary text-sm">m</span>
                                         </h5>
                                         <p class="mb-0">จัดทำ มคอ4</p>
                                     </div>
                                 </div>
-                                <div
-                                    class="card card-do-success"
-                                    v-show="
-                                        subject.doc_type == 2 &&
-                                        docfile.length == 1
-                                    "
-                                >
+                                <div class="card card-do-success" v-show="subject.doc_type == 2 &&
+            docfile.length == 1
+            ">
                                     <div class="card-body">
-                                        <div
-                                            class="icon icon-shape bg-gradient-success shadow text-center"
-                                        >
-                                            <i
-                                                class="ni ni-curved-next opacity-10"
-                                                aria-hidden="true"
-                                            ></i>
+                                        <div class="icon icon-shape bg-gradient-success shadow text-center">
+                                            <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0 text-success">
                                             จัดทำ มคอ.4
                                         </h5>
-                                        <label class="text-dark ms-0"
-                                            >สถานะเสร็จสิ้น</label
-                                        >
+                                        <label class="text-dark ms-0">สถานะเสร็จสิ้น</label>
                                     </div>
                                 </div>
                             </div>
