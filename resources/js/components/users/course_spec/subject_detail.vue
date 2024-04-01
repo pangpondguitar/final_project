@@ -8,6 +8,7 @@ const router = useRouter();
 let subjectTname = ref({});
 let teachers = ref({});
 let subject = ref({});
+let teacher_len = ref(0);
 let docfile = ref({});
 let df_id = ref({});
 let doc_status = ref({});
@@ -41,7 +42,9 @@ const get_teachers = async () => {
     try {
         let response = await axios.get(`/api/get_teachers/${props.id}`);
         teachers.value = response.data.teachers;
-        console.log(teachers.value);
+        teacher_len.value = teachers.value.length > 0 ? teachers.value[0].terms_sub_teach.length : 0;
+        
+        console.log('Teacher',teachers.value);
     } catch (error) {
         console.error("Error fetching subject:", error);
     }
@@ -135,7 +138,7 @@ onMounted(async () => {
             <h4 class="mb-0">{{ subject.subjects.s_name }}</h4>
 
             <h4 class="fw-normal text-muted h6">
-                รายวิชา{{ subject.subjects.s_name }}
+                รายวิชา{{ subject.subjects.s_name2 }}
             </h4>
         </div>
     </div>
@@ -149,34 +152,28 @@ onMounted(async () => {
 
             </div> -->
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="card bg-gradient-dark shadow" @click="Subdoc_fisrt(props.id)">
+                <div class="col-lg-12">
+                    <div class="card bg-gradient-dark shadow" >
                         <div class="card-body">
                             <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
                                 <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                             </div> -->
-                            <div class="h2 text-white">3</div>
-                            <h5 class="mt-1 mb-0 text-white fw-normal">
+                            <div v-for="subject in subjectTname" :key="subject.ts_id">
+          
+<small class="text-xs mb-0 text-white fw-bold">รายวิชา </small>
+            <h4 class="fw-normal text-secondary h6">
+                รายวิชา{{ subject.subjects.s_name2 }}
+            </h4>
+        </div>
+                            <div class="h2 text-white mb-0 pb-0 mt-1">{{  teacher_len }}</div>
+                            <h5 class="mt-1 mb-0 text-white fw-normal text-md">
                                 อาจารย์ผู้สอน<span class="text-secondary text-sm"></span>
                             </h5>
-                            <p class="mb-0 text-white">ทั้งหมด</p>
+                            <p class="mb-0 text-white text-sm text-muted mb-2">ทั้งหมด</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="card bg-gradient-primary" @click="Subdoc_fisrt(props.id)">
-                        <div class="card-body">
-                            <!-- <div class="icon icon-shape bg-gradient-dark shadow text-center">
-                                <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
-                            </div> -->
-                            <div class="h2 text-white">2</div>
-                            <h5 class="mt-1 mb-0 text-white fw-normal">
-                                อาจารย์ผู้สอน<span class="text-secondary text-sm"></span>
-                            </h5>
-                            <p class="mb-0 text-white">ทั้งหมด</p>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
             <div class="row mt-4">
                 <div class="col">
@@ -184,15 +181,15 @@ onMounted(async () => {
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="d-flex justify-content-between">
+                                    <div class="d-flex justify-content-between mb-3">
                                         <div>
                                             <h5 class="mb-0">
                                                 สถานะการจัดทำ มคอ.
                                             </h5>
-                                            <span class="text-xs fw-normal">รายละเอียดสถานะการส่ง มคอ</span>
+                                            <span class="text-sm fw-normal">รายละเอียดสถานะการส่ง มคอ</span>
                                         </div>
                                         <div>
-                                            <span class="badge badge-success">ตรวจสอบแล้ว</span>
+                                            <span class="badge bg-gradient-dark">Status</span>
                                         </div>
                                     </div>
                                 </div>
@@ -275,11 +272,11 @@ onMounted(async () => {
         </div>
         <div class="col-lg-8">
             <div class="card">
-                <div class="card-header pb-0">
+                <div class="card-header pb-2">
                     <div class="row">
                         <div class="col-md-6">
                             <h5 class="mb-0">อาจารย์ผู้สอน</h5>
-                            <span class="text-xs fw-normal">อาจารย์ผู้สอนรายวิชา</span>
+                            <span class="text-sm fw-normal">อาจารย์ผู้สอนรายวิชา</span>
                         </div>
                     </div>
                 </div>
@@ -290,8 +287,7 @@ onMounted(async () => {
                             <div class="avatar me-3">
                                 <div
                                     class="icon icon-shape icon-shape-bg shadow text-center border-radius-md shadow-none">
-                                    <i class="ni ni-money-coins text-lg text-info text-gradient opacity-10"
-                                        aria-hidden="true"></i>
+                                    <i class="ni ni-circle-08 text-dark text-gradient text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <div class="d-flex align-items-start flex-column justify-content-center">
@@ -300,11 +296,12 @@ onMounted(async () => {
             termTeach.users.user_detail.user_d_name
         }}
                                 </h6>
-                                <p class="mb-0 text-xs">
-                                    Hi! I need more information..
+                                <p class="mb-0 text-xs text-primary text-gradient">
+                                    {{
+            termTeach.users.user_detail.user_d_name2
+        }}
                                 </p>
                             </div>
-                            <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto" href="javascript:;">Reply</a>
                         </li>
                     </ul>
                 </div>
@@ -313,10 +310,10 @@ onMounted(async () => {
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mb-3">
                                 <div>
                                     <h5 class="mb-0">ไฟล์เอกสาร มคอ.</h5>
-                                    <span class="fw-normal text-xs">จัดทำไฟล์เอกสาร มคอ.</span>
+                                    <span class="fw-normal text-sm">จัดทำไฟล์เอกสาร มคอ.</span>
                                 </div>
                                 <div>
                                     <span class="badge badge-danger">pdf</span>
@@ -327,7 +324,7 @@ onMounted(async () => {
             docfile.length == 0
             ">
                                     <div class="card-body">
-                                        <div class="icon icon-shape bg-gradient-info shadow text-center">
+                                        <div class="icon icon-shape bg-gradient-primary shadow text-center">
                                             <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0">
@@ -342,7 +339,7 @@ onMounted(async () => {
             docfile.length == 1
             ">
                                     <div class="card-body">
-                                        <div class="icon icon-shape bg-gradient-success shadow text-center">
+                                        <div class="icon icon-shape bg-gradient-success text-center">
                                             <i class="ni ni-curved-next opacity-10" aria-hidden="true"></i>
                                         </div>
                                         <h5 class="mt-3 mb-0 text-success">

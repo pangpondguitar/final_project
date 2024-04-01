@@ -161,7 +161,7 @@ onMounted(async () => {
             <div class="card-header pb-0">
                 <div>
                     <h5 class="mb-0">ยืนยันรายการการจัดทำ มคอ .</h5>
-                    <label class="mb-0 ms-0 text-muted"
+                    <label class="mb-0 ms-0 text-muted  text-sm fw-normal"
                         >ตรวจสอบ มคอ. ที่จัดทำ
                     </label>
                 </div>
@@ -176,7 +176,7 @@ onMounted(async () => {
                         >
                             <div class="card-body">
                                 <div
-                                    class="icon icon-shape bg-gradient-info shadow text-center"
+                                    class="icon icon-shape bg-gradient-primary shadow text-center"
                                 >
                                     <i
                                         class="ni ni-curved-next opacity-10"
@@ -220,15 +220,11 @@ onMounted(async () => {
                 <div class="row mt-4">
                     <div class="d-flex">
                         <div class="me-2">
-                            <button class="btn btn-dark" @click="sendFile()">
+                            <button class="btn bg-gradient-dark text-sm fw-normal" @click="sendFile()">
                                 ยืนยันรายการ
                             </button>
                         </div>
-                        <div class=" ">
-                            <button class="btn btn-outline-secondary">
-                                กลับหน้าหลัก
-                            </button>
-                        </div>
+                       
                     </div>
                 </div>
             </div>

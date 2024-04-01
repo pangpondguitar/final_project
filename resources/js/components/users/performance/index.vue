@@ -66,13 +66,10 @@ onMounted(async () => {
         <div class="row gx-4">
             <div class="col-auto" v-for="item in teacher" :key="item.id">
                 <div class="avatar avatar-xl position-relative">
-                    <div v-if="data.user_detail.user_d_pic != ''">
-                        <img :src="'/uploads/profile_pic/' + item.user_detail.user_d_pic" alt="profile_image"
-                            class="w-100 ">
-                    </div>
-                    <div v-else>
-                        <img src="../../../../../public/assets/img/user.png" class="avatar avatar-sm me-3" />
-                    </div>
+                  
+
+                        <img :src="'/uploads/profile_pic/' + item.user_detail.user_d_pic"
+                        class="w-100 border-radius-lg shadow-sm" />
                 </div>
             </div>
             <div class="col-auto my-auto">
@@ -81,7 +78,7 @@ onMounted(async () => {
                         {{ item.user_detail.user_d_name
                         }}
                     </h5>
-                    <p class="mb-0 font-weight-bold text-sm">
+                    <p class="mb-0 text-sm">
                         {{ item.user_detail.user_d_name2
                         }}
                     </p>

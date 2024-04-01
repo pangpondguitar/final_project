@@ -68,19 +68,19 @@ onMounted(async () => {
                         </div>
                     </div>
                 </div>
-                <table class="table align-items-center mb-0">
+                <table class="table  mb-0">
                     <thead>
                         <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 th-1">รายวิชา
+                            <th class=" text-dark text-sm th-1">รายวิชา
                             </th>
                             <th
-                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
-                                Value
+                                class=" text-dark text-sm ps-0">
+                                หน่วยกิต
                             </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                            <th class="text-center  text-dark text-sm">
                                 สถานะ</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Refunds</th>
+                            <th class="text-center  text-dark text-sm">
+                                ดูรายละเอียด</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,29 +97,10 @@ onMounted(async () => {
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center">
-                                <div class="avatar-group mt-2 text-center">
-                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Tompson"
-                                        data-bs-original-title="Ryan Tompson">
-                                        <img src=" /public/assets/img/team-1.jpg" alt="team1">
-                                    </a>
-                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Romina Hadid"
-                                        data-bs-original-title="Romina Hadid">
-                                        <img src=" /public/assets/img/team-2.jpg" alt="team2">
-                                    </a>
-                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Alexander Smith"
-                                        data-bs-original-title="Alexander Smith">
-                                        <img src=" /public/assets/img/team-3.jpg" alt="team3">
-                                    </a>
-                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Jessica Doe"
-                                        data-bs-original-title="Jessica Doe">
-                                        <img src=" /public/assets/img/team-4.jpg" alt="team4">
-                                    </a>
-                                </div>
+                            <td class="text-start">
+                                <small class="text-xs">จำนวนหน่วยกิต</small>
+                                <p class="text-sm fw-normal  text-muted mb-0 mt-0"> <span class="">{{
+                                items.subjects.s_credit }}</span> </p>
                             </td>
                             <td class="align-middle text-center text-sm">
                                 <div v-if="items.docfile.length > 0">
@@ -167,6 +148,6 @@ onMounted(async () => {
 }
 
 .th-1 {
-    width: 40% !important;
+    width: 30% !important;
 }
 </style>

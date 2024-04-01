@@ -1,9 +1,9 @@
 {
     "open sans": {
-        "300": "D:\\Laravel\\example-app\\storage\\fonts\/open_sans_300_39ef945f04dffafb40d0e4258ccaa41b",
-        "normal": "D:\\Laravel\\example-app\\storage\\fonts\/open_sans_normal_3760d4dc48428d77234c57aacbf4be3d",
-        "600": "D:\\Laravel\\example-app\\storage\\fonts\/open_sans_600_b1ce21e0a900a5106e97539d2f082999",
-        "bold": "open_sans_bold_76cc12ba903c653efae07dd0b62d46cf"
+        "300": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/open_sans_300_39ef945f04dffafb40d0e4258ccaa41b",
+        "normal": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/open_sans_normal_3760d4dc48428d77234c57aacbf4be3d",
+        "600": "open_sans_600_b1ce21e0a900a5106e97539d2f082999",
+        "bold": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/open_sans_bold_76cc12ba903c653efae07dd0b62d46cf"
     },
     "kanit": {
         "300": "kanit_300_28618fff9adec3aa6aefc4a9f4f430ee"
@@ -12,13 +12,13 @@
         "normal": "sarabun_normal_bcf01d8d70bbc4a458a8b99c089a29e9"
     },
     "thsarabunnew": {
-        "normal": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_normal_8850558d1b722ded3e9c2aa9715411f7",
-        "bold": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_bold_a4533f8fe68625af065df41d89f0501e",
-        "bold_italic": "thsarabunnew_bold_italic_0ffa977a1ec4696b0359ddce07b98aa9",
-        "italic": "D:\\Laravel\\example-app\\storage\\fonts\/thsarabunnew_italic_14a3dcedc952813e7dc301de0313722f"
+        "normal": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/thsarabunnew_normal_2ac037d6964ebd629f0eb32ad5bab76e",
+        "bold": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/thsarabunnew_bold_66738e22ebf62b4f2847da142d353839",
+        "bold_italic": "thsarabunnew_bold_italic_a5948f80a069a44cfb56e9635a5e0a3d",
+        "italic": "C:\\xampp\\htdocs\\final_project\\storage\\fonts\/thsarabunnew_italic_24dc0b5b0a2da4a1fafc06461120772b"
     },
     "arial": {
         "bold": "D:\\Laravel\\example-app\\storage\\fonts\/arial_bold_9ca7968e20406e04bfdf3df40a5c9653",
-        "normal": "arial_normal_8de88566027cf649637eea226ca5d8a3"
+        "normal": "arial_normal_94f2fb9aabd5dccba0e22acb795d8bb9"
     }
 }

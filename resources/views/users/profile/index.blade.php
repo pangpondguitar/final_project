@@ -1,7 +1,7 @@
 @extends('users.layouts.layout')
 @section('content')
 
-<div id="app">
+<div id="app" data-user-id="{{ Auth::user()->id }}">
 
 </div>
 @endsection

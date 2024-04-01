@@ -1,22 +1,394 @@
+
+
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+
+import Toast from 'primevue/toast';
+import { useToast } from "primevue/usetoast";
+import RadioButton from 'primevue/radiobutton';
+const userId = document.getElementById('app').getAttribute('data-user-id');
+const router = useRouter();
+let programs = ref([]);
+let selected_program = ref('');
+let user = ref({});
+let input = ref("");
+let selectedImage = ref('/assets/img/eskimo.png');
+let imageUrl = ref('');
+let imageUrlAvatar = ref('/assets/img/user.png');
+let selectedUsertype = ref('');
+let user_status = ref(true);
+const user_type = ref('');
+
+const toast = useToast();
+
+const showError = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'ชื่อบัญชีผู้ใช้ซ้ำ กรุณาตรวจสอบอีกครั้ง', life: 3000 });
+};
+const showErrorPass = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'รหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง', life: 3000 });
+};
+
+const showErrorPassempty = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'กรุณาป้อนรหัสผ่าน', life: 3000 });
+};
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Add Teacher', detail: 'บันทึกข้อมูลผู้ใช้สำเร็จ', life: 3000 });
+};
+const showPassSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Add Teacher', detail: 'เปลี่ยนรหัสผ่านผู้ใช้สำเร็จ', life: 3000 });
+};
+
+
+const isLoadingData = ref(true);
+const checked = ref(false);
+
+const inputValue = ref("");
+const isValid = ref(true);
+const isValidPass = ref(true);
+let form = ref({
+    id: "",
+    username: "",
+    password: "",
+    email: "",
+    name: "",
+    user_type: "",
+    status: "",
+    name2: "",
+    address: "",
+    phone: "",
+    d_pic: "",
+    p_id: "",
+});
+let form_pass = ref({
+    pass_first: "",
+    pass_second: ""
+});
+
+const submitForm = () => {
+    if (form.value.username.trim() === "") {
+        isValid.value = false;
+    } else {
+        isValid.value = true;
+        UpdateUser();
+    }
+};
+const submitFormPassCheck = () => {
+    if (form_pass.value.pass_first.trim() === '' || form_pass.value.pass_second.trim() === '') {
+        isValidPass.value = false;
+        showErrorPassempty();
+    } else if (form_pass.value.pass_first.trim() !== form_pass.value.pass_second.trim()) {
+        isValidPass.value = false;
+        showErrorPass();
+    } else {
+        UpdatePass();
+        isValidPass.value = true;
+    }
+};
+
+const getUser_ById = async () => {
+    try {
+        let response = await axios.get(`/api/admin_get_users_by_id/${userId}`);
+        user.value = response.data.user;
+        form.value = response.data.user;
+        console.log("user", form.value);
+
+        const userData = response.data.user;
+
+        // Assuming user.value represents user data
+        user.value = userData;
+
+        // Assuming form.value represents the form data
+        form.value = {
+            id: userData.id,
+            username: userData.username,
+            email: userData.email,
+            user_type: userData.user_type,
+            status: userData.user_status,
+            name: userData.user_detail.user_d_name,
+            name2: userData.user_detail.user_d_name2,
+            address: userData.user_detail.user_d_add,
+            phone: userData.user_detail.user_d_phone,
+            pic: userData.user_detail.user_d_pic,
+            p_id: userData.user_detail.p_id,
+        };
+
+        if (form.value.status == '0') {
+            user_status.value = false
+            console.log(user_status.value);
+        } else {
+            user_status.value = true
+            console.log(user_status.value);
+        }
+        form.value.status == 0;
+
+
+        selected_program.value = form.value.p_id;
+        selectedUsertype.value = form.value.user_type;
+        if (form.value.pic != '') {
+            imageUrl.value = (`/uploads/profile_pic/` + form.value.pic);
+        } else {
+            imageUrl.value = imageUrlAvatar.value;
+        }
+
+    } catch (error) {
+        console.error("Error fetching user:", error);
+    }
+};
+const UpdatePass = () => {
+    const formData = new FormData();
+    formData.append('password', form_pass.value.pass_first);
+    axios
+        .post(`/api/admin_update_user_pass/${userId}`, formData)
+        .then((response) => {
+            form_pass.value.pass_first = '';
+            form_pass.value.pass_second = '';
+            showPassSuccess();
+        })
+        .catch((error) => { });
+    toast.fire({
+        icon: "success",
+        title: "Add Teachers Subject successfully",
+    });
+};
+
+
+const UpdateUser = () => {
+    const formData = new FormData();
+    formData.append('file', selectedImage.value);
+    formData.append("username", form.value.username);
+    formData.append("email", form.value.email);
+    formData.append("user_type", selectedUsertype.value);
+    formData.append("status", user_status.value);
+    formData.append("name", form.value.name);
+    formData.append("name2", form.value.name2);
+    formData.append("address", form.value.address);
+    formData.append("phone", form.value.phone);
+    formData.append("program", selected_program.value);
+
+    axios
+        .post(`/api/admin_update_users/${userId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+            if (response.data.success) { // ตรวจสอบค่า 'success' ในข้อมูลที่ส่งกลับมาจาก API
+                showSuccess();
+                getUser_ById();
+            }
+        })
+        .catch((error) => {
+            if (error.response.data.message_err) {
+                showError();
+            }
+        });
+};
+const getProgram = async () => {
+    try {
+        let response = await axios.get("/api/admin_get_all_programs");
+        programs.value = response.data.programs;
+        console.log("programs", programs.value);
+    } catch (error) {
+        console.error("Error fetching programs:", error);
+    }
+};
+
+const onFileChange = (event) => {
+    selectedImage.value = event.target.files[0];
+    previewImage();
+}
+
+const previewImage = () => {
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImage.value);
+    reader.onload = (event) => {
+        imageUrl.value = event.target.result;
+    };
+}
+const switchcheck = () => {
+    console.log(user_status.value)
+}
+
+const User_home = () => {
+    router.push("/admin/users");
+};
+
+onMounted(async () => {
+    await getUser_ById();
+    await getProgram();
+});
+</script>
+
 <template>
-    <div id="app">
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+    <div class="row">
+        <Toast />
+        <div class="col-lg-12 mt-lg-0 mt-4">
+            <div class="card mt-4" id="basic-info">
+
+                <div class="card-header  pb-3  border-bottom  ">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="mb-0">แก้ไขข้อมูลส่วนตัวผู้ใช้</h5>
+                            <small class="text-muted">แก้ไขข้อมูลส่วนตัวผู้ใช้ แก้ไขรายละเอียด</small>
+                        </div>
+                        <div class="d-flex mt-2">
+                           
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body pt-0">
+                    <div>
+                        <!-- Input file -->
+                        <input type="file" @change="onFileChange" id="avatarInput" class="hidden mt-3">
+
+                        <!-- Avatar preview -->
+                        <label for="avatarInput" class="mt-3">
+                            <img v-if="imageUrl" :src="imageUrl" alt="Avatar" class="avatar">
+                            <div v-else class="avatar-placeholder">เลือกรูปภาพ</div>
+                        </label>
+
+                        <!-- Submit button -->
+                    </div>
+
+                    <form @submit.prevent="submitForm">
+                        <div class="row">
+                            <div class="col-lg-6 mt-3">
+                                <label class="form-label text-sm mb-1">ชื่อ-นามสกุล</label>
+                                <div class="input-group">
+                                    <input id="firstName" name="name" class="form-control" type="text"
+                                        placeholder="ป้อนชื่อ-นามสกุล" v-model="form.name" />
+                                </div>
+                                <p v-if="!isValid" class="text-sm fw-normal text-danger mb-0">
+                                    กรุณาชื่อ - นามสกุล
+                                </p>
+                            </div>
+                            <div class="col-lg-6 mt-3">
+                                <label class="form-label text-sm mb-1">ชื่อภาษาอังกฤษ</label>
+                                <div class="input-group">
+                                    <input id="lastName" name="name2" class="form-control" type="text"
+                                        placeholder="ป้อนชื่อ-นามสกุล(ภาษาอังกฤษ)" v-model="form.name2" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label text-sm mb-1">ชื่อบัญชีผู้ใช้ (username)</label>
+                                <div class="input-group">
+                                    <input id="email" name="username" class="form-control" type="text"
+                                        placeholder="ป้อนชื่อบัญชีผู้ใช้" v-model="form.username" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label text-sm mb-1">Email</label>
+                                <div class="input-group">
+                                    <input id="location" name="email" class="form-control" type="email"
+                                        placeholder="ป้อนอีเมล" v-model="form.email" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mt-3">
+                                <label class="form-label mb-1 text-sm">เบอร์โทรศัพท์</label>
+                                <div class="input-group">
+                                    <input id="phone" name="phone" class="form-control" type="number"
+                                        placeholder="ป้อนเบอร์โทรศัพท์" v-model="form.phone" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            
+
+
+                            <div class="col-12">
+                                <label class="form-label mt-4 text-sm">ที่อยู่</label>
+                                <textarea name="address" class="form-control" cols="30" rows="3"
+                                    v-model="form.address"></textarea>
+                            </div>
+
+                           
+
+                        </div>
+                        <div class="row d-flex text-end mt-3">
+                            <div class="col-lg-12  mt-2">
+                              
+                                <button class="btn bg-gradient-dark ms-2 mb-0 px-5 text-sm fw-normal" type="submit"
+                                    name="button">
+                                    บันทึกข้อมูล
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header  border-bottom">
+                    <div>
+                        <h5 class="mb-0"> เปลี่ยนรหัสผ่าน</h5>
+                        <small class="text-muted">เปลี่ยนรหัสผ่าน</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form @submit.prevent="submitFormPassCheck">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="form-label text-sm mb-1">ป้อนรหัสผ่าน</label>
+                                <div class="input-group">
+                                    <input id="location" name="pass_first" class="form-control" type="password"
+                                        placeholder="ป้อนรหัสผ่าน" v-model="form_pass.pass_first" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="form-label text-sm mb-1">ป้อนรหัสผ่านอีกครั้ง</label>
+                                <div class="input-group">
+                                    <input id="location" name="pass_second" class="form-control" type="password"
+                                        placeholder="ป้อนรหัสผ่านอีกครั้ง" v-model="form_pass.pass_second" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" d-flex justify-content-end mt-3">
+                            <div class="col-lg-12 float-end">
+                                <button class="btn bg-gradient-dark float-end fw-normal text-sm px-5  mt-2 " type="submit"
+                                    name="buttonPass">บันทึกข้อมูล</button>
+                              
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
-
-<script>
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-export default {
-    name: 'app',
-    data() {
-        return {
-            editor: ClassicEditor,
-            editorData: '<p>Content of the editor.</p>',
-            editorConfig: {
-                // The configuration of the editor.
-            }
-        };
-    }
+<style scoped>
+/* CSS styles */
+.hidden {
+    display: none;
 }
-</script>
+
+.avatar {
+    width: 120px;
+    /* ปรับขนาดตามที่ต้องการ */
+    height: 120px;
+    /* ปรับขนาดตามที่ต้องการ */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.avatar-placeholder {
+    width: 140px;
+    /* ปรับขนาดตามที่ต้องการ */
+    height: 140px;
+    /* ปรับขนาดตามที่ต้องการ */
+    border-radius: 50%;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+</style>
