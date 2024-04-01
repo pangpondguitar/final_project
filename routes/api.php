@@ -57,7 +57,6 @@ Route::get('get_term_sub/{id}/{p_id}', [TeachingControllor::class, 'get_term_sub
 Route::post('add_teacher', [teachingControllor::class, 'add_teacher']);
 
 
-
 //admin_course
 Route::get('admin_get_all_programs', [CourseController::class, 'get_all_programs']);
 Route::get('admin_get_courses/{id}', [CourseController::class, 'get_courses']);
@@ -96,6 +95,7 @@ Route::get('admin_get_all_users/', [AdminuserController::class, 'get_all_user'])
 Route::post('admin_add_users/', [AdminuserController::class, 'add_user']);
 Route::get('admin_get_users_by_id/{id}', [AdminuserController::class, 'get_single_user']);
 Route::post('admin_update_users/{id}', [AdminuserController::class, 'update_users']);
+Route::post('admin_update_user_pass/{id}', [AdminuserController::class, 'update_user_pass']);
 
 
 Route::post('admin_add_course_doc/{id}', [CourseController::class, 'course_Addfile']);

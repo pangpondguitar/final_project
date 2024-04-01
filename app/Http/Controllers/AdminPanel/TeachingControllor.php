@@ -111,7 +111,9 @@ class TeachingControllor extends Controller
     {
         $subjectsId = $request->subjectsId;
 
-        $existingIds = Terms_sub::where('t_id', $t_id)->pluck('s_id')->toArray();
+        $existingIds = Terms_sub::where('t_id', $t_id) ->with('subjects.courses.program')->whereHas('subjects.courses.program', function ($query) use ($p_id) {
+            $query->where('p_id', $p_id);
+        })->pluck('s_id')->toArray();
 
         if (empty($subjectsId)) {
             Terms_sub::where('t_id', $t_id)

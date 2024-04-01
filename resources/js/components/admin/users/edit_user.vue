@@ -24,9 +24,20 @@ const toast = useToast();
 const showError = () => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: 'ชื่อบัญชีผู้ใช้ซ้ำ กรุณาตรวจสอบอีกครั้ง', life: 3000 });
 };
+const showErrorPass = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'รหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง', life: 3000 });
+};
+
+const showErrorPassempty = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'กรุณาป้อนรหัสผ่าน', life: 3000 });
+};
 const showSuccess = () => {
     toast.add({ severity: 'success', summary: 'Success Add Teacher', detail: 'บันทึกข้อมูลผู้ใช้สำเร็จ', life: 3000 });
 };
+const showPassSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Add Teacher', detail: 'เปลี่ยนรหัสผ่านผู้ใช้สำเร็จ', life: 3000 });
+};
+
 const props = defineProps({
     id: {
         type: String,
@@ -38,6 +49,7 @@ const checked = ref(false);
 
 const inputValue = ref("");
 const isValid = ref(true);
+const isValidPass = ref(true);
 let form = ref({
     id: "",
     username: "",
@@ -52,6 +64,11 @@ let form = ref({
     d_pic: "",
     p_id: "",
 });
+let form_pass = ref({
+    pass_first: "",
+    pass_second: ""
+});
+
 const submitForm = () => {
     if (form.value.username.trim() === "") {
         isValid.value = false;
@@ -60,7 +77,18 @@ const submitForm = () => {
         UpdateUser();
     }
 };
-
+const submitFormPassCheck = () => {
+    if (form_pass.value.pass_first.trim() === '' || form_pass.value.pass_second.trim() === '') {
+        isValidPass.value = false;
+        showErrorPassempty();
+    } else if (form_pass.value.pass_first.trim() !== form_pass.value.pass_second.trim()) {
+        isValidPass.value = false;
+        showErrorPass();
+    } else {
+        UpdatePass();
+        isValidPass.value = true;
+    }
+};
 
 const getUser_ById = async () => {
     try {
@@ -111,6 +139,24 @@ const getUser_ById = async () => {
         console.error("Error fetching user:", error);
     }
 };
+const UpdatePass = () => {
+    const formData = new FormData();
+    formData.append('password', form_pass.value.pass_first);
+    axios
+        .post(`/api/admin_update_user_pass/${props.id}`, formData)
+        .then((response) => {
+            form_pass.value.pass_first = '';
+            form_pass.value.pass_second = '';
+            showPassSuccess();
+        })
+        .catch((error) => { });
+    toast.fire({
+        icon: "success",
+        title: "Add Teachers Subject successfully",
+    });
+};
+
+
 const UpdateUser = () => {
     const formData = new FormData();
     formData.append('file', selectedImage.value);
@@ -181,24 +227,6 @@ onMounted(async () => {
 <template>
     <div class="row">
         <Toast />
-        <!-- <div class="card" id="delete">
-            <div class="card-header">
-                <h5 class="mb-1">ลบข้อมูลหลักสูตร</h5>
-                <p class="text-sm mb-0"> กรุณายืนยันการลบข้อมูลหลักสูตร
-                    คุณแน่ใจหรือในการลบข้อมูลหลักสูตรออกจากระบบเมื่อลบแล้วไม่สามารถกู้คืนข้อมูลดังกล่าวได้ </p>
-            </div>
-            <div class="card-body d-sm-flex pt-0">
-                <div class="d-flex align-items-center mb-sm-0 mb-4">
-                    <div>
-                        <div class="form-check form-switch mb-0"><input class="form-check-input" type="checkbox"
-                                id="flexSwitchCheckDefault0"></div>
-                    </div>
-                    <div class="ms-2"><span class="text-dark font-weight-bold d-block text-sm">Confirm</span><span
-                            class="text-xs d-block">I want to delete my account.</span></div>
-                </div><button class="btn btn-outline-secondary mb-0 ms-auto" type="button" name="button"> Deactivate
-                </button><button class="btn bg-gradient-danger mb-0 ms-2"> ลบข้อมูลหลักสูตร </button>
-            </div>
-        </div> -->
         <div class="col-lg-12 mt-lg-0 mt-4">
             <div class="card mt-4" id="basic-info">
 
@@ -283,7 +311,7 @@ onMounted(async () => {
                                 <label class="form-label mb-1 text-sm">เลือกสาขา</label>
                                 <select name="program" class="form-control" v-model="selected_program">
                                     <option value="" disabled>เลือกสาขาวิชา</option>
-                                    <option v-for="item in programs" :value="item.p_id">
+                                    <option v-for="item in programs" :value="item.p_id" :key="item.p_id">
                                         {{ item.p_name }}
                                     </option>
                                 </select>
@@ -329,6 +357,44 @@ onMounted(async () => {
                                 </button>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header  border-bottom">
+                    <div>
+                        <h5 class="mb-0"> เปลี่ยนรหัสผ่าน</h5>
+                        <small class="text-muted">เปลี่ยนรหัสผ่าน</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form @submit.prevent="submitFormPassCheck">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label class="form-label text-sm mb-1">ป้อนรหัสผ่าน</label>
+                                <div class="input-group">
+                                    <input id="location" name="pass_first" class="form-control" type="password"
+                                        placeholder="ป้อนรหัสผ่าน" v-model="form_pass.pass_first" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="form-label text-sm mb-1">ป้อนรหัสผ่านอีกครั้ง</label>
+                                <div class="input-group">
+                                    <input id="location" name="pass_second" class="form-control" type="password"
+                                        placeholder="ป้อนรหัสผ่านอีกครั้ง" v-model="form_pass.pass_second" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" d-flex justify-content-end mt-3">
+                            <div class="col-lg-12 float-end">
+                                <button class="btn bg-gradient-dark float-end fw-normal text-sm px-5 " type="submit"
+                                    name="buttonPass">บันทึกข้อมูล</button>
+                                <a class="btn btn-white border text-dark shadow-none border-1 mb-0 px-5 me-2 text-sm float-end"
+                                    @click="User_home()">กลับ</a>
+
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>

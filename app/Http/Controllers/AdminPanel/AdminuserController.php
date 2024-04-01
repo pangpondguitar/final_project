@@ -26,6 +26,14 @@ class AdminuserController extends Controller
             'users' => $users
         ], 200);
     }
+    public function update_user_pass(Request $request, $id)
+    {
+        $password = Hash::make($request->password);
+        $user = User::where('id',$id)->first();
+        $user->password = $password;
+        $user->save();
+        return response()->json(['message' => 'Password updated successfully'], 200);
+    }
     public function add_user(Request $request)
     {
         $user = new User();
@@ -112,7 +120,10 @@ class AdminuserController extends Controller
             $filePath = 'uploads/profile_pic' . '/' . $randomFileName;
             if ($user_d->user_d_pic != '') {
                 $fileDir = 'uploads/profile_pic/';
-                unlink($fileDir . $user_d->user_d_pic);
+                $fileToDelete = $fileDir . $user_d->user_d_pic;
+                if (file_exists($fileToDelete)) {
+                    unlink($fileToDelete);
+                }
             }
             if (move_uploaded_file($uploadedFile, $filePath)) {
                 $filePaths[] = $filePath;
