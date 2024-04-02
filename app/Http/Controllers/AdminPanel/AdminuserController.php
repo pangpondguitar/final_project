@@ -147,7 +147,6 @@ class AdminuserController extends Controller
         $user_detail->delete();
         $user->delete();
     }
-
     public function get_single_user($id)
     {
         $user = User::where('id', $id)->with('user_detail')->first();
