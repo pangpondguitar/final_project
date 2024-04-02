@@ -37,7 +37,7 @@ onMounted(async () => {
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="mb-0">
-                                จัดการข้อมูลตารางสอนตามสาขาวิชา
+                                รายงานการจัดทำ มคอ. รายสาขาวิชา
                             </h5>
                             <p class="text-sm">
                                 หลักสูตรทั้งหมด (เลือกสาขาวิชา)

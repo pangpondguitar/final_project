@@ -97,7 +97,7 @@ Route::post('admin_add_users/', [AdminuserController::class, 'add_user']);
 Route::get('admin_get_users_by_id/{id}', [AdminuserController::class, 'get_single_user']);
 Route::post('admin_update_users/{id}', [AdminuserController::class, 'update_users']);
 Route::post('admin_update_user_pass/{id}', [AdminuserController::class, 'update_user_pass']);
-
+Route::get('admin_delete_users/{id}', [AdminuserController::class, 'delete_user']);
 
 Route::post('admin_add_course_doc/{id}', [CourseController::class, 'course_Addfile']);
 Route::get('admin_get_course_doc/{id}', [CourseController::class, 'get_course_doc']);

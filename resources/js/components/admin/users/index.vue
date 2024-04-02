@@ -79,7 +79,38 @@ const filteredList = () => {
             .includes(input.value.toLowerCase())
     );
 };
-
+const deleteUser = (id) => {
+    Swal.fire({
+        title: "ยืนยันลบข้อมูล",
+        text: 'ยืนยันลบข้อมูล',
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ยืนยันรายการ",
+        cancelButtonText: "ยกเลิก",
+    }).then((result) => {
+        if (result.value) {
+            axios
+                .get("/api/admin_delete_users/" + id)
+                .then(() => {
+                    Swal.fire(
+                        "Delete",
+                        "Subject delete successfully",
+                        "success"
+                    );
+                    getUserAll();
+                })
+                .catch(() => {
+                    Swal.fire(
+                        "Failed!!",
+                        "There was somthing wrong",
+                        "Warning"
+                    );
+                });
+        }
+    });
+};
 onMounted(async () => {
     await getUserAll();
 });
@@ -184,7 +215,7 @@ onMounted(async () => {
                                     @click="Edit_user(data.id)">
                                     <i class="bi bi-pen"></i>
                                 </a>
-                                <a class="text-danger font-weight-bold ms-4" data-toggle="tooltip"
+                                <a class="text-danger font-weight-bold ms-4" data-toggle="tooltip" @click="deleteUser(data.id)"
                                     data-original-title="Edit user" data-target="">
                                     <i class="bi bi-trash3"></i>
                                 </a>

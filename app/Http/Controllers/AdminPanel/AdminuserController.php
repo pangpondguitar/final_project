@@ -29,7 +29,7 @@ class AdminuserController extends Controller
     public function update_user_pass(Request $request, $id)
     {
         $password = Hash::make($request->password);
-        $user = User::where('id',$id)->first();
+        $user = User::where('id', $id)->first();
         $user->password = $password;
         $user->save();
         return response()->json(['message' => 'Password updated successfully'], 200);
@@ -83,7 +83,7 @@ class AdminuserController extends Controller
 
     public function update_users(Request $request, $id)
     {
-        $user =  User::find($id);
+        $user = User::find($id);
         if ($user->username != $request->username) {
             $user_check = User::where('username', $request->username)->exists();
 
@@ -142,14 +142,15 @@ class AdminuserController extends Controller
 
     public function delete_user($id)
     {
-        $user =  User::find($id);
+        $user = User::find($id);
         $user_detail = Users_detail::where('id', $id);
         $user_detail->delete();
         $user->delete();
     }
+
     public function get_single_user($id)
     {
-        $user =  User::where('id', $id)->with('user_detail')->first();
+        $user = User::where('id', $id)->with('user_detail')->first();
         return response()->json([
             'user' => $user
         ]);
@@ -158,7 +159,7 @@ class AdminuserController extends Controller
 
     public function update_user($id)
     {
-        $user =  User::find($id);
+        $user = User::find($id);
         $user->delete();
     }
 

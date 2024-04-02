@@ -37,23 +37,21 @@ import {
 } from "chart.js";
 
 const chartData = computed(() => {
+
+    const distinctColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8000', '#80ff00', '#0080ff', '#ff0080', '#80ff80', '#8080ff', '#ff80ff', '#80ffff', '#ffff80', '#ff8080', '#808080'];
+
+// Map distinct colors to RGBA format for backgroundColor
+const backgroundColor = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 0.2)`);
+
+// Map distinct colors to RGBA format for borderColor
+const borderColor = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 1)`);
     return {
         labels: labels.value,
         datasets: [
             {
                 data: data.value,
-                backgroundColor: [
-                    "rgba(61, 247, 79,  0.2)", // เขียว
-                    "rgba(255, 165, 0, 0.2)", // สีส้ม
-                    "rgba(255, 0, 0, 0.2)", // แดง
-                    "rgba(255, 0, 0, 0.2)", // แดง
-                ],
-                borderColor: [
-                    "rgba(61, 247, 79, 82)", // เขียว
-                    "rgba(255, 165, 0, 1)", // สีส้ม
-                    "rgba(255, 0, 0, 1)", // แดง
-                    "rgba(255, 0, 0, 1)",
-                ],
+                backgroundColor: backgroundColor,
+                borderColor:borderColor,
                 borderWidth: 1,
             },
         ],
@@ -70,6 +68,11 @@ const chartData = computed(() => {
         },
     };
 });
+const generateDistinctColors = () => {
+      const distinctColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8000', '#80ff00', '#0080ff', '#ff0080', '#80ff80', '#8080ff', '#ff80ff', '#80ffff', '#ffff80', '#ff8080', '#808080'];
+      backgroundColor.value = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 0.2)`);
+      borderColor.value = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 1)`);
+    };
 const chartOptions = {
     responsive: true,
 };
