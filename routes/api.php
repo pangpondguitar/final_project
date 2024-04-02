@@ -18,6 +18,7 @@ use App\Http\Controllers\PresidentPanel\DocumentReportController;
 use App\Http\Controllers\PresidentPanel\CourseProgramController;
 use App\Models\Course_committee;
 use App\Http\Controllers\ManagerPanel\DocumentSummaryController;
+use App\Http\Controllers\ManagerPanel\ManagerPerformanceReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -227,6 +228,7 @@ Route::get('president_get_program/{id}', [CourseProgramController::class, 'get_p
 Route::get('president_get_single_course/{id}', [CourseProgramController::class, 'get_single_course']);
 Route::get('manager_get_subjectAll_term/{id}/{t_id}', [DocumentSummaryController::class, 'get_subject']);
 Route::get('manager_get_program/{id}', [DocumentSummaryController::class, 'get_program']);
+Route::get('manager_get_doc_performance/{year}', [ManagerPerformanceReportController::class, 'get_doc_performance']);
 
 Route::get('manager_get_doc_status_count/{t_id}', [DocumentSummaryController::class, 'get_doc_status_count']);
 

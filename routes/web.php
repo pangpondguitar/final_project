@@ -19,8 +19,10 @@ use App\Http\Controllers\PresidentPanel\DocumentReportController;
 use App\Http\Controllers\PresidentPanel\CourseProgramController;
 use App\Http\Controllers\ManagerPanel\ManagerController;
 use App\Http\Controllers\ManagerPanel\DocumentSummaryController;
+use App\Http\Controllers\ManagerPanel\ManagerPerformanceReportController;
 use App\Http\Controllers\PerformanceReportController;
 use App\Http\Controllers\AdminPanel\AdminDocumentReportController;
+
 use App\Http\Controllers\PDFController;
 use App\Models\Terms;
 
@@ -230,6 +232,13 @@ Route::middleware(['auth', 'role:4'])->group(function () {
         Route::controller(DocumentSummaryController::class)->group(function () {
             Route::get('/', 'index')->name('manager.document_report');
             Route::get('/doc_report_detail/{id}', 'index')->name('manager.report_detail');
+            Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
+        });
+    });
+    Route::prefix('manager/performance_report')->group(function () {
+        Route::controller(ManagerPerformanceReportController::class)->group(function () {
+            Route::get('/', 'index')->name('manager.performance_report');
+            Route::get('/performance_report_detail/{id}', 'index')->name('manager.performance_report_detail');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });

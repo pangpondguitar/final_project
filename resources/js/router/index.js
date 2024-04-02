@@ -50,6 +50,7 @@ import presidentPerformanceReportView from "../components/president/performance_
 import managerHome from "../components/manager/index.vue";
 import managerDocReport from "../components/manager/doc_report/index.vue";
 import managerDocReport_Detail from "../components/manager/doc_report/doc_report_detail.vue";
+import managerPerformanceReport from "../components/manager/performance_report/index.vue";
 
 import notFound from "../components/notFound.vue";
 
@@ -245,6 +246,10 @@ const routes = [
         path: "/manager/doc_report/doc_report_detail/:id",
         component: managerDocReport_Detail,
         props: true,
+    },
+    {
+        path: "/manager/performance_report",
+        component: managerPerformanceReport
     },
 ];
 
