@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import axios from 'axios';
-import { defineComponent } from 'vue'
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import { defineComponent } from "vue";
+import { Carousel, Navigation, Slide } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 let teachers = ref({});
 let committee = ref({});
 const props = defineProps({
@@ -35,7 +35,7 @@ const addCommittee = (id) => {
             get_Committee();
             get_teachers();
         })
-        .catch((error) => { });
+        .catch((error) => {});
 
     toast.fire({
         icon: "success",
@@ -46,7 +46,7 @@ const addCommittee = (id) => {
 const deleteCommittee = (id) => {
     Swal.fire({
         title: "ยืนยันลบข้อมูล",
-        text: 'ยืนยันลบข้อมูล',
+        text: "ยืนยันลบข้อมูล",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -85,7 +85,7 @@ onMounted(async () => {
 <template>
     <div class="col-lg-12">
         <div class="card mb-3">
-            <div class="card-header pb-0 ">
+            <div class="card-header pb-0">
                 <div class="d-flex justify-content-between">
                     <div>
                         <h5 class="mb-0">คณะกรรมการหลักสูตร</h5>
@@ -95,83 +95,119 @@ onMounted(async () => {
             </div>
             <div class="card-body">
                 <div class="row" v-if="committee.length > 0">
-                    <div class="col-lg-3" v-for="item in committee" :key="item.id">
-                        <div class="card card-plain text-center ">
-
+                    <div
+                        class="col-lg-3"
+                        v-for="item in committee"
+                        :key="item.id"
+                    >
+                        <div class="card card-plain text-center">
                             <div class="d-flex justify-content-end">
-                                <div><i class="bi bi-trash3 text-decondary me-4"
-                                        @click="deleteCommittee(item.cm_id)"></i>
+                                <div>
+                                    <i
+                                        class="bi bi-trash3 text-decondary me-4"
+                                        @click="deleteCommittee(item.cm_id)"
+                                    ></i>
                                 </div>
                             </div>
                             <a href="javascript:;">
-                               
                                 <!-- <img :src="'/uploads/profile_pic/' + item.user_detail.user_d_pic"
                                         class="avatar avatar-sm me-3" />
                                 <img class="img-icon-commit " src=" /public/assets/img/man (1).png"> -->
 
-                                <div v-if=" item.user.user_detail.user_d_pic != ''">
-                                    <img :src="'/uploads/profile_pic/' +  item.user.user_detail.user_d_pic"
-                                        class="img-icon-commit" />
+                                <div
+                                    v-if="
+                                        item.user.user_detail.user_d_pic != ''
+                                    "
+                                >
+                                    <img
+                                        :src="
+                                            '/uploads/profile_pic/' +
+                                            item.user.user_detail.user_d_pic
+                                        "
+                                        class="img-icon-commit border-radius-lg"
+                                    />
                                 </div>
                                 <div v-else>
-                                    <img src="../../../../../public/assets/img/user.png"
-                                        class="img-icon-commit" />
+                                    <img
+                                        src="../../../../../public/assets/img/user.png"
+                                        class="img-icon-commit border-radius-lg"
+                                    />
                                 </div>
                             </a>
                             <div class="card-body">
-                                <h5 class="card-title">{{ item.user.user_detail.user_d_name }}</h5>
-                                <h6 class="category text-info text-gradient">{{ item.user.user_detail.user_d_name2
-                                    }}</h6>
+                                <h5 class="card-title">
+                                    {{ item.user.user_detail.user_d_name }}
+                                </h5>
+                                <h6 class="category text-info text-gradient">
+                                    {{ item.user.user_detail.user_d_name2 }}
+                                </h6>
                                 <p class="card-description text-sm">
-                                    "Don't walk behind me; I may not lead. Don't walk in front of me; I may not
-                                    follow.
-                                    Just
+                                    "Don't walk behind me; I may not lead. Don't
+                                    walk in front of me; I may not follow. Just
                                     walk beside me and be my friend."
                                 </p>
-
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="" v-if="committee.length == 0">
                     <div class="d-flex justify-content-center">
-                        <img class="img-committ-not " src=" /public/assets/img/not-result.jpg">
+                        <img
+                            class="img-committ-not"
+                            src=" /public/assets/img/not-result.jpg"
+                        />
                     </div>
                     <div class="d-flex justify-content-center text-center">
-
                         <div>
                             <h5>ยังไม่มีคณะกรรมการหลักสูตรในขณะนี้</h5>
-                            <label for="" class="text-muted mb-5">กรุณาเพิ่มข้อมูล</label>
+                            <label for="" class="text-muted mb-5"
+                                >กรุณาเพิ่มข้อมูล</label
+                            >
                         </div>
-
-
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
     <Carousel :items-to-show="5" :wrap-around="true" v-if="teachers.length > 0">
         <Slide v-for="item in teachers" :key="item.id">
             <div class="carousel__item">
-                <div class="card card-plain text-center py-4 h-100 mx-2 bg-white">
+                <div
+                    class="card card-plain text-center py-4 h-100 mx-2 bg-white"
+                >
                     <a href="javascript:;">
-                        <div v-if=" item.user_detail.user_d_pic != ''">
-                                    <img :src="'/uploads/profile_pic/' +  item.user_detail.user_d_pic"
-                                        class="img-icon-commit" />
-                                </div>
-                                <div v-else>
-                                    <img src="../../../../../public/assets/img/user.png"
-                                        class="img-icon-commit" />
-                                </div>
+                        <div v-if="item.user_detail.user_d_pic != ''">
+                            <img
+                                :src="
+                                    '/uploads/profile_pic/' +
+                                    item.user_detail.user_d_pic
+                                "
+                                class="img-icon-commit border-radius-lg"
+                            />
+                        </div>
+                        <div v-else>
+                            <img
+                                src="../../../../../public/assets/img/user.png"
+                                class="img-icon-commit border-radius-lg"
+                            />
+                        </div>
                     </a>
                     <div class="card-body">
-                        <label class="card-title  mb-1 h6">{{ item.user_detail.user_d_name }}</label><br>
-                        <span class="text-muted text-sm">{{ item.user_detail.user_d_name2 }}</span>
+                        <label class="card-title mb-1 h6">{{
+                            item.user_detail.user_d_name
+                        }}</label
+                        ><br />
+                        <span class="text-muted text-sm">{{
+                            item.user_detail.user_d_name2
+                        }}</span>
                     </div>
                     <div class="row d-flex justify-content-center">
-                        <button class="btn bg-gradient-dark col-6 " @click="addCommittee(item.id)">เพิ่ม</button>
+                        <button
+                            class="btn bg-gradient-dark col-6"
+                            @click="addCommittee(item.id)"
+                        >
+                            เพิ่ม
+                        </button>
                     </div>
                 </div>
             </div>
@@ -181,10 +217,7 @@ onMounted(async () => {
             <Navigation />
         </template>
     </Carousel>
-
-
 </template>
-
 
 <style>
 .img-icon-commit {

@@ -88,7 +88,6 @@
                                                 <i class="fa fa-ellipsis-h text-white" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers1">
-                                                <li><a class="dropdown-item border-radius-md " href="{{ route('admin.term_program', $item->t_id) }}">จัดการผู้สอนรายวิชา</a></li>
                                                 <li><a class="dropdown-item border-radius-md" href="javascript:;" data-bs-toggle="modal" data-bs-target="#Modaledit{{$item->t_id}}">แก้ไข</a></li>
                                                 <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;" data-target="{{ route('admin.term_delete', $item->t_id) }}" onclick="Delete(this)">ลบ</a></li>
                                             </ul>

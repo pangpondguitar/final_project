@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 const router = useRouter();
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 let user = ref({});
 let term = ref({});
 let term_sub_teach = ref({});
@@ -13,8 +13,8 @@ let count_success = ref(0);
 let count_wait = ref(0);
 let count_doc = ref(0);
 
-const userId = document.getElementById('app').getAttribute('data-user-id');
-let User_pId = ref('')
+const userId = document.getElementById("app").getAttribute("data-user-id");
+let User_pId = ref("");
 let currentTerm = ref("");
 const props = defineProps({
     id: {
@@ -28,10 +28,11 @@ const props = defineProps({
 });
 const get_UserProgram = async () => {
     try {
-        let response = await axios.get(`/api/president_get_user_data/${userId}`);
+        let response = await axios.get(
+            `/api/president_get_user_data/${userId}`
+        );
         user.value = response.data.user;
-        User_pId.value = user.value.p_id
-
+        User_pId.value = user.value.p_id;
     } catch (error) {
         console.error("Error fetching user:", error);
     }
@@ -39,7 +40,9 @@ const get_UserProgram = async () => {
 const get_Teacher_Detail = async () => {
     try {
         console.log(currentTerm.value);
-        let response = await axios.get(`/api/president_get_teacher_detail/${props.id}/${props.t_id}`);
+        let response = await axios.get(
+            `/api/president_get_teacher_detail/${props.id}/${props.t_id}`
+        );
         teachers.value = response.data.teachers;
         count_success.value = response.data.count_success;
         count_wait.value = response.data.count_wait;
@@ -56,7 +59,9 @@ const get_Teacher_Detail = async () => {
 };
 const get_Terms_ById = async () => {
     try {
-        let response = await axios.get(`/api/president_get_single_term/${props.t_id}`);
+        let response = await axios.get(
+            `/api/president_get_single_term/${props.t_id}`
+        );
         term.value = response.data.term;
         console.log(term.value);
     } catch (error) {
@@ -65,10 +70,10 @@ const get_Terms_ById = async () => {
 };
 
 const Teaching_Home = (id) => {
-    router.push('/president/teaching/');
+    router.push("/president/teaching/");
 };
 const Doc_report_Detail = (id) => {
-    router.push('/president/doc_report/doc_report_detail/' + id);
+    router.push("/president/doc_report/doc_report_detail/" + id);
 };
 onMounted(async () => {
     await get_UserProgram();
@@ -81,148 +86,242 @@ onMounted(async () => {
     <div class="row">
         <div class="col">
             <div class="row">
-                <div class="d-flex ">
-
+                <div class="d-flex">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item" @click="Teaching_Home()"><a href="#">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">รายวิชาที่อาจารย์สอนภาคเรียน</li>
+                            <li
+                                class="breadcrumb-item"
+                                @click="Teaching_Home()"
+                            >
+                                <a href="#">หน้าหลัก</a>
+                            </li>
+                            <li
+                                class="breadcrumb-item active"
+                                aria-current="page"
+                            >
+                                รายวิชาที่อาจารย์สอนภาคเรียน
+                            </li>
                         </ol>
                     </nav>
-
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-lg-4">
-                    <div class="card text-start bg-gradient-dark shadow " v-for="item in teachers " :key="item.id">
-                        <div class="d-flex justify-content-center">
-
-                        </div>
-                        <a href="javascript:;" class="text-start ms-4">
-                            <img class="img-icon-commit mt-4 text-center"
-                                src="http://[::1]:5173/public/assets/img/user (9).png">
+                    <div
+                        class="card text-start bg-gradient-dark shadow"
+                        v-for="item in teachers"
+                        :key="item.id"
+                    >
+                        <div class="d-flex justify-content-center"></div>
+                        <a href="javascript:;" class="text-start ms-4 mt-4">
+                            <img
+                                :src="
+                                    '/uploads/profile_pic/' +
+                                    item.user_detail.user_d_pic
+                                "
+                                class="w-100 border-radius-lg shadow-sm img-pic"
+                            />
                         </a>
                         <div class="card-body text-white">
-                            <h5 class="text-white mb-0">{{ item.user_detail.user_d_name }}</h5>
-                            <p class="category  py-0 ">{{ item.user_detail.user_d_name2 }}</p>
+                            <h5 class="text-white mb-0">
+                                {{ item.user_detail.user_d_name }}
+                            </h5>
+                            <p class="category py-0">
+                                {{ item.user_detail.user_d_name2 }}
+                            </p>
                             <div class="col-12 py-1 ps-0">
                                 <div class="d-flex mb-2">
                                     <div
-                                        class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center">
-                                        <svg width="10px" height="10px" viewBox="0 0 40 44" version="1.1"
+                                        class="icon icon-shape icon-xxs shadow border-radius-sm bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center"
+                                    >
+                                        <svg
+                                            width="10px"
+                                            height="10px"
+                                            viewBox="0 0 40 44"
+                                            version="1.1"
                                             xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        >
                                             <title>document</title>
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <g transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF"
-                                                    fill-rule="nonzero">
-                                                    <g transform="translate(1716.000000, 291.000000)">
-                                                        <g transform="translate(154.000000, 300.000000)">
-                                                            <path class="color-background"
+                                            <g
+                                                stroke="none"
+                                                stroke-width="1"
+                                                fill="none"
+                                                fill-rule="evenodd"
+                                            >
+                                                <g
+                                                    transform="translate(-1870.000000, -591.000000)"
+                                                    fill="#FFFFFF"
+                                                    fill-rule="nonzero"
+                                                >
+                                                    <g
+                                                        transform="translate(1716.000000, 291.000000)"
+                                                    >
+                                                        <g
+                                                            transform="translate(154.000000, 300.000000)"
+                                                        >
+                                                            <path
+                                                                class="color-background"
                                                                 d="M40,40 L36.3636364,40 L36.3636364,3.63636364 L5.45454545,3.63636364 L5.45454545,0 L38.1818182,0 C39.1854545,0 40,0.814545455 40,1.81818182 L40,40 Z"
-                                                                opacity="0.603585379"></path>
-                                                            <path class="color-background"
-                                                                d="M30.9090909,7.27272727 L1.81818182,7.27272727 C0.814545455,7.27272727 0,8.08727273 0,9.09090909 L0,41.8181818 C0,42.8218182 0.814545455,43.6363636 1.81818182,43.6363636 L30.9090909,43.6363636 C31.9127273,43.6363636 32.7272727,42.8218182 32.7272727,41.8181818 L32.7272727,9.09090909 C32.7272727,8.08727273 31.9127273,7.27272727 30.9090909,7.27272727 Z M18.1818182,34.5454545 L7.27272727,34.5454545 L7.27272727,30.9090909 L18.1818182,30.9090909 L18.1818182,34.5454545 Z M25.4545455,27.2727273 L7.27272727,27.2727273 L7.27272727,23.6363636 L25.4545455,23.6363636 L25.4545455,27.2727273 Z M25.4545455,20 L7.27272727,20 L7.27272727,16.3636364 L25.4545455,16.3636364 L25.4545455,20 Z">
-                                                            </path>
+                                                                opacity="0.603585379"
+                                                            ></path>
+                                                            <path
+                                                                class="color-background"
+                                                                d="M30.9090909,7.27272727 L1.81818182,7.27272727 C0.814545455,7.27272727 0,8.08727273 0,9.09090909 L0,41.8181818 C0,42.8218182 0.814545455,43.6363636 1.81818182,43.6363636 L30.9090909,43.6363636 C31.9127273,43.6363636 32.7272727,42.8218182 32.7272727,41.8181818 L32.7272727,9.09090909 C32.7272727,8.08727273 31.9127273,7.27272727 30.9090909,7.27272727 Z M18.1818182,34.5454545 L7.27272727,34.5454545 L7.27272727,30.9090909 L18.1818182,30.9090909 L18.1818182,34.5454545 Z M25.4545455,27.2727273 L7.27272727,27.2727273 L7.27272727,23.6363636 L25.4545455,23.6363636 L25.4545455,27.2727273 Z M25.4545455,20 L7.27272727,20 L7.27272727,16.3636364 L25.4545455,16.3636364 L25.4545455,20 Z"
+                                                            ></path>
                                                         </g>
                                                     </g>
                                                 </g>
                                             </g>
                                         </svg>
                                     </div>
-                                    <p class="text-xs mt-1 fw-normal mb-0 ">รายการสอน</p>
+                                    <p class="text-xs mt-1 fw-normal mb-0">
+                                        รายการสอน
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3" v-for="item in teachers " :key="item.id">
+                    <div
+                        class="row mt-3"
+                        v-for="item in teachers"
+                        :key="item.id"
+                    >
                         <div class="col-lg-12 col-sm-6 h-100">
-                            <div class="card  mb-3">
+                            <div class="card mb-3">
                                 <div class="card-body p-3">
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-capitalize font-weight-bold">รายวิชาทั้งหมด
+                                                <p
+                                                    class="text-sm mb-0 text-dark font-weight-bold"
+                                                >
+                                                    รายวิชาทั้งหมด
                                                 </p>
-                                                <h4 class="font-weight-bolder mb-0">
-                                                    {{ item.terms_sub_teaches.length }}
-                                                    <span class="text-success text-sm fw-normal ms-1">รายการ</span>
+                                                <h4
+                                                    class="font-weight-bolder mb-0"
+                                                >
+                                                    {{
+                                                        item.terms_sub_teaches
+                                                            .length
+                                                    }}
+                                                    <span
+                                                        class="text-success text-sm fw-normal ms-1"
+                                                        >รายการ</span
+                                                    >
                                                 </h4>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                                <i class="ni ni-paper-diploma text-lg opacity-10"
-                                                    aria-hidden="true"></i>
+                                                class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"
+                                            >
+                                                <i
+                                                    class="ni ni-paper-diploma text-lg opacity-10"
+                                                    aria-hidden="true"
+                                                ></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mb-3 ">
+                            <div class="card mb-3">
                                 <div class="card-body p-3">
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-capitalize font-weight-bold">เสร็จสิ้น
+                                                <p
+                                                    class="text-sm mb-0 text-capitalize font-weight-bold text-dark"
+                                                >
+                                                    เสร็จสิ้น
                                                 </p>
-                                                <h4 class="font-weight-bolder mb-0">
+                                                <h4
+                                                    class="font-weight-bolder mb-0"
+                                                >
                                                     {{ count_success }}
-                                                    <span class="text-success text-sm fw-normal ms-1">รายการ</span>
+                                                    <span
+                                                        class="text-success text-sm fw-normal ms-1"
+                                                        >รายการ</span
+                                                    >
                                                 </h4>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="icon icon-shape bg-gradient-success shadow text-center border-radius-md">
-                                                <i class="ni ni-paper-diploma text-lg opacity-10"
-                                                    aria-hidden="true"></i>
+                                                class="icon icon-shape bg-gradient-success shadow text-center border-radius-md"
+                                            >
+                                                <i
+                                                    class="ni ni-paper-diploma text-lg opacity-10"
+                                                    aria-hidden="true"
+                                                ></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card mb-3 ">
+                            <div class="card mb-3">
                                 <div class="card-body p-3">
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-capitalize font-weight-bold">รอการตรวจสอบ
+                                                <p
+                                                    class="text-sm mb-0 text-capitalize font-weight-bold text-dark"
+                                                >
+                                                    รอการตรวจสอบ
                                                 </p>
-                                                <h4 class="font-weight-bolder mb-0">
+                                                <h4
+                                                    class="font-weight-bolder mb-0"
+                                                >
                                                     {{ count_wait }}
-                                                    <span class="text-success text-sm fw-normal ms-1">รายการ</span>
+                                                    <span
+                                                        class="text-success text-sm fw-normal ms-1"
+                                                        >รายการ</span
+                                                    >
                                                 </h4>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md">
-                                                <i class="ni ni-paper-diploma text-lg opacity-10"
-                                                    aria-hidden="true"></i>
+                                                class="icon icon-shape bg-gradient-warning shadow text-center border-radius-md"
+                                            >
+                                                <i
+                                                    class="ni ni-paper-diploma text-lg opacity-10"
+                                                    aria-hidden="true"
+                                                ></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card ">
+                            <div class="card">
                                 <div class="card-body p-3">
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p class="text-sm mb-0 text-capitalize font-weight-bold">ยังไม่จัดทำ</p>
-                                                <h4 class="font-weight-bolder mb-0">
+                                                <p
+                                                    class="text-sm mb-0 text-capitalize font-weight-bold text-dark"
+                                                >
+                                                    ยังไม่จัดทำ
+                                                </p>
+                                                <h4
+                                                    class="font-weight-bolder mb-0"
+                                                >
                                                     {{ count_doc }}
-                                                    <span class="text-success text-sm fw-normal ms-1 ">รายการ</span>
+                                                    <span
+                                                        class="text-success text-sm fw-normal ms-1"
+                                                        >รายการ</span
+                                                    >
                                                 </h4>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="icon icon-shape bg-gradient-danger shadow text-center border-radius-md">
-                                                <i class="ni ni-paper-diploma text-lg opacity-10"
-                                                    aria-hidden="true"></i>
+                                                class="icon icon-shape bg-gradient-danger shadow text-center border-radius-md"
+                                            >
+                                                <i
+                                                    class="ni ni-paper-diploma text-lg opacity-10"
+                                                    aria-hidden="true"
+                                                ></i>
                                             </div>
                                         </div>
                                     </div>
@@ -232,66 +331,113 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="card  h-100">
+                    <div class="card h-100">
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
-                                    <h5 class=" mb-0 ">ภาคเรียน {{ term.t_name }} / {{
-                                term.t_year }}
+                                    <h5 class="mb-0">
+                                        ภาคเรียน {{ term.t_name }} /
+                                        {{ term.t_year }}
                                     </h5>
-                                    <h4 class="fw-normal  h6 text-muted">รายการสอนของอาจารย์</h4>
+                                    <h4 class="fw-normal h6 text-muted">
+                                        รายการสอนของอาจารย์
+                                    </h4>
                                 </div>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" v-for="item in term_sub_teach" :key="item.tst_id"
-                                    @click="Doc_report_Detail(item.terms_sub.ts_id)">
+                                <li
+                                    class="list-group-item"
+                                    v-for="item in term_sub_teach"
+                                    :key="item.tst_id"
+                                    @click="
+                                        Doc_report_Detail(item.terms_sub.ts_id)
+                                    "
+                                >
+                                    <a
+                                        class="d-flex justify-content-between py-1"
+                                        href="#"
+                                    >
+                                        <div class="text-dark title-sub-term">
+                                            <label
+                                                for=""
+                                                class="ms-0 mb-0 text-sm"
+                                            >
+                                                {{
+                                                    item.terms_sub.subjects
+                                                        .s_name
+                                                }}</label
+                                            >
 
-                                    <a class="d-flex justify-content-between py-1" href="#">
-
-                                        <div class="text-dark   title-sub-term">
-
-                                            {{ item.terms_sub.subjects.s_name }}
-                                            <p class="mb-0 text-xs text-muted">จำนวนหน่วยกิต {{
-                                item.terms_sub.subjects.s_credit }}
+                                            <p class="mb-0 text-xs text-muted">
+                                                จำนวนหน่วยกิต
+                                                {{
+                                                    item.terms_sub.subjects
+                                                        .s_credit
+                                                }}
                                             </p>
                                             <!-- <span class="badge badge-dot ps-0 ms-0">
                                                 <i class="bg-info"></i>
                                                 <span class="text-dark text-xs">positive</span>
                                             </span> -->
-
-
                                         </div>
                                         <div>
                                             <div>
-                                                <div v-if="item.terms_sub.docfile.length > 0">
-                                                    <div v-for="docfile in item.terms_sub.docfile" :key="docfile.df_id">
-                                                        <div v-for="status in docfile.docfile_status.slice(-1)"
-                                                            :key="status.dfs_id">
-                                                            <span class="badge bg-gradient-warning shadow"
-                                                                v-if="status.dfs_status == '0'">Waiting
+                                                <div
+                                                    v-if="
+                                                        item.terms_sub.docfile
+                                                            .length > 0
+                                                    "
+                                                >
+                                                    <div
+                                                        v-for="docfile in item
+                                                            .terms_sub.docfile"
+                                                        :key="docfile.df_id"
+                                                    >
+                                                        <div
+                                                            v-for="status in docfile.docfile_status.slice(
+                                                                -1
+                                                            )"
+                                                            :key="status.dfs_id"
+                                                        >
+                                                            <span
+                                                                class="badge bg-gradient-warning shadow"
+                                                                v-if="
+                                                                    status.dfs_status ==
+                                                                    '0'
+                                                                "
+                                                                >Waiting
                                                             </span>
-                                                            <span class="badge bg-gradient-success  shadow"
-                                                                v-if="status.dfs_status == '1'">Success
+                                                            <span
+                                                                class="badge bg-gradient-success shadow"
+                                                                v-if="
+                                                                    status.dfs_status ==
+                                                                    '1'
+                                                                "
+                                                                >Success
                                                             </span>
-                                                            <span class="badge bg-gradient-info shadow"
-                                                                v-if="status.dfs_status == '2'">Make again
+                                                            <span
+                                                                class="badge bg-gradient-info shadow"
+                                                                v-if="
+                                                                    status.dfs_status ==
+                                                                    '2'
+                                                                "
+                                                                >Make again
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div v-else>
-                                                    <span class="badge  bg-gradient-danger shadow   ">no
-                                                        documents</span>
+                                                    <span
+                                                        class="badge bg-gradient-danger shadow"
+                                                        >no documents</span
+                                                    >
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </a>
                                     <!-- Add more properties as needed -->
                                 </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -452,7 +598,6 @@ onMounted(async () => {
                     </div>
                 </div> -->
             </div>
-
         </div>
     </div>
 </template>
@@ -465,5 +610,8 @@ onMounted(async () => {
 
 .title-sub-term {
     transition: 0.3s;
+}
+.img-pic {
+    width: 55px !important;
 }
 </style>

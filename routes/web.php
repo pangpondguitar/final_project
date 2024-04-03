@@ -27,6 +27,7 @@ use App\Http\Controllers\PDFController;
 use App\Models\Terms;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -205,7 +206,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::prefix('president/doc_report')->group(function () {
         Route::controller(DocumentReportController::class)->group(function () {
             Route::get('/', 'index')->name('president.document_report');
-            Route::get('/doc_report_detail/{id}', 'doc_report_detail')->name('president.report_detail');
+            Route::get('/doc_report_detail/{id}', 'index')->name('president.report_detail');
             Route::get('/{pathMatch}', 'index')->where('pathMatch', ".*");
         });
     });
