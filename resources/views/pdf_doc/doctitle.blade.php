@@ -219,7 +219,19 @@
                             <h6 class="p-0 m-0 fs-18 ms-10">3. ชื่อหลักสูตรและประเภทของรายวิชา</h6>
                             <div class="ms-25">
                                 <label> ชื่อหลักสูตร {{$subject->subjects->courses->c_name}}</label><br>
-                                <label> ประเภทของรายวิชา กลุ่มวิชาเฉพาะด้านเลือก</label>
+                                <label> ประเภทของรายวิชา
+                                    
+                             @if($subject->subjects->doc_type == 1)
+                                กลุ่มวิชาเฉพาะด้านเลือก
+                                @else
+                                ฝึกประสบการณ์วิชาชีพหรือสหกิจศึกษา
+
+                                @endif
+                            </label>
+
+                               
+
+
                             </div>
                         </td>
                     </tr>

@@ -3,7 +3,6 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 
 import Chart from "primevue/chart";
-
 import { onMounted, ref, watch, reactive, computed } from "vue";
 const router = useRouter();
 let programs = ref([]);
@@ -21,7 +20,9 @@ let count_doc = ref(0);
 let count_sub = ref(0);
 let count_redoc = ref(0);
 
-import { Bar } from "vue-chartjs";
+const chartCanvas = ref(null);
+let chartInstance = null;
+import { Bar, Doughnut, Line, PolarArea } from "vue-chartjs";
 import {
     Chart as ChartJS,
     Title,
@@ -81,16 +82,35 @@ const chartData = computed(() => {
                     count_sub.value,
                 ],
                 backgroundColor: [
-                    "rgba(61, 247, 79,  0.2)", // เขียว
-                    "rgba(255, 165, 0, 0.2)", // สีส้ม
-                    "rgba(255, 0, 0, 0.2)", // แดง
-                    "rgba(255, 0, 0, 0.2)", // แดง
+                    "#E178C5",
+                    "#FFB38E",
+                    "#FDE767",
+                    "#B0A4A4",
+                    "#824D74",
                 ],
-                borderColor: [
-                    "rgba(61, 247, 79, 82)", // เขียว
-                    "rgba(255, 165, 0, 1)", // สีส้ม
-                    "rgba(255, 0, 0, 1)", // แดง
-                    "rgba(255, 0, 0, 1)",
+                borderWidth: 1,
+            },
+        ],
+    };
+});
+const chartData3 = computed(() => {
+    return {
+        type: "doughnut",
+        labels: ["เสร็จสิ้น", "รอตรวจสอบ", "รอจัดทำใหม่", "ยังไม่จัดทำ"],
+        datasets: [
+            {
+                data: [
+                    count_success.value,
+                    count_wait.value,
+                    count_redoc.value,
+                    count_sub.value,
+                ],
+                backgroundColor: [
+                    "#E178C5",
+                    "#FFB38E",
+                    "#FDE767",
+                    "#86469C",
+                    "#824D74",
                 ],
                 borderWidth: 1,
             },
@@ -141,6 +161,7 @@ const get_count_Doc = async () => {
         count_redoc.value = response.data.count_redoc;
         console.log("subjects", count_sub.value);
         updateChartData();
+        updateChartData2();
     } catch (error) {
         console.error("Error fetching programs:", error);
     }
@@ -152,6 +173,20 @@ const updateChartData = () => {
         chartData.value.datasets[0]
     ) {
         chartData.value.datasets[0].data = [
+            count_success.value,
+            count_wait.value,
+            count_re_doc.value,
+            count_doc.value,
+        ];
+    }
+};
+const updateChartData2 = () => {
+    if (
+        chartData3.value &&
+        chartData3.value.datasets &&
+        chartData3.value.datasets[0]
+    ) {
+        chartData3.value.datasets[0].data = [
             count_success.value,
             count_wait.value,
             count_re_doc.value,
@@ -287,13 +322,50 @@ onMounted(async () => {
                         >ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label
                     >
                     <div class="row">
-                        <div class="col-lg-8 col-sm-12 col-md-12">
+                        <div class="col-lg-6 col-sm-12 col-md-12">
                             <Bar
                                 id="my-chart-id"
                                 :options="chartOptions"
                                 :data="chartData"
                                 class="mt-2"
                             />
+                        </div>
+                        <div class="col-lg-6">
+                            <Line
+                                id="my-chart-id"
+                                :options="chartOptions"
+                                :data="chartData"
+                                class="mt-2"
+                            />
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <Doughnut
+                                            id="my-chart-id"
+                                            :options="chartOptions"
+                                            :data="chartData"
+                                            class="mt-2"
+                                            style="width: 300px; height: 300px"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="d-flex justify-content-center">
+                                    <div>
+                                        <PolarArea
+                                            id="my-chart-id"
+                                            :options="chartOptions"
+                                            :data="chartData"
+                                            style="width: 320px; height: 320px"
+                                            class="mt-2"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- <div class="col-lg-6">
                             <div class="card flex justify-content-center">
