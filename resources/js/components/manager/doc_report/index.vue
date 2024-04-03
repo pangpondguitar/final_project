@@ -1,6 +1,9 @@
 <script setup>
 import { useRouter } from "vue-router";
 import axios from "axios";
+
+import Chart from "primevue/chart";
+
 import { onMounted, ref, watch, reactive, computed } from "vue";
 const router = useRouter();
 let programs = ref([]);
@@ -28,7 +31,44 @@ import {
     CategoryScale,
     LinearScale,
 } from "chart.js";
+const chartData2 = ref();
+const chartOptions2 = ref(null);
+const setChartData = () => {
+    const documentStyle = getComputedStyle(document.body);
+    return {
+        labels: ["A", "B", "C"],
+        datasets: [
+            {
+                data: [540, 325, 702],
+                backgroundColor: [
+                    documentStyle.getPropertyValue("--cyan-500"),
+                    documentStyle.getPropertyValue("--orange-500"),
+                    documentStyle.getPropertyValue("--gray-500"),
+                ],
+                hoverBackgroundColor: [
+                    documentStyle.getPropertyValue("--cyan-400"),
+                    documentStyle.getPropertyValue("--orange-400"),
+                    documentStyle.getPropertyValue("--gray-400"),
+                ],
+            },
+        ],
+    };
+};
+const setChartOptions = () => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue("--text-color");
 
+    return {
+        plugins: {
+            legend: {
+                labels: {
+                    cutout: "60%",
+                    color: textColor,
+                },
+            },
+        },
+    };
+};
 const chartData = computed(() => {
     return {
         labels: ["เสร็จสิ้น", "รอตรวจสอบ", "รอจัดทำใหม่", "ยังไม่จัดทำ"],
@@ -133,6 +173,8 @@ onMounted(async () => {
     await getProgram();
     await get_Terms();
     await get_count_Doc();
+    chartData2.value = setChartData();
+    chartOptions2.value = setChartOptions();
 });
 </script>
 
@@ -142,13 +184,13 @@ onMounted(async () => {
             <div class="card mt-3">
                 <div class="card-header pb-0">
                     <div>
-                        <h4 class="fw-normal mb-0">รายงานสรุปการจัดส่ง มคอ.</h4>
-                        <h6 class="fw-normal text-sm mb-4">
-                            รายงานสรุปการจัดทำ มคอ. รายภาคเรียน
-                        </h6>
+                        <h5 class="mb-0">รายงานสรุปการจัดส่ง มคอ.</h5>
+                        <label class="mt-0 text-muted ms-0 fw-normal">
+                            รายงานสรุปการจัดทำ มคอ. รายภาคเรียน</label
+                        >
                     </div>
                     <div>
-                        <label for="" class="text-sm"
+                        <label for="" class="text-sm mt-4"
                             >เลือกภาคเรียนการศึกษา</label
                         >
                         <select
@@ -168,69 +210,83 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="card-body pt-0">
-                    <div class="row mt-1">
+                    <div class="row">
                         <div class="col-lg-3 g-4">
-                            <div class="card bg-gradient-success p-1">
-                                <div class="card-body text-center">
-                                    <h6 class="text-white fw-normal">
-                                        เสร็จสิ้น
-                                        <i class="bi bi-check-circle"></i>
-                                    </h6>
-                                    <h2 class="text-white mb-0">
+                            <div
+                                class="card p-1 card-course-detail card-sum-detail bg-gradient-primary"
+                            >
+                                <div class="card-body">
+                                    <small class="text-white mb-2">สถานะ</small>
+                                    <h5 class="mb-0 text-white">เสร็จสิ้น</h5>
+                                    <h2 class="mb-0 text-xl mt-2 text-white">
                                         {{ count_success }}
+                                        <span
+                                            for=""
+                                            class="mb-0 text-sm text-white fw-normal"
+                                            >รายการ</span
+                                        >
                                     </h2>
-                                    <p for="" class="text-white mb-0">รายการ</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 g-4">
                             <div class="card p-1 card-course-detail">
-                                <div class="card-body text-center">
-                                    <h6 class=" ">
-                                        รอตรวจสอบ
-                                        <i class="bi bi-clock-history"></i>
-                                    </h6>
-                                    <h2 class="mb-0">
+                                <div class="card-body">
+                                    <small class="mb-2">สถานะ</small>
+                                    <h5 class="mb-0">รอตรวจสอบ</h5>
+                                    <h2 class="mb-0 text-xl mt-2">
                                         {{ count_wait }}
+                                        <span
+                                            for=""
+                                            class="mb-0 text-sm fw-normal"
+                                            >รายการ</span
+                                        >
                                     </h2>
-                                    <p for="" class="mb-0">รายการ</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 g-4">
                             <div class="card p-1 card-course-detail">
-                                <div class="card-body text-center">
-                                    <h6 class=" ">
-                                        รอจัดทำใหม่
-                                        <i class="bi bi-clock-history"></i>
-                                    </h6>
-                                    <h2 class="mb-0">
+                                <div class="card-body">
+                                    <small class="mb-2">สถานะ</small>
+                                    <h5 class="mb-0">รอจัดทำใหม่</h5>
+                                    <h2 class="mb-0 text-xl mt-2">
                                         {{ count_redoc }}
+                                        <span
+                                            for=""
+                                            class="mb-0 text-sm fw-normal"
+                                            >รายการ</span
+                                        >
                                     </h2>
-                                    <p for="" class="mb-0">รายการ</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 g-4">
                             <div class="card p-1 card-course-detail">
-                                <div class="card-body text-center">
-                                    <h6 class="">
-                                        ยังไม่จัดทำ
-                                        <i class="bi bi-ban"></i>
-                                    </h6>
-                                    <h2 class="mb-0">
+                                <div class="card-body">
+                                    <small class="mb-2">สถานะ</small>
+                                    <h5 class="mb-0">ยังไม่จัดทำ</h5>
+                                    <h2 class="mb-0 text-xl mt-2">
                                         {{ count_doc }}
+                                        <span
+                                            for=""
+                                            class="mb-0 text-sm fw-normal"
+                                            >รายการ</span
+                                        >
                                     </h2>
-                                    <p for="" class="mb-0">รายการ</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h5 class="mb-0 mt-5">แผนภาพแสดงสถานะการจัดส่ง มคอ.</h5>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="mb-0">แผนภาพแสดงสถานะการจัดส่ง มคอ.</h5>
                     <label class="mt-0 text-muted ms-0 fw-normal"
                         >ตรวจสอบการจัดทำ มคอ.ในภาคเรียน</label
                     >
-                    <div class="d-flex justify-content-center">
+                    <div class="row">
                         <div class="col-lg-8 col-sm-12 col-md-12">
                             <Bar
                                 id="my-chart-id"
@@ -239,6 +295,20 @@ onMounted(async () => {
                                 class="mt-2"
                             />
                         </div>
+                        <!-- <div class="col-lg-6">
+                            <div class="card flex justify-content-center">
+                                <div class="card-body">
+                                    <Chart
+                                        type="doughnut"
+                                        :data="chartData"
+                                        :options="chartOptions"
+                                        class=""
+                                        width="200"
+                                        height="200"
+                                    />
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -295,5 +365,8 @@ onMounted(async () => {
 <style>
 .text-truncate {
     max-width: 80%;
+}
+.card-sum-detail {
+    box-shadow: rgb(205 14 155 / 25%) 0px 7px 29px 0px;
 }
 </style>

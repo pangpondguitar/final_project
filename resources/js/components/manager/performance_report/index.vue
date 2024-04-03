@@ -25,6 +25,7 @@ let data = ref([]);
 let yearOptions = ref([]);
 let selectedYear = ref("");
 let currentYear = ref((new Date().getFullYear() + 543).toString());
+
 import { Bar } from "vue-chartjs";
 import {
     Chart as ChartJS,
@@ -37,21 +38,36 @@ import {
 } from "chart.js";
 
 const chartData = computed(() => {
+    const distinctColors = [
+        "#98ABEE",
+        "#5C5470",
+        "#795458",
+        "#B9B4C7",
+        "#ff00ff",
+        "#00ffff",
+        "#ff8000",
+        "#80ff00",
+        "#0080ff",
+        "#ff0080",
+        "#80ff80",
+        "#8080ff",
+        "#ff80ff",
+        "#80ffff",
+        "#ffff80",
+        "#ff8080",
+        "#808080",
+    ];
 
-    const distinctColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8000', '#80ff00', '#0080ff', '#ff0080', '#80ff80', '#8080ff', '#ff80ff', '#80ffff', '#ffff80', '#ff8080', '#808080'];
+    // Set distinct colors directly for backgroundColor
+    const backgroundColor = distinctColors.map((color) => color);
 
-// Map distinct colors to RGBA format for backgroundColor
-const backgroundColor = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 0.2)`);
-
-// Map distinct colors to RGBA format for borderColor
-const borderColor = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 1)`);
+    // Map distinct colors to RGBA format for borderColor
     return {
         labels: labels.value,
         datasets: [
             {
                 data: data.value,
                 backgroundColor: backgroundColor,
-                borderColor:borderColor,
                 borderWidth: 1,
             },
         ],
@@ -69,10 +85,40 @@ const borderColor = distinctColors.map(color => `rgba(${parseInt(color.substr(1,
     };
 });
 const generateDistinctColors = () => {
-      const distinctColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8000', '#80ff00', '#0080ff', '#ff0080', '#80ff80', '#8080ff', '#ff80ff', '#80ffff', '#ffff80', '#ff8080', '#808080'];
-      backgroundColor.value = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 0.2)`);
-      borderColor.value = distinctColors.map(color => `rgba(${parseInt(color.substr(1,2), 16)}, ${parseInt(color.substr(3,2), 16)}, ${parseInt(color.substr(5,2), 16)}, 1)`);
-    };
+    const distinctColors = [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff",
+        "#ffff00",
+        "#ff00ff",
+        "#00ffff",
+        "#ff8000",
+        "#80ff00",
+        "#0080ff",
+        "#ff0080",
+        "#80ff80",
+        "#8080ff",
+        "#ff80ff",
+        "#80ffff",
+        "#ffff80",
+        "#ff8080",
+        "#808080",
+    ];
+    backgroundColor.value = distinctColors.map(
+        (color) =>
+            `rgba(${parseInt(color.substr(1, 2), 16)}, ${parseInt(
+                color.substr(3, 2),
+                16
+            )}, ${parseInt(color.substr(5, 2), 16)}, 0.2)`
+    );
+    borderColor.value = distinctColors.map(
+        (color) =>
+            `rgba(${parseInt(color.substr(1, 2), 16)}, ${parseInt(
+                color.substr(3, 2),
+                16
+            )}, ${parseInt(color.substr(5, 2), 16)}, 1)`
+    );
+};
 const chartOptions = {
     responsive: true,
 };
@@ -183,7 +229,6 @@ onMounted(async () => {
     await get_count_Doc();
     await generateYearOptions();
     await get_count_Performance();
- 
 });
 </script>
 
@@ -206,20 +251,23 @@ onMounted(async () => {
                         <label for="" class="text-sm"
                             >เลือกปีที่ต้องการค้นหา</label
                         >
-                       
-                        <select v-model="selectedYear" class="form-control select-year"   @change="term">
+
+                        <select
+                            v-model="selectedYear"
+                            class="form-control select-year"
+                            @change="term"
+                        >
                             <option
                                 v-for="year in yearOptions"
                                 :key="year"
                                 :value="year"
-                             
                             >
                                 {{ year }}
                             </option>
                         </select>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-11 col-sm-12 col-md-12">
                             <Bar
                                 id="my-chart-id"
                                 :options="chartOptions"
@@ -231,7 +279,6 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
-       
     </div>
 </template>
 
